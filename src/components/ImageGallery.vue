@@ -56,7 +56,10 @@ export default {
 		},
 		// Split images into a 2d array of columns first, then images.
 		splitImagesIntoColumns() {
-			const columns = Math.floor(window.innerWidth / 265);
+			const body_margins = 30;
+			const columns = Math.floor(
+				(window.innerWidth - body_margins) / 265
+			);
 			const columnQueue = [];
 			for (let i = 0; i < columns; i++) {
 				columnQueue[i] = [];
