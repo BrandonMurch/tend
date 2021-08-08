@@ -17,7 +17,7 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp
 					<input
 						class="search-input"
 						type="text"
-						placeholder="search for a plant species (example: monstera deliciosa)"
+						placeholder="search for a plant species..."
 						v-model="searchTerm"
 					/>
 					<div class="suggestion-box">
@@ -190,7 +190,7 @@ export default {
 	text-align: center;
 	color: #3f463d;
 	font-family: fell, serif;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	padding: 1rem;
 	border-bottom: 2px solid gray;
 }
