@@ -22,5 +22,6 @@ export default {
 	position: relative;
 	top: -1rem;
 	cursor: default;
+	font-weight: normal;
 }
 </style>
