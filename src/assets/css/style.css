@@ -1,0 +1,29 @@
+@font-face {
+  font-family: fell;
+  src: url("../fonts/IMFeENrm29P.ttf");
+}
+
+html {
+  font-family: fell, serif;
+  font-size: 18px;
+}
+
+.hidden {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (max-width: 1000px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
