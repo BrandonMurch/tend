@@ -85,7 +85,7 @@ export default {
 	}
 }
 
-@media (max-width: 800px) {
+@media (max-width: 799px) {
 	.large-navigation {
 		display: none;
 	}
