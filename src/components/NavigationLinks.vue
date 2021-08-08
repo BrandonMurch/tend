@@ -53,10 +53,11 @@ export default {
 <style scoped>
 .navigation-link {
 	float: right;
-	color: #bf763c;
+	color: #b87d4b;
 	text-decoration: none;
 	margin: 2rem 1rem;
 	font-size: 1.5rem;
+	text-shadow: 0.3px 0.3px 0.3px grey;
 }
 
 .activeLink {

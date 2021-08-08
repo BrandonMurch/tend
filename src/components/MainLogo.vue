@@ -1,6 +1,6 @@
 <template>
-	<div style="display: inline">
-		<img class="logo-image" src="../assets/images/logo.svg" alt="logo" />
+	<div class="logo-container">
+		<img class="logo-image" src="../assets/images/logo3.svg" alt="logo" />
 		<h1 class="logo-text">tend</h1>
 	</div>
 </template>
@@ -12,16 +12,24 @@ export default {
 </script>
 
 <style scoped>
+.logo-container {
+	display: inline;
+	position: relative;
+	left: 20px;
+}
+
 .logo-image {
 	height: 5rem;
 }
 .logo-text {
 	display: inline;
-	color: #bf763c;
+	color: #b87d4b;
 	font-size: 4rem;
 	position: relative;
+	left: -10px;
 	top: -1rem;
 	cursor: default;
 	font-weight: normal;
+	text-shadow: 2px 2px 2px grey;
 }
 </style>
