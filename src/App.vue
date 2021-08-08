@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="application-container">
 		<div class="application-background"></div>
 		<NavigationBar
 			:activeComponent="activeComponent"
@@ -31,6 +31,12 @@ export default {
 </script>
 
 <style scoped>
+.application-container {
+	width: 100%;
+	overflow-x: hidden;
+	position: absolute;
+	left: 0;
+}
 .application-background {
 	position: fixed;
 	top: 0;
