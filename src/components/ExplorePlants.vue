@@ -1,12 +1,21 @@
 <template>
+	<PopUp
+		v-if="selectedPlant"
+		@close="selectedPlant = null"
+		v-bind="selectedPlant"
+	/>
 	<div class="image-gallery">
-		<ImageGallery v-bind:images="getImageData()" />
+		<ImageGallery
+			v-bind:images="getImageData()"
+			@itemClick="(plant) => (selectedPlant = plant)"
+		/>
 	</div>
 </template>
 
 <script>
 import ImageGallery from "./ImageGallery.vue";
 import plantData from "../assets/json/plants.json";
+import PopUp from "./PopUp.vue";
 
 export default {
 	name: "ExplorePlants",
@@ -25,10 +34,13 @@ export default {
 		},
 	},
 	data() {
-		return {};
+		return {
+			selectedPlant: null,
+		};
 	},
 	components: {
 		ImageGallery,
+		PopUp,
 	},
 };
 </script>

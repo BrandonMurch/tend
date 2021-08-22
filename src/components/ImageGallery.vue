@@ -1,10 +1,5 @@
 <template>
 	<div class="gallery-container">
-		<PopUp
-			v-if="popupImage"
-			v-bind="popupImage"
-			@close="popupImage = null"
-		/>
 		<div
 			class="gallery-column"
 			v-for="(column, index) in imageColumns"
@@ -14,22 +9,21 @@
 				v-for="image in column"
 				:key="image.id"
 				v-bind="image"
-				@click="popupImage = image"
+				@click="$emit('itemClick', image)"
 			/>
+			<!-- @click="popupImage = image" -->
 		</div>
 	</div>
 </template>
 
 <script>
 import ImageCard from "./ImageCard.vue";
-import PopUp from "./PopUp.vue";
 import { debounce } from "../assets/javascript/debounce";
 
 export default {
 	name: "ImageGallery",
 	components: {
 		ImageCard,
-		PopUp,
 	},
 	props: {
 		images: Array,
@@ -73,7 +67,6 @@ export default {
 	data() {
 		return {
 			imageColumns: this.splitImagesIntoColumns(),
-			popupImage: null,
 			// Use data to properly remove event listener;
 			debounceUpdateSize: debounce(this.updateColumnsOnResize),
 		};
