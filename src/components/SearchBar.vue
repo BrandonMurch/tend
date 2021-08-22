@@ -15,6 +15,7 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp
 				<div class="search-container" ref="searchbar">
 					<!-- Search bar -->
 					<input
+						@keyup="handleKeyUp"
 						class="search-input"
 						type="text"
 						placeholder="search for a plant species..."
@@ -78,6 +79,7 @@ export default {
 			this.$emit("close");
 		},
 		handleKeyUp(event) {
+			console.log(event);
 			if (this.suggestions.length === 0) {
 				this.getSuggestions();
 			}
@@ -146,12 +148,6 @@ export default {
 				alert("Your search could not be found.");
 			}
 		},
-	},
-	created() {
-		window.addEventListener("keyup", this.handleKeyUp);
-	},
-	unmounted() {
-		window.addEventListener("keyup", this.handleKeyUp);
 	},
 };
 </script>
