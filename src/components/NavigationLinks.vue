@@ -10,24 +10,12 @@
 		>
 			{{ link.text }}
 		</a>
-		<a
-			class="navigation-link"
-			:class="{ dropDown: dropDown }"
-			@click="searchOpen = !searchOpen"
-			href="#"
-		>
-			search
-		</a>
-		<SearchBar :isOpen="searchOpen" @close="searchOpen = false" />
 	</div>
 </template>
 
 <script>
-import SearchBar from "./SearchBar.vue";
-
 export default {
 	name: "NavigationLinks",
-	components: { SearchBar },
 	props: { links: Array, activeComponent: String, dropDown: Boolean },
 	methods: {
 		isActive(linkName) {
@@ -41,11 +29,6 @@ export default {
 				target == "contact" ? "contact" : "explore"
 			);
 		},
-	},
-	data() {
-		return {
-			searchOpen: false,
-		};
 	},
 };
 </script>

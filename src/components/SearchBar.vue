@@ -79,7 +79,6 @@ export default {
 			this.$emit("close");
 		},
 		handleKeyUp(event) {
-			console.log(event);
 			if (this.suggestions.length === 0) {
 				this.getSuggestions();
 			}
