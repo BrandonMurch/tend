@@ -5,21 +5,25 @@
 			:key="link.text"
 			:class="{ linkContainer: dropDown }"
 		>
-			<a
+			<RouterLink
 				class="navigation-link"
 				:class="{ activeLink: isActive(link.text), dropDown: dropDown }"
 				:href="link.url"
+				:to="link.url"
 				@click="click(link.text)"
 			>
 				{{ link.text }}
-			</a>
+			</RouterLink>
 		</div>
 	</div>
 </template>
 
 <script>
+import { RouterLink } from "vue-router";
+
 export default {
 	name: "NavigationLinks",
+	components: { RouterLink },
 	props: { links: Array, activeComponent: String, dropDown: Boolean },
 	methods: {
 		isActive(linkName) {

@@ -5,22 +5,19 @@
 			:activeComponent="activeComponent"
 			@update:activeComponent="activeComponent = $event"
 		/>
-		<ContactForm v-if="activeComponent == 'contact'" />
-		<ExplorePlants v-if="activeComponent == 'explore'" />
+		<RouterView> </RouterView>
 	</div>
 </template>
 
 <script>
 import NavigationBar from "./components/NavigationBar.vue";
-import ExplorePlants from "./components/ExplorePlants.vue";
-import ContactForm from "./components/ContactForm.vue";
+import { RouterView } from "vue-router";
 
 export default {
 	name: "App",
 	components: {
 		NavigationBar,
-		ExplorePlants,
-		ContactForm,
+		RouterView,
 	},
 	data() {
 		return {

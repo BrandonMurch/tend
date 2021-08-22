@@ -24,7 +24,16 @@ import CloseIcon from "./CloseIcon.vue";
 export default {
 	name: "SearchIcon",
 	components: { CloseIcon },
-	props: { isOpen: Boolean, size: { default: "small", type: String } },
+	props: {
+		isOpen: Boolean,
+		size: {
+			default: "small",
+			type: String,
+			validator: (value) => {
+				return ["small", "large"].includes(value);
+			},
+		},
+	},
 };
 </script>
 

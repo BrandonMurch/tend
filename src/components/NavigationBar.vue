@@ -62,10 +62,10 @@ export default {
 			menuOpen: false,
 			isMobile: window.innerWidth < 800,
 			links: [
-				{ text: "contact", url: "#" },
-				{ text: "learn", url: "#" },
-				{ text: "explore", url: "#" },
-				{ text: "my plants", url: "#" },
+				{ text: "contact", url: "/contact" },
+				{ text: "learn", url: "/learn" },
+				{ text: "explore", url: "/explore" },
+				{ text: "my plants", url: "/my-plants" },
 			],
 			searchOpen: false,
 		};
