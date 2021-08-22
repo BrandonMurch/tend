@@ -1,6 +1,6 @@
 <template>
 	<div :class="{ open: isOpen, container: true }" ref="container">
-		<div ref="contents" @change="updateHeight">
+		<div ref="contents">
 			<!-- Named slots, in the future would like to add more parts to the drop down
 			https://vuejs.org/v2/guide/components-slots.html#Named-Slots-->
 			<slot name="inside" />
@@ -45,6 +45,7 @@ export default {
 	position: relative;
 	left: -10%;
 	width: 120%;
+	/* Hide until javascript loads */
 	height: 0;
 	/* https://www.w3schools.com/css/css3_transitions.asp */
 	box-shadow: inset 0px 0px 4px 4px grey;
@@ -52,7 +53,6 @@ export default {
 }
 
 .open {
-	/* Uneven transition times due to the max-height css animation work around. */
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 }

@@ -21,7 +21,7 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp
 						placeholder="search for a plant species..."
 						v-model="searchTerm"
 					/>
-					<div class="suggestion-box">
+					<div>
 						<!-- Populated with suggestions for autocomplete -->
 						<h3
 							v-for="suggestion in suggestions"
@@ -164,6 +164,10 @@ export default {
 	left: 50%;
 	transform: translateX(-50%);
 	font-weight: normal;
+}
+
+.suggestion-text:last-child {
+	padding-bottom: 1rem;
 }
 
 .suggestion-text:hover,

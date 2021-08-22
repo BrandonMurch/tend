@@ -1,15 +1,19 @@
 <template>
 	<div class="hide-div">
-		<a
+		<div
 			v-for="link in links"
 			:key="link.text"
-			class="navigation-link"
-			:class="{ activeLink: isActive(link.text), dropDown: dropDown }"
-			:href="link.url"
-			@click="click(link.text)"
+			:class="{ linkContainer: dropDown }"
 		>
-			{{ link.text }}
-		</a>
+			<a
+				class="navigation-link"
+				:class="{ activeLink: isActive(link.text), dropDown: dropDown }"
+				:href="link.url"
+				@click="click(link.text)"
+			>
+				{{ link.text }}
+			</a>
+		</div>
 	</div>
 </template>
 
@@ -34,6 +38,10 @@ export default {
 </script>
 
 <style scoped>
+.linkContainer {
+	height: 4.1rem;
+}
+
 .navigation-link {
 	float: right;
 	color: #b87d4b;

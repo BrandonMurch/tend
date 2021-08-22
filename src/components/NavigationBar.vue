@@ -3,34 +3,29 @@
 		<MainLogo />
 
 		<!-- Mobile Navigation -->
-		<MenuIcon
-			class="menu-icon"
-			:isOpen="menuOpen"
-			@click="menuOpen = !menuOpen"
-		/>
-		<SearchIcon
-			:isOpen="searchOpen"
-			@click="searchOpen = !searchOpen"
-			:size="'large'"
-		/>
-		<DropDown class="drop-down" :isOpen="menuOpen">
-			<template v-slot:inside>
-				<NavigationLinks
-					v-if="isMobile"
-					:links="links"
-					:dropDown="true"
-					:activeComponent="activeComponent"
-					@update:activeComponent="updateActiveComponent"
-				/>
-			</template>
-		</DropDown>
-
-		<!-- Desktop Navigation -->
-		<div class="large-navigation">
+		<div class="mobile-navigation">
+			<MenuIcon :isOpen="menuOpen" @click="toggleMenu" />
 			<SearchIcon
 				:isOpen="searchOpen"
-				@click="searchOpen = !searchOpen"
+				@click="toggleSearch"
+				:size="'large'"
 			/>
+			<DropDown class="drop-down" :isOpen="menuOpen">
+				<template v-slot:inside>
+					<NavigationLinks
+						v-if="isMobile"
+						:links="links"
+						:dropDown="true"
+						:activeComponent="activeComponent"
+						@update:activeComponent="updateActiveComponent"
+					/>
+				</template>
+			</DropDown>
+		</div>
+
+		<!-- Desktop Navigation -->
+		<div class="desktop-navigation">
+			<SearchIcon :isOpen="searchOpen" @click="toggleSearch" />
 			<NavigationLinks
 				v-if="!isMobile"
 				:dropDown="false"
@@ -48,7 +43,7 @@ import DropDown from "./DropDown.vue";
 import MainLogo from "./MainLogo.vue";
 import MenuIcon from "./MenuIcon.vue";
 import SearchIcon from "./SearchIcon.vue";
-import SearchBar from "./SearchIcon.vue";
+import SearchBar from "./SearchBar.vue";
 import NavigationLinks from "./NavigationLinks.vue";
 
 export default {
@@ -76,6 +71,14 @@ export default {
 		};
 	},
 	methods: {
+		toggleSearch() {
+			this.menuOpen = false;
+			this.searchOpen = !this.searchOpen;
+		},
+		toggleMenu() {
+			this.searchOpen = false;
+			this.menuOpen = !this.menuOpen;
+		},
 		updateIsMobile() {
 			this.isMobile = window.innerWidth < 800;
 		},
@@ -99,19 +102,26 @@ export default {
 }
 
 @media (min-width: 800px) {
-	.drop-down,
-	.menu-icon {
+	.mobile-navigation {
 		display: none;
 	}
 
-	.large-navigation {
+	.desktop-navigation {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
 		display: inline;
 	}
 }
 
 @media (max-width: 799px) {
-	.large-navigation {
+	.desktop-navigation {
 		display: none;
+	}
+
+	.mobile-navigation {
+		display: inline;
 	}
 }
 </style>
