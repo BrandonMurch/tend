@@ -24,8 +24,12 @@
 		</div>
 
 		<!-- Desktop Navigation -->
-		<div class="desktop-navigation">
-			<SearchIcon :isOpen="searchOpen" @click="toggleSearch" />
+		<div class="desktop-navigation" @click="toggleSearch">
+			<div class="search-desktop">
+				<CloseIcon :isOpen="searchOpen">
+					<a class="search-text" @click="toggleSearch"> search </a>
+				</CloseIcon>
+			</div>
 			<NavigationLinks
 				v-if="!isMobile"
 				:dropDown="false"
@@ -42,6 +46,7 @@
 import DropDown from "./DropDown.vue";
 import MainLogo from "./MainLogo.vue";
 import MenuIcon from "./MenuIcon.vue";
+import CloseIcon from "./CloseIcon.vue";
 import SearchIcon from "./SearchIcon.vue";
 import SearchBar from "./SearchBar.vue";
 import NavigationLinks from "./NavigationLinks.vue";
@@ -55,6 +60,7 @@ export default {
 		NavigationLinks,
 		SearchIcon,
 		SearchBar,
+		CloseIcon,
 	},
 	props: { activeComponent: String },
 	data() {
@@ -99,6 +105,23 @@ export default {
 .navigation-bar {
 	position: relative;
 	min-height: 2rem;
+}
+
+.search-text {
+	color: #b87d4b;
+	font-size: 1.5rem;
+	float: right;
+}
+
+.search-desktop {
+	width: 4rem;
+	height: 2rem;
+	margin: 2rem 2rem 2rem 1rem;
+	float: right;
+}
+
+.search-text:hover {
+	font-weight: bold;
 }
 
 @media (min-width: 800px) {
