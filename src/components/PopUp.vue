@@ -33,6 +33,9 @@
 				<h3 class="title">{{ title }}</h3>
 				<h4 class="subtitle">{{ subtitle }}</h4>
 				<p class="paragraph">{{ text }}</p>
+				<div class="action-container">
+					<HeartIcon />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -40,9 +43,11 @@
 
 <script>
 import { debounce } from "../assets/javascript/debounce";
+import HeartIcon from "./HeartIcon.vue";
 
 export default {
 	name: "PopUp",
+	components: { HeartIcon },
 	props: {
 		imageSource: String,
 		title: String,
@@ -175,8 +180,16 @@ p {
 }
 
 .close-icon:hover {
-	transform: scale(1.2);
+	transform: scale(1.1);
 	stroke: #c25f0f;
+}
+
+.action-container {
+	height: 3rem;
+	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: space-around;
 }
 
 @media (min-width: 800px) {
