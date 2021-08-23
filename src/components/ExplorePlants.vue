@@ -57,7 +57,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .image-gallery {
 	display: flex;
 	align-content: center;
