@@ -34,6 +34,11 @@ export default {
 	height: 100%;
 }
 
+.icon-container:hover {
+	transform: scale(1.1);
+	transition: 0.4s;
+}
+
 .icon {
 	height: 100%;
 	width: 100%;

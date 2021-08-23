@@ -62,27 +62,32 @@ export default {
 	left: 0;
 	width: 100%;
 	height: 100%;
+	transition: 0.7s;
 }
 
 .image-overlay:hover {
 	background-color: rgba(0, 0, 0, 0.3);
 	cursor: pointer;
+	transition: 0.7s;
 }
 
 .image-hover-text {
-	display: none;
+	opacity: 0;
+	color: white;
+	font-size: 2rem;
 }
 
 /* Display when card is hovered. */
 .image-overlay:hover .image-hover-text {
 	display: inline;
+	opacity: 1;
 	position: absolute;
 	bottom: 10%;
 	left: 5%;
 	text-align: center;
 	width: 90%;
-	color: white;
-	font-size: 2rem;
 	margin: 0;
+
+	transition: 0.7s;
 }
 </style>

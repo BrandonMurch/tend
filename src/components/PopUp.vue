@@ -110,6 +110,7 @@ p {
 	align-items: center;
 	justify-content: center;
 	z-index: 10;
+	transition: 0.7s;
 }
 
 .background {

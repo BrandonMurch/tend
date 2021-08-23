@@ -117,6 +117,7 @@ h1 {
 	margin-left: 1rem;
 	text-transform: lowercase;
 	cursor: pointer;
+	transition: 0.5s;
 }
 
 .button:hover {
@@ -124,6 +125,7 @@ h1 {
 	background-color: #bf763c;
 	height: 2.1rem;
 	width: 35%;
+	transition: 0.5s;
 }
 
 @media (min-width: 800px) {

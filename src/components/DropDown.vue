@@ -21,7 +21,7 @@ export default {
 		const container = ref(null);
 
 		const updateHeight = () => {
-			container.value.style.transition = "1.5s ease-in-out";
+			container.value.style.transition = "1s ease-out";
 
 			container.value.style.height = props.isOpen
 				? contents.value.clientHeight + "px"
