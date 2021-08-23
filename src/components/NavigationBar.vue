@@ -24,8 +24,8 @@
 		</div>
 
 		<!-- Desktop Navigation -->
-		<div class="desktop-navigation" @click="toggleSearch">
-			<div class="search-desktop">
+		<div class="desktop-navigation">
+			<div class="search-desktop" @click="toggleSearch">
 				<CloseIcon :isOpen="searchOpen">
 					<a class="search-text" @click="toggleSearch"> search </a>
 				</CloseIcon>
@@ -69,9 +69,9 @@ export default {
 			isMobile: window.innerWidth < 800,
 			links: [
 				{ text: "contact", url: "/contact", name: "contact" },
-				{ text: "learn", url: "/learn", name: "learn" },
+				{ text: "learn", url: "/explore", name: "learn" },
 				{ text: "explore", url: "/explore", name: "explore" },
-				{ text: "my plants", url: "/my-plants", name: "my-plants" },
+				{ text: "my plants", url: "/explore", name: "my-plants" },
 			],
 			searchOpen: false,
 		};
@@ -118,6 +118,10 @@ export default {
 	height: 2rem;
 	margin: 2rem 2rem 2rem 1rem;
 	float: right;
+}
+
+.search-desktop:hover {
+	font-weight: bold;
 }
 
 .search-text:hover {

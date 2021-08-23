@@ -93,6 +93,12 @@ export default {
 </script>
 
 <style scoped>
+h3,
+h4,
+p {
+	color: #3f463d;
+}
+
 .container {
 	/* Cover entire screen, ignore scrolling */
 	position: fixed;
@@ -160,6 +166,18 @@ export default {
 	z-index: 20;
 }
 
+.close-icon {
+	fill: #bf763c;
+	stroke: #bf763c;
+	stroke-width: 2px;
+	stroke-linejoin: round;
+}
+
+.close-icon:hover {
+	transform: scale(1.2);
+	stroke: #c25f0f;
+}
+
 @media (min-width: 800px) {
 	.popup {
 		min-width: 40vw;
@@ -170,6 +188,11 @@ export default {
 	.image {
 		max-width: 40vw;
 		max-height: 80vh;
+	}
+
+	.text-container {
+		width: 44%;
+		margin-right: 2%;
 	}
 }
 
