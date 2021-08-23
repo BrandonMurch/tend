@@ -6,8 +6,9 @@
 	/>
 	<div class="image-gallery">
 		<ImageGallery
-			v-bind:images="getImageData()"
+			v-bind:images="images"
 			@itemClick="(plant) => (selectedPlant = plant)"
+			@moreImages="getImageData"
 		/>
 	</div>
 </template>
@@ -19,23 +20,31 @@ import PopUp from "./PopUp.vue";
 
 export default {
 	name: "ExplorePlants",
+	created() {
+		this.getImageData();
+	},
 	methods: {
 		getImageData() {
 			// Duplicate examples to fill the screen into images array.
 			const images = [];
+
 			for (let i = 0; i < 5; i++) {
-				for (let j = 0; j < 6; j++) {
+				for (let j = 0; j < 7; j++) {
 					let copy = { ...plantData[j] };
-					copy.id = copy.id + 7 * i;
+					copy.id = copy.id + 7 * i + this.currentImageRound * 7 * 5;
 					images.push(copy);
 				}
 			}
-			return images;
+
+			// New array to trigger watch updates.
+			this.images = [...this.images, ...images];
 		},
 	},
 	data() {
 		return {
+			currentImageRound: 0,
 			selectedPlant: null,
+			images: [],
 		};
 	},
 	components: {
@@ -49,5 +58,6 @@ export default {
 .image-gallery {
 	display: flex;
 	align-content: center;
+	flex-wrap: wrap;
 }
 </style>
