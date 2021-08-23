@@ -9,7 +9,7 @@
 				class="input-box desktop-side"
 				placeholder="Name:"
 				type="text"
-				v-model="userName"
+				v-model.trim="userName"
 			/>
 			<label class="hidden" for="email">Email address:</label>
 			<input
@@ -17,8 +17,22 @@
 				class="input-box desktop-side"
 				placeholder="Email:"
 				type="email"
-				v-model="userEmail"
+				v-model.trim="userEmail"
 			/>
+			<label class="hidden" for="messageType">Message Type:</label>
+			<select
+				id="messageType"
+				class="input-box desktop-side"
+				v-model="messageType"
+			>
+				<option
+					v-for="option in messageTypeOptions"
+					:key="option"
+					:value="option.value"
+				>
+					{{ option.text }}
+				</option>
+			</select>
 			<label class="hidden" for="message">Message:</label>
 			<textarea
 				class="input-box"
@@ -30,6 +44,10 @@
 			<input class="button" type="submit" />
 			<input class="button" type="reset" />
 		</form>
+		<div class="policy-container">
+			<button class="button">Terms of Use</button>
+			<button class="button">Privacy Policy</button>
+		</div>
 	</div>
 </template>
 
@@ -41,11 +59,20 @@ export default {
 			userName: "",
 			userEmail: "",
 			userMessage: "",
+			messageType: null,
+			messageTypeOptions: [
+				{ text: "Account", value: "account" },
+				{ text: "Report Offensive Content", value: "offensive" },
+				{ text: "Bug Finding", value: "bug" },
+				{ text: "Other", value: "misc" },
+			],
 		};
 	},
 	methods: {
 		onSubmit() {
-			alert(`Thank you ${this.userName}! We will get in touch shortly.`);
+			alert(
+				`Thank you ${this.userName}! We will get in touch shortly at ${this.userEmail}.`
+			);
 		},
 	},
 };
@@ -126,6 +153,15 @@ h1 {
 	height: 2.1rem;
 	width: 35%;
 	transition: 0.5s;
+}
+
+.policy-container {
+	position: fixed;
+	bottom: 20px;
+	width: 50%;
+	min-width: 300px;
+	display: flex;
+	justify-content: center;
 }
 
 @media (min-width: 800px) {
