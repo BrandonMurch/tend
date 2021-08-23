@@ -7,10 +7,8 @@
 		>
 			<RouterLink
 				class="navigation-link"
-				:class="{ activeLink: isActive(link.text), dropDown: dropDown }"
-				:href="link.url"
+				:class="{ activeLink: isActive(link.name), dropDown: dropDown }"
 				:to="link.url"
-				@click="click(link.text)"
 			>
 				{{ link.text }}
 			</RouterLink>
@@ -24,18 +22,10 @@ import { RouterLink } from "vue-router";
 export default {
 	name: "NavigationLinks",
 	components: { RouterLink },
-	props: { links: Array, activeComponent: String, dropDown: Boolean },
+	props: { links: Array, dropDown: Boolean },
 	methods: {
 		isActive(linkName) {
-			// Change once Vue-Router is implemented to verify using location.
-			return linkName == this.activeComponent ? true : false;
-		},
-		click(target) {
-			// Used for mocking only the contact and explore pages momentarily
-			this.$emit(
-				"update:activeComponent",
-				target == "contact" ? "contact" : "explore"
-			);
+			return linkName == this.$route.name;
 		},
 	},
 };
