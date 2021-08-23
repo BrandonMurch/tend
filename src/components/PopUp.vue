@@ -119,7 +119,7 @@ export default {
 
 .popup {
 	position: relative;
-	background-color: #d8dad4;
+	background-color: #dce0d1;
 	border-radius: 20px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	z-index: 11;
