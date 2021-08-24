@@ -1,10 +1,7 @@
 <template>
 	<div class="application-container">
 		<div class="application-background"></div>
-		<NavigationBar
-			:activeComponent="activeComponent"
-			@update:activeComponent="activeComponent = $event"
-		/>
+		<NavigationBar />
 		<RouterView> </RouterView>
 	</div>
 </template>
@@ -20,9 +17,7 @@ export default {
 		RouterView,
 	},
 	data() {
-		return {
-			activeComponent: "explore",
-		};
+		return {};
 	},
 };
 </script>
