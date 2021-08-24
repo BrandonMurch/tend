@@ -5,16 +5,16 @@
 			v-for="(column, index) in imageColumns"
 			:key="index"
 		>
-			<!-- eslint-disable-next-line vue/no-unused-vars -->
 			<ImageCard
 				v-for="image in column"
 				:key="image.id"
 				v-bind="image"
-				@imageLoaded="countLoads"
+				@imageLoaded="setAllImagesLoadedIfTrue"
 				@click="$emit('itemClick', image)"
 			/>
 		</div>
 	</div>
+	<!-- Only display once all images are loaded, to prevent hitting it initially -->
 	<div v-show="allImagesLoaded" class="reload-trigger" ref="reload"></div>
 </template>
 
@@ -33,9 +33,7 @@ export default {
 	emits: ["itemClick", "moreImages"],
 
 	/*
-        For monitoring the resize of the window, I use the lifecycle hooks
-        to create global event listeners. When the component is unmounted,
-        the listener will be removed.
+        Lifecycle hooks are used to create global event listeners. When the component is unmounted, the listener will be removed to prevent memory leaks.
 
         https://vuejs.org/v2/api/#Options-Lifecycle-Hooks
         https://vuejs.org/v2/api/#created
@@ -47,7 +45,7 @@ export default {
 		this.updateColumns();
 	},
 	mounted() {
-		// When the bottom of the screen is reached. Load more images.
+		// When the bottom of the screen is reached. Ask for more images.
 		// https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 		this.observer = new IntersectionObserver((entries) => {
 			if (entries[0].isIntersecting === true) {
@@ -62,8 +60,7 @@ export default {
 		this.observer.disconnect();
 	},
 	methods: {
-		countLoads() {
-			// Once all images are loaded in the initial round, then the element to trigger loading more images will be displayed. This is only a concern where there are no elements on the screen, and would trigger more images automatically.
+		setAllImagesLoadedIfTrue() {
 			this.loadedImages++;
 			if (this.loadedImages === this.images.length) {
 				this.allImagesLoaded = true;
@@ -78,7 +75,10 @@ export default {
 
 		initialiseColumns() {
 			const body_margins = 30;
-			this.columns = Math.floor((window.innerWidth - body_margins) / 265);
+			const card_width = 265;
+			this.columns = Math.floor(
+				(window.innerWidth - body_margins) / card_width
+			);
 			const columnQueue = [];
 			for (let i = 0; i < this.columns; i++) {
 				columnQueue[i] = [];
