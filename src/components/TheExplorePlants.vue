@@ -28,8 +28,8 @@ export default {
 		this.getImageData();
 	},
 	methods: {
-		getImageData() {
-			// Duplicate examples to fill the screen into images array.
+		// Duplicate examples to fill the screen into images array.
+		getDataStub() {
 			const images = [];
 
 			for (let i = 0; i < 5; i++) {
@@ -40,8 +40,12 @@ export default {
 				}
 			}
 
+			return images;
+		},
+
+		getImageData() {
 			// New array to trigger watch updates.
-			this.images = [...this.images, ...images];
+			this.images = [...this.images, ...this.getDataStub()];
 		},
 	},
 	data() {
