@@ -1,29 +1,53 @@
 @font-face {
-  font-family: fell;
-  src: url("../fonts/IMFeENrm29P.ttf");
+	font-family: fell;
+	src: url("../fonts/IMFeENrm29P.ttf");
 }
 
 html {
-  font-family: fell, serif;
-  font-size: 18px;
+	font-family: fell, serif;
+	font-size: 18px;
 }
 
 .hidden {
-  position: absolute;
-  left: -10000px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
+	position: absolute;
+	left: -10000px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
 }
 
 @media (max-width: 1000px) {
-  html {
-    font-size: 16px;
-  }
+	html {
+		font-size: 16px;
+	}
 }
 
 @media (max-width: 600px) {
-  html {
-    font-size: 14px;
-  }
+	html {
+		font-size: 14px;
+	}
+}
+
+.button {
+	height: 2rem;
+	width: 30%;
+	display: block;
+	float: right;
+	border-radius: 5px;
+	background-color: #3d6b56;
+	color: #dce0d1;
+	font-family: fell, serif;
+	font-size: 1rem;
+	margin-left: 1rem;
+	text-transform: lowercase;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+.button:hover {
+	color: #dce0d1;
+	background-color: #bf763c;
+	height: 2.1rem;
+	width: 35%;
+	transition: 0.5s;
 }

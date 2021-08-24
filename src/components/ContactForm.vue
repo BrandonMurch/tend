@@ -1,7 +1,16 @@
 <template>
 	<div class="contact-container">
-		<form class="form" v-on:submit.stop.prevent="onSubmit">
+		<form
+			class="form"
+			v-on:submit.stop.prevent="onSubmit"
+			v-on:reset="resetErrorMessage"
+		>
 			<h1 class="contact-title">Send us a message!</h1>
+			<SlideFadeTransition>
+				<h4 class="errorMessage" v-if="errorMessage">
+					{{ errorMessage }}
+				</h4>
+			</SlideFadeTransition>
 			<!-- label with hidden class for use with accessibility readers. -->
 			<label class="hidden" for="name">Email address:</label>
 			<input
@@ -9,7 +18,7 @@
 				class="input-box desktop-side"
 				placeholder="Name:"
 				type="text"
-				v-model.trim="userName"
+				v-model.trim="formData.userName"
 			/>
 			<label class="hidden" for="email">Email address:</label>
 			<input
@@ -17,14 +26,15 @@
 				class="input-box desktop-side"
 				placeholder="Email:"
 				type="email"
-				v-model.trim="userEmail"
+				v-model.trim="formData.userEmail"
 			/>
 			<label class="hidden" for="messageType">Message Type:</label>
 			<select
 				id="messageType"
 				class="input-box desktop-side"
-				v-model="messageType"
+				v-model="formData.messageType"
 			>
+				<option value="" selected disabled>Message Type:</option>
 				<option
 					v-for="option in messageTypeOptions"
 					:key="option"
@@ -39,27 +49,33 @@
 				id="message"
 				placeholder="Enter a message..."
 				type="text"
-				v-model="userMessage"
+				v-model="formData.userMessage"
 			></textarea>
-			<input class="button" type="submit" />
+			<input class="button" type="submit" value="submit" />
 			<input class="button" type="reset" />
 		</form>
-		<div class="policy-container">
-			<button class="button">Terms of Use</button>
-			<button class="button">Privacy Policy</button>
-		</div>
+	</div>
+	<div class="policy-container">
+		<a class="footer-link" href="#">Terms of Use</a>
+		<a class="footer-link" href="#">Privacy Policy</a>
 	</div>
 </template>
 
 <script>
+import SlideFadeTransition from "./SlideFadeTransition.vue";
+
 export default {
 	name: "ContactForm",
+	components: { SlideFadeTransition },
 	data() {
 		return {
-			userName: "",
-			userEmail: "",
-			userMessage: "",
-			messageType: null,
+			formData: {
+				userName: "",
+				userEmail: "",
+				userMessage: "",
+				messageType: "",
+			},
+			errorMessage: "",
 			messageTypeOptions: [
 				{ text: "Account", value: "account" },
 				{ text: "Report Offensive Content", value: "offensive" },
@@ -69,10 +85,25 @@ export default {
 		};
 	},
 	methods: {
+		resetErrorMessage() {
+			this.errorMessage = "";
+			this.messageType = "";
+		},
+		checkRequiredFields() {
+			for (let key of Object.keys(this.formData)) {
+				if (this.formData[key].length <= 0) {
+					this.errorMessage = "Please fill in all fields.";
+					return false;
+				}
+			}
+			return true;
+		},
 		onSubmit() {
-			alert(
-				`Thank you ${this.userName}! We will get in touch shortly at ${this.userEmail}.`
-			);
+			if (this.checkRequiredFields()) {
+				alert(
+					`Thank you ${this.userName}! We will get in touch shortly at ${this.userEmail}.`
+				);
+			}
 		},
 	},
 };
@@ -81,6 +112,13 @@ export default {
 <style scoped>
 h1 {
 	color: #3f463d;
+}
+
+.errorMessage {
+	color: #3f463d;
+	width: 100%;
+	text-align: center;
+	margin: 0;
 }
 
 .contact-title {
@@ -104,7 +142,7 @@ h1 {
 .form {
 	width: 50%;
 	max-width: 800px;
-	min-width: 400px;
+	min-width: 300px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
@@ -131,42 +169,38 @@ h1 {
 	border: 4px solid darkred;
 }
 
-.button {
-	height: 2rem;
-	width: 30%;
-	display: block;
-	float: right;
-	border-radius: 5px;
-	background-color: #3d6b56;
-	color: #dce0d1;
-	font-family: fell, serif;
-	font-size: 1rem;
-	margin-left: 1rem;
-	text-transform: lowercase;
-	cursor: pointer;
-	transition: 0.5s;
-}
-
-.button:hover {
-	color: #dce0d1;
-	background-color: #bf763c;
-	height: 2.1rem;
-	width: 35%;
-	transition: 0.5s;
-}
-
 .policy-container {
-	position: fixed;
+	position: absolute;
 	bottom: 20px;
-	width: 50%;
+	width: 100%;
 	min-width: 300px;
 	display: flex;
 	justify-content: center;
 }
 
+.footer-link {
+	color: #bf763c;
+	font-size: 1.25rem;
+	margin: 0 2rem;
+	text-align: center;
+}
+
+.footer-link:hover {
+	font-size: 1.3rem;
+	font-weight: bold;
+	transition: font-size 0.5s;
+}
+
 @media (min-width: 800px) {
 	.desktop-side {
 		width: 46%;
+	}
+}
+
+@media (max-height: 700px) {
+	.policy-container {
+		position: relative;
+		margin: 4rem 0;
 	}
 }
 </style>
