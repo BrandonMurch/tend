@@ -3,7 +3,7 @@
         Wait until image is loaded before loading borders, overlay and text.
         https://www.geeksforgeeks.org/how-to-check-an-image-is-loaded-or-not-in-vuejs/
     -->
-	<div :class="{ imageContainer: isLoaded }">
+	<div :class="{ imageContainer: isLoaded, hiddenContainer: !isLoaded }">
 		<img class="image" :src="imageSource" :alt="title" @load="onLoaded" />
 		<div v-if="isLoaded" class="image-overlay">
 			<p class="image-hover-text">{{ title }}</p>
@@ -34,6 +34,10 @@ export default {
 </script>
 
 <style scoped>
+.hiddenContainer {
+	height: 0;
+}
+
 .imageContainer {
 	position: relative;
 	width: 250px;
