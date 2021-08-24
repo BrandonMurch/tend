@@ -2,8 +2,8 @@
 	<div class="contact-container">
 		<form
 			class="form"
-			v-on:submit.stop.prevent="onSubmit"
-			v-on:reset="resetErrorMessage"
+			@submit.stop.prevent="onSubmit"
+			@reset="resetErrorMessage"
 		>
 			<h1 class="contact-title">Send us a message!</h1>
 			<SlideFadeTransition>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import SlideFadeTransition from "./SlideFadeTransition.vue";
+import SlideFadeTransition from "./TransitionSlideFade.vue";
 
 export default {
 	name: "ContactForm",
@@ -98,11 +98,12 @@ export default {
 			}
 			return true;
 		},
-		onSubmit() {
+		onSubmit(event) {
 			if (this.checkRequiredFields()) {
 				alert(
-					`Thank you ${this.userName}! We will get in touch shortly at ${this.userEmail}.`
+					`Thank you ${this.formData.userName}! We will get in touch shortly at ${this.formData.userEmail}.`
 				);
+				event.target.reset();
 			}
 		},
 	},

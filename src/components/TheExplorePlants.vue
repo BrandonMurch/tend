@@ -20,7 +20,7 @@
 import ImageGallery from "./ImageGallery.vue";
 import plantData from "../assets/json/plants.json";
 import PlantProfilePublic from "./PlantProfilePublic.vue";
-import SlideFadeTransition from "./SlideFadeTransition.vue";
+import SlideFadeTransition from "./TransitionSlideFade.vue";
 
 export default {
 	name: "ExplorePlants",

@@ -20,7 +20,7 @@
 
 <script>
 import ImageCard from "./ImageCard.vue";
-import { debounce } from "../assets/javascript/debounce";
+import { debounce } from "../helpers/debounce.js";
 
 export default {
 	name: "ImageGallery",

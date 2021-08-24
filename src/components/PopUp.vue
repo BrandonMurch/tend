@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import CloseIcon from "./CloseIcon.vue";
+import CloseIcon from "./IconClose.vue";
 
 export default {
 	name: "PopUp",

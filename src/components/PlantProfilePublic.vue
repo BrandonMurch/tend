@@ -31,9 +31,9 @@
 
 <script>
 import PopUp from "./PopUp.vue";
-import HeartIcon from "./HeartIcon.vue";
-import MessageIcon from "./MessageIcon.vue";
-import { debounce } from "../assets/javascript/debounce";
+import HeartIcon from "./IconHeart.vue";
+import MessageIcon from "./IconMessage.vue";
+import { debounce } from "../helpers/debounce";
 import PopUpMessage from "./PopUpMessage.vue";
 
 export default {
@@ -121,6 +121,7 @@ export default {
 	position: relative;
 	display: flex;
 	justify-content: center;
+	margin: 1rem 0 3rem 0;
 }
 
 @media (min-width: 800px) {
@@ -170,6 +171,7 @@ export default {
 }
 
 /* Scrollbar Modifications: https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp */
+
 .popup::-webkit-scrollbar,
 .text-container::-webkit-scrollbar {
 	width: 4px; /* width of the entire scrollbar */

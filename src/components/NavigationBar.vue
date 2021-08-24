@@ -45,11 +45,11 @@
 <script>
 import DropDown from "./DropDown.vue";
 import MainLogo from "./MainLogo.vue";
-import MenuIcon from "./MenuIcon.vue";
-import CloseIcon from "./CloseIcon.vue";
+import MenuIcon from "./IconMenu.vue";
+import CloseIcon from "./IconClose.vue";
 import SearchIcon from "./SearchIcon.vue";
 import SearchBar from "./SearchBar.vue";
-import NavigationLinks from "./NavigationLinks.vue";
+import NavigationLinks from "./NavigationBarLinks.vue";
 
 export default {
 	name: "NavigationBar",
