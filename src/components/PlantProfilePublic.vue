@@ -1,5 +1,10 @@
 <template>
-	<PopUp @close="$emit('close')">
+	<PopUpMessage
+		v-if="messageActive"
+		@cancelMessage="messageActive = false"
+		@sendMessage="submitMessage"
+	/>
+	<PopUp v-else @close="$emit('close')">
 		<div
 			class="content-container"
 			:style="{ height: popUpHeight, width: popUpWidth }"
@@ -17,7 +22,7 @@
 				<p class="paragraph">{{ text }}</p>
 				<div class="action-container">
 					<HeartIcon />
-					<MessageIcon />
+					<MessageIcon @message="messageActive = true" />
 				</div>
 			</div>
 		</div>
@@ -29,10 +34,11 @@ import PopUp from "./PopUp.vue";
 import HeartIcon from "./HeartIcon.vue";
 import MessageIcon from "./MessageIcon.vue";
 import { debounce } from "../assets/javascript/debounce";
+import PopUpMessage from "./PopUpMessage.vue";
 
 export default {
 	name: "PlantProfilePublic",
-	components: { PopUp, HeartIcon, MessageIcon },
+	components: { PopUp, PopUpMessage, HeartIcon, MessageIcon },
 	props: {
 		imageSource: String,
 		title: String,
@@ -41,6 +47,7 @@ export default {
 	},
 	data() {
 		return {
+			messageActive: false,
 			popUpHeight: null,
 			popUpWidth: null,
 			// Cannot put debounce(...) directly in the event
@@ -49,8 +56,16 @@ export default {
 		};
 	},
 	methods: {
+		submitMessage(message) {
+			this.messageActive = false;
+			console.log(message);
+		},
 		getPopUpThenResize() {
-			this.updateSizeOfPopUpBasedOnImage({ target: this.$refs.image });
+			if (!this.messageActive) {
+				this.updateSizeOfPopUpBasedOnImage({
+					target: this.$refs.image,
+				});
+			}
 		},
 		updateSizeOfPopUpBasedOnImage(event) {
 			if (window.innerWidth > 800) {
