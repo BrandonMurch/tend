@@ -1,5 +1,8 @@
 <template>
 	<div class="login-container">
+		<div class="logo-container">
+			<MainLogo />
+		</div>
 		<form
 			class="form"
 			id="loginForm"
@@ -17,14 +20,16 @@
 				v-model="formData[input.dataName]"
 			/>
 
-			<label for="rememberMe">Remember me:</label>
-			<input
-				id="rememberMe"
-				type="checkbox"
-				v-model="formData.rememberMe"
-				:true-value="true"
-				:false-value="false"
-			/>
+			<div class="checkbox-container">
+				<label for="rememberMe">Remember me:</label>
+				<input
+					id="rememberMe"
+					type="checkbox"
+					v-model="formData.rememberMe"
+					:true-value="true"
+					:false-value="false"
+				/>
+			</div>
 
 			<div class="button-container">
 				<Button
@@ -47,9 +52,12 @@
 </template>
 
 <script>
+import { ref } from "@vue/reactivity";
+import { useStore } from "vuex";
+
 import Button from "./AppButton.vue";
 import Input from "./AppInput.vue";
-import { ref } from "@vue/reactivity";
+import MainLogo from "./MainLogo.vue";
 
 const getDefaultForm = () => {
 	return {
@@ -99,8 +107,9 @@ const inputs = [
 
 export default {
 	name: "LogInForm",
-	components: { Button, Input },
+	components: { Button, Input, MainLogo },
 	setup() {
+		const store = useStore();
 		const register = ref(false);
 		const hasSubmitted = ref(false);
 		let formData = getDefaultForm();
@@ -160,7 +169,12 @@ export default {
 				areAllFieldsNotNull() &&
 				doPasswordsMatch()
 			) {
-				console.log("Logged in");
+				const name = formData.username
+					? formData.username
+					: formData.email.split("@")[0];
+				console.log(name);
+
+				store.commit("user/logUserIn", name);
 				event.target.reset();
 			}
 		};
@@ -185,6 +199,13 @@ export default {
 </script>
 
 <style scoped>
+.logo-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	height: 7rem;
+}
+
 .form {
 	display: flex;
 	justify-content: center;
@@ -215,6 +236,12 @@ export default {
 	border: 3px solid #b87d4b;
 	border-radius: 20px;
 	min-width: 200px;
+}
+
+.checkbox-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .checkboxLabel {

@@ -1,14 +1,16 @@
 <template>
 	<div class="application-container">
 		<div class="application-background"></div>
-		<NavigationBar />
+		<NavigationBar v-if="isLoggedIn" />
 		<RouterView> </RouterView>
 	</div>
 </template>
 
 <script>
 import NavigationBar from "./components/NavigationBar.vue";
+import { computed } from "vue";
 import { RouterView } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
 	name: "App",
@@ -16,8 +18,14 @@ export default {
 		NavigationBar,
 		RouterView,
 	},
-	data() {
-		return {};
+	setup() {
+		const store = useStore();
+
+		store.commit("user/logOut");
+
+		return {
+			isLoggedIn: computed(() => store.getters["user/isLoggedIn"]),
+		};
 	},
 };
 </script>
