@@ -1,7 +1,7 @@
 <template>
-	<div class="container">
-		<div class="background" @click="close" />
-		<div class="popup" ref="popUp">
+	<div :class="{ container: !scrollable }">
+		<div :class="{ background: !scrollable }" @click="close" />
+		<div class="popup" :class="{ scrollPopup: scrollable }" ref="popUp">
 			<CloseIcon
 				v-if="closable"
 				class="close"
@@ -22,6 +22,10 @@ export default {
 	props: {
 		closable: {
 			default: true,
+			type: Boolean,
+		},
+		scrollable: {
+			default: false,
 			type: Boolean,
 		},
 	},
@@ -72,8 +76,15 @@ p {
 	background-color: #dce0d1;
 	border-radius: 20px;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	z-index: 11;
+	z-index: 25;
 	overflow: hidden;
+}
+
+.scrollPopup {
+	position: absolute;
+	top: 50vh;
+	left: 50vw;
+	transform: translate(-50%, -50%);
 }
 
 .close {

@@ -2,57 +2,34 @@
 	<div class="contact-container">
 		<form
 			class="form"
+			id="contactForm"
 			@submit.stop.prevent="onSubmit"
-			@reset="resetErrorMessage"
+			@reset="resetForm"
+			:class="{ submitted: hasSubmitted }"
 		>
 			<h1 class="contact-title">Send us a message!</h1>
-			<SlideFadeTransition>
-				<h4 class="errorMessage" v-if="errorMessage">
-					{{ errorMessage }}
-				</h4>
-			</SlideFadeTransition>
-			<!-- label with hidden class for use with accessibility readers. -->
-			<label class="hidden" for="name">Name:</label>
-			<input
-				id="name"
-				class="input-box desktop-side"
-				placeholder="Name:"
-				type="text"
-				v-model.trim="formData.userName"
+
+			<Input
+				v-for="input in getInputs()"
+				:key="input.label"
+				v-bind="input"
+				v-model="formData[input.dataName]"
+				required
 			/>
-			<label class="hidden" for="email">Email address:</label>
-			<input
-				id="email"
-				class="input-box desktop-side"
-				placeholder="Email:"
-				type="email"
-				v-model.trim="formData.userEmail"
-			/>
-			<label class="hidden" for="messageType">Message Type:</label>
-			<select
-				id="messageType"
-				class="input-box desktop-side"
-				v-model="formData.messageType"
-			>
-				<option value="" selected disabled>Message Type:</option>
-				<option
-					v-for="option in messageTypeOptions"
-					:key="option"
-					:value="option.value"
+
+			<div class="button-container">
+				<Button
+					class="button"
+					:type="'submit'"
+					:form="'contactForm'"
+					@click="hasSubmitted = true"
 				>
-					{{ option.text }}
-				</option>
-			</select>
-			<label class="hidden" for="message">Message:</label>
-			<textarea
-				class="input-box"
-				id="message"
-				placeholder="Enter a message..."
-				type="text"
-				v-model="formData.userMessage"
-			></textarea>
-			<input class="button" type="submit" value="submit" />
-			<input class="button" type="reset" />
+					submit
+				</Button>
+				<Button class="button" :type="'reset'" :form="'contactForm'">
+					reset
+				</Button>
+			</div>
 		</form>
 	</div>
 	<div class="policy-container">
@@ -62,44 +39,77 @@
 </template>
 
 <script>
-import SlideFadeTransition from "./TransitionSlideFade.vue";
+import Button from "./AppButton.vue";
+import Input from "./AppInput.vue";
+
+const getDefaultForm = () => {
+	return {
+		name: "",
+		email: "",
+		userMessage: "",
+		messageType: "",
+	};
+};
 
 export default {
 	name: "ContactForm",
-	components: { SlideFadeTransition },
+	components: { Button, Input },
 	data() {
 		return {
-			formData: {
-				userName: "",
-				userEmail: "",
-				userMessage: "",
-				messageType: "",
-			},
-			errorMessage: "",
-			messageTypeOptions: [
-				{ text: "Account", value: "account" },
-				{ text: "Report Offensive Content", value: "offensive" },
-				{ text: "Bug Finding", value: "bug" },
-				{ text: "Other", value: "misc" },
-			],
+			formData: getDefaultForm(),
+			hasSubmitted: false,
 		};
 	},
 	methods: {
-		resetErrorMessage() {
-			this.errorMessage = "";
-			this.messageType = "";
+		getInputs() {
+			return [
+				{
+					label: "Name:",
+					dataName: "name",
+					size: "half",
+				},
+				{
+					label: "email:",
+					type: "email",
+					dataName: "email",
+					size: "half",
+				},
+
+				{
+					label: "Message Type:",
+					type: "select",
+					options: [
+						{ text: "Account", value: "account" },
+						{
+							text: "Report Offensive Content",
+							value: "offensive",
+						},
+						{ text: "Bug Finding", value: "bug" },
+						{ text: "Other", value: "misc" },
+					],
+					dataName: "messageType",
+				},
+				{
+					label: "message:",
+					type: "textarea",
+					dataName: "message",
+				},
+			];
 		},
-		checkRequiredFields() {
+		resetForm() {
+			this.hasSubmitted = false;
+			this.dataForm = getDefaultForm();
+		},
+		checkFieldsAreNotNull() {
 			for (let key of Object.keys(this.formData)) {
 				if (this.formData[key].length <= 0) {
-					this.errorMessage = "Please fill in all fields.";
 					return false;
 				}
 			}
 			return true;
 		},
 		onSubmit(event) {
-			if (this.checkRequiredFields()) {
+			if (this.checkFieldsAreNotNull()) {
 				alert(
 					`Thank you ${this.formData.userName}! We will get in touch shortly at ${this.formData.userEmail}.`
 				);
@@ -141,7 +151,7 @@ h1 {
 }
 
 .form {
-	width: 50%;
+	width: 80%;
 	max-width: 800px;
 	min-width: 300px;
 	display: flex;
@@ -149,25 +159,11 @@ h1 {
 	justify-content: space-evenly;
 }
 
-.input-box {
-	box-sizing: border-box;
-	width: 100%;
-	border-radius: 10px;
-	border: 4px solid #3d6b56;
-	margin: 0.5rem;
-	font-family: fell, serif;
-	font-size: 1rem;
-	padding: 0.5rem;
-	background-color: rgba(255, 255, 255, 0.4);
-}
-
-.input-box:focus {
-	outline: none;
-	border: 4px solid #bf763c;
-}
-
-.input-box:invalid {
-	border: 4px solid darkred;
+.button-container {
+	width: 80%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .policy-container {
@@ -196,9 +192,19 @@ h1 {
 	.desktop-side {
 		width: 46%;
 	}
+
+	.button {
+		width: 8rem;
+	}
 }
 
-@media (max-height: 700px) {
+@media (max-width: 800px) {
+	.button {
+		width: 60%;
+	}
+}
+
+@media (max-height: 800px) {
 	.policy-container {
 		position: relative;
 		margin: 4rem 0;
