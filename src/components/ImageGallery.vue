@@ -1,5 +1,5 @@
 <template>
-	<div class="gallery-container">
+	<div ref="container" class="gallery-container">
 		<div
 			class="gallery-column"
 			v-for="(column, index) in imageColumns"
@@ -42,7 +42,6 @@ export default {
     */
 	created() {
 		window.addEventListener("resize", this.debounceUpdateSize);
-		this.updateColumns();
 	},
 	mounted() {
 		// When the bottom of the screen is reached. Ask for more images.
@@ -54,6 +53,8 @@ export default {
 		});
 
 		this.observer.observe(this.$refs.reload);
+
+		this.updateColumns();
 	},
 	unmounted() {
 		window.removeEventListener("resize", this.debounceUpdateSize);
@@ -77,7 +78,7 @@ export default {
 			const body_margins = 30;
 			const card_width = 265;
 			this.columns = Math.floor(
-				(window.innerWidth - body_margins) / card_width
+				(this.$refs.container.clientWidth - body_margins) / card_width
 			);
 			const columnQueue = [];
 			for (let i = 0; i < this.columns; i++) {
@@ -121,6 +122,8 @@ export default {
 .gallery-container {
 	margin: auto;
 	display: flex;
+	width: 100%;
+	justify-content: center;
 }
 
 .gallery-column {
