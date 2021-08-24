@@ -2,7 +2,12 @@
 	<div class="container">
 		<div class="background" @click="close" />
 		<div class="popup" ref="popUp">
-			<CloseIcon class="close" :isOpen="true" @click="close" />
+			<CloseIcon
+				v-if="closable"
+				class="close"
+				:isOpen="true"
+				@click="close"
+			/>
 			<slot />
 		</div>
 	</div>
