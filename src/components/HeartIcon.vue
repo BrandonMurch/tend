@@ -61,6 +61,7 @@ export default {
 
 .heart {
 	fill: #bf753c;
+	cursor: pointer;
 }
 
 .heart:hover {
