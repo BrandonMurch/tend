@@ -54,6 +54,7 @@
 <script>
 import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 import Button from "./AppButton.vue";
 import Input from "./AppInput.vue";
@@ -110,6 +111,7 @@ export default {
 	components: { Button, Input, MainLogo },
 	setup() {
 		const store = useStore();
+		const router = useRouter();
 		const register = ref(false);
 		const hasSubmitted = ref(false);
 		let formData = getDefaultForm();
@@ -172,10 +174,9 @@ export default {
 				const name = formData.username
 					? formData.username
 					: formData.email.split("@")[0];
-				console.log(name);
 
 				store.commit("user/logUserIn", name);
-				event.target.reset();
+				router.push("/explore");
 			}
 		};
 

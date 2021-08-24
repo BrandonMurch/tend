@@ -1,5 +1,4 @@
 <template>
-	<h1>{{ isLoggedIn }}</h1>
 	<ImageGallery :images="images" @moreImages="getImageData()" />
 	<PopUp :closable="false" scrollable>
 		<LogInForm />
@@ -17,7 +16,6 @@ export default {
 	components: { ImageGallery, PopUp, LogInForm },
 	data() {
 		return {
-			isLoggedIn: this.$store.getters.isLoggedIn,
 			images: [],
 			currentImageRound: 0,
 		};

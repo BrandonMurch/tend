@@ -21,8 +21,6 @@ export default {
 	setup() {
 		const store = useStore();
 
-		store.commit("user/logOut");
-
 		return {
 			isLoggedIn: computed(() => store.getters["user/isLoggedIn"]),
 		};

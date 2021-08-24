@@ -14,7 +14,7 @@
 				<template v-slot:inside>
 					<NavigationLinks
 						v-if="isMobile"
-						:links="links"
+						:links="reverseLinks"
 						:dropDown="true"
 					/>
 				</template>
@@ -63,6 +63,7 @@ export default {
 			menuOpen: false,
 			isMobile: window.innerWidth < 800,
 			links: [
+				{ text: "logout", url: "/logout", name: "logout" },
 				{ text: "contact", url: "/contact", name: "contact" },
 				{ text: "learn", url: "/explore", name: "learn" },
 				{ text: "explore", url: "/explore", name: "explore" },
@@ -70,6 +71,11 @@ export default {
 			],
 			searchOpen: false,
 		};
+	},
+	computed: {
+		reverseLinks: function() {
+			return [...this.links].reverse();
+		},
 	},
 	methods: {
 		toggleSearch() {
