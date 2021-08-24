@@ -105,6 +105,8 @@ export default {
 .navigation-bar {
 	position: relative;
 	min-height: 2rem;
+	left: 2%;
+	width: 98%;
 }
 
 .search-text {
@@ -149,6 +151,19 @@ export default {
 
 	.mobile-navigation {
 		display: inline;
+	}
+}
+
+@media (max-width: 350px) {
+	.mobile-navigation {
+		display: inline-block;
+		width: 12rem;
+	}
+
+	.navigation-bar {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
 	}
 }
 </style>

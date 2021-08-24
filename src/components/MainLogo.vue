@@ -14,8 +14,6 @@ export default {
 <style scoped>
 .logo-container {
 	display: inline;
-	position: relative;
-	left: 20px;
 }
 
 .logo-image {
@@ -31,5 +29,6 @@ export default {
 	cursor: default;
 	font-weight: normal;
 	text-shadow: 2px 2px 2px grey;
+	margin: 2rem 0;
 }
 </style>
