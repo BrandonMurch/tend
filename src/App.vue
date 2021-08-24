@@ -30,6 +30,7 @@ export default {
 <style scoped>
 .application-container {
 	width: 100%;
+	min-height: 98vh;
 	overflow-x: hidden;
 	position: absolute;
 	left: 0;
