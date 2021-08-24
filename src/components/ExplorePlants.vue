@@ -1,6 +1,6 @@
 <template>
 	<transition name="fade">
-		<PopUp
+		<PlantProfilePublic
 			v-if="selectedPlant"
 			@close="selectedPlant = null"
 			v-bind="selectedPlant"
@@ -19,7 +19,7 @@
 <script>
 import ImageGallery from "./ImageGallery.vue";
 import plantData from "../assets/json/plants.json";
-import PopUp from "./PopUp.vue";
+import PlantProfilePublic from "./PlantProfilePublic.vue";
 
 export default {
 	name: "ExplorePlants",
@@ -52,7 +52,7 @@ export default {
 	},
 	components: {
 		ImageGallery,
-		PopUp,
+		PlantProfilePublic,
 	},
 };
 </script>
