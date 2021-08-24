@@ -16,8 +16,6 @@
 						v-if="isMobile"
 						:links="links"
 						:dropDown="true"
-						:activeComponent="activeComponent"
-						@update:activeComponent="updateActiveComponent"
 					/>
 				</template>
 			</DropDown>
@@ -34,8 +32,6 @@
 				v-if="!isMobile"
 				:dropDown="false"
 				:links="links"
-				:activeComponent="activeComponent"
-				@update:activeComponent="updateActiveComponent"
 			/>
 		</div>
 		<SearchBar :isOpen="searchOpen" @close="searchOpen = false" />
@@ -47,7 +43,7 @@ import DropDown from "./DropDown.vue";
 import MainLogo from "./MainLogo.vue";
 import MenuIcon from "./IconMenu.vue";
 import CloseIcon from "./IconClose.vue";
-import SearchIcon from "./SearchIcon.vue";
+import SearchIcon from "./IconSearch.vue";
 import SearchBar from "./SearchBar.vue";
 import NavigationLinks from "./NavigationBarLinks.vue";
 
@@ -62,7 +58,6 @@ export default {
 		SearchBar,
 		CloseIcon,
 	},
-	props: { activeComponent: String },
 	data() {
 		return {
 			menuOpen: false,
