@@ -12,7 +12,7 @@
 				</h4>
 			</SlideFadeTransition>
 			<!-- label with hidden class for use with accessibility readers. -->
-			<label class="hidden" for="name">Email address:</label>
+			<label class="hidden" for="name">Name:</label>
 			<input
 				id="name"
 				class="input-box desktop-side"
