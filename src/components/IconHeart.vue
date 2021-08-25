@@ -1,5 +1,9 @@
+<!-- A heart icon that will fill up when clicked. It emits 'like' and 'unlike'
+similar to other social media sites. Implementation of these features are
+handled by the parent. -->
+
 <template>
-	<div class="icon-container" @click="like">
+	<div @click="like">
 		<svg
 			v-show="!hasLiked"
 			class="heart"
@@ -42,6 +46,7 @@ export default {
 	},
 	emits: ["like", "unlike"],
 	methods: {
+		// emit either 'like', 'unlike' depending on the state.
 		like() {
 			if (this.hasLiked) {
 				this.$emit("unlike");
@@ -55,10 +60,6 @@ export default {
 </script>
 
 <style scoped>
-.icon-container {
-	height: 100%;
-}
-
 .heart {
 	fill: #bf753c;
 	cursor: pointer;

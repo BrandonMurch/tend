@@ -1,3 +1,5 @@
+<!-- Component to store the menu icon and handles sizing. -->
+
 <template>
 	<div class="container">
 		<CloseIcon :isOpen="isOpen">

@@ -1,3 +1,5 @@
+<!-- SINGLETON. Uses the image gallery to display public plant profiles. When one is clicked, it opens a pop-up in PlantPublicProfile with more information. -->
+
 <template>
 	<transition name="fade">
 		<PlantProfilePublic
@@ -23,9 +25,20 @@ import PlantProfilePublic from "./PlantProfilePublic.vue";
 
 export default {
 	name: "ExplorePlants",
-	created() {
-		this.getImageData();
+	components: {
+		ImageGallery,
+		PlantProfilePublic,
 	},
+
+	data() {
+		return {
+			// This incremenets each time more images are loaded
+			currentImageRound: 0,
+			selectedPlant: null,
+			images: [],
+		};
+	},
+
 	methods: {
 		// Duplicate examples to fill the screen into images array.
 		getDataStub() {
@@ -47,16 +60,8 @@ export default {
 			this.images = [...this.images, ...this.getDataStub()];
 		},
 	},
-	data() {
-		return {
-			currentImageRound: 0,
-			selectedPlant: null,
-			images: [],
-		};
-	},
-	components: {
-		ImageGallery,
-		PlantProfilePublic,
+	created() {
+		this.getImageData();
 	},
 };
 </script>

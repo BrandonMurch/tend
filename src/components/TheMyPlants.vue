@@ -1,5 +1,5 @@
 <template>
-	<p>WORK IN PROGRESS</p>
+	<p>WORK IN PROGRESS. Necessary for Router.</p>
 </template>
 
 <script>

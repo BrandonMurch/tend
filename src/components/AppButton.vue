@@ -1,3 +1,6 @@
+<!-- An button component that applies common styling throughout the application
+ -->
+
 <template>
 	<button class="button" :type="type" :form="form"><slot /></button>
 </template>
@@ -5,9 +8,9 @@
 <script>
 export default {
 	name: "Button",
-	props: { type: String, form: String },
-	data() {
-		return {};
+	props: {
+		type: String,
+		form: String,
 	},
 };
 </script>
@@ -23,9 +26,9 @@ export default {
 	color: #dce0d1;
 	font-family: fell, serif;
 	text-transform: lowercase;
+	font-size: 1.25rem;
 	cursor: pointer;
 	transition: 0.5s;
-	font-size: 1.25rem;
 }
 
 .button:hover {

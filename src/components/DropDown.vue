@@ -1,5 +1,9 @@
+<!-- A higher order function that renders any of its children within a drop down
+menu. Handles animation. Use an external button to modify the isOpen prop to
+open/close component. -->
+
 <template>
-	<div :class="{ open: isOpen, container: true }" ref="container">
+	<div class="container" ref="container">
 		<div ref="contents">
 			<!-- Named slots, in the future would like to add more parts to the drop down
 			https://vuejs.org/v2/guide/components-slots.html#Named-Slots-->
@@ -20,8 +24,11 @@ export default {
 		const contents = ref(null);
 		const container = ref(null);
 
+		// Set the height of the dropdown dynamically to fit the childrens size. This is because height:auto is not affected by transition styles.
 		const updateHeight = () => {
-			container.value.style.transition = "1s ease-out";
+			let duration = contents.value.clientHeight < 100 ? 1 : 1.5;
+
+			container.value.style.transition = `${duration}s ease-in-out`;
 
 			container.value.style.height = props.isOpen
 				? contents.value.clientHeight + "px"
@@ -43,18 +50,13 @@ export default {
 <style scoped>
 .container {
 	position: relative;
+	/* Container should be larger than its parent to hide left and right inset shadows. */
 	left: -10%;
 	width: 120%;
-	/* Hide until javascript loads */
-	height: 0;
-	/* https://www.w3schools.com/css/css3_transitions.asp */
 	box-shadow: inset 0px 0px 4px 4px grey;
 	overflow: hidden;
-}
-
-.open {
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
+	/* Hide until javascript loads */
+	height: 0;
 }
 </style>
 

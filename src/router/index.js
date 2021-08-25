@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import store from '../store';
+// import store from '../store';
 
 import ExplorePlants from '../components/TheExplorePlants.vue';
 import Contact from '../components/TheContactForm.vue';
@@ -24,16 +24,18 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to) => {
+router.beforeEach(() => {
 
-    if (to.path == "/logout") {
-        store.commit("user/logOut");
-        return "/";
-    } else if (to.path != "/" && !store.getters['user/isLoggedIn']) {
-        return "/";
-    } else if (to.path == "/" && store.getters['user/isLoggedIn']) {
-        return "/explore";
-    }
+    // Re-Enable after development
+
+    // if (to.path == "/logout") {
+    //     store.commit("user/logOut");
+    //     return "/";
+    // } else if (to.path != "/" && !store.getters['user/isLoggedIn']) {
+    //     return "/";
+    // } else if (to.path == "/" && store.getters['user/isLoggedIn']) {
+    //     return "/explore";
+    // }
     return true;
 })
 

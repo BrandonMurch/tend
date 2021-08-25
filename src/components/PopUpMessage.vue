@@ -1,3 +1,6 @@
+<!-- A PopUp window that allows a user to send a message to the owner of the
+plant. -->
+
 <template>
 	<PopUp :closable="false">
 		<div class="message-container">
@@ -9,10 +12,10 @@
 				rows="10"
 			></textarea>
 			<div class="button-container">
-				<AppButton @click="$emit('sendMessage', message)">
+				<AppButton @click="$emit('send', message)">
 					submit
 				</AppButton>
-				<AppButton @click="$emit('cancelMessage')">
+				<AppButton @click="$emit('cancel')">
 					cancel
 				</AppButton>
 			</div>
@@ -27,6 +30,7 @@ import AppButton from "./AppButton.vue";
 export default {
 	name: "PopUpMessage",
 	components: { PopUp, AppButton },
+	emits: ["send", "cancel"],
 	data() {
 		return {
 			message: "",
@@ -54,12 +58,7 @@ export default {
 	border-radius: 20px;
 }
 
-.textarea:focus {
-	border: none;
-}
-
 .button-container {
-	width: 100%;
 	display: flex;
 	justify-content: center;
 }

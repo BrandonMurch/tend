@@ -1,5 +1,5 @@
-// Presents an image inside a card. Hover for the title. Emits "imageLoaded" for
-keeping track of when all images are loaded on the page.
+<!-- Presents an image inside a card. Hover for the title. Emits "imageLoaded" for keeping track of when all images are loaded on the page.
+ -->
 
 <template>
 	<!-- 

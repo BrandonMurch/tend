@@ -1,3 +1,6 @@
+<!--Component that will render whatever is passed within a centred "popup". The
+background will be tinted to draw focus to the content. -->
+
 <template>
 	<div :class="{ container: !scrollable }">
 		<div :class="{ background: !scrollable }" @click="close" />
@@ -20,10 +23,12 @@ export default {
 	name: "PopUp",
 	components: { CloseIcon },
 	props: {
+		// If the pop up can be closed.
 		closable: {
 			default: true,
 			type: Boolean,
 		},
+		// Instead of covering the background, the window is still scrollable meaning the popup will disappear off the top of the screen.
 		scrollable: {
 			default: false,
 			type: Boolean,
@@ -81,6 +86,7 @@ p {
 }
 
 .scrollPopup {
+	/* When the popup is scrollable, we need to use position absolute, and cannot rely on the parents flexbox. */
 	position: absolute;
 	top: 50vh;
 	left: 50vw;

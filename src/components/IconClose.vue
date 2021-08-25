@@ -1,6 +1,9 @@
+<!-- Component that can switch between the provided icon, and a close icon. The
+supplied icon is passed in through the default slot.-->
+
 <template>
 	<div class="icon-container">
-		<div class="slot-container icon" :class="{ displayIcon: !isOpen }">
+		<div class="icon" :class="{ displayIcon: !isOpen }">
 			<slot />
 		</div>
 
@@ -53,7 +56,7 @@ export default {
 
 .displayIcon {
 	opacity: 1;
-	transition: opacity 0.5s;
-	transition-delay: 0.5s;
+	/* Delay the appearance of the entering icon until the other has disappeared */
+	transition: opacity 0.5s 0.5s;
 }
 </style>

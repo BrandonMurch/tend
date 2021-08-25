@@ -1,6 +1,5 @@
-// Presents images within the space given. Arranges the image into columns. Once
-the bottom of the page is reached, 'moreImages' will be emitted. A slot is
-provided for a special card to be placed in the first place of the first column.
+<!-- Presents images within the space given. Arranges the image into columns. Once the bottom of the page is reached, 'moreImages' will be emitted. A slot is
+provided for a special card to be placed in the first place of the first column. -->
 
 <template>
 	<div ref="container" class="gallery-container">
@@ -83,11 +82,11 @@ export default {
 		initialiseColumns() {
 			const pageMargins = 30;
 			const cardWidth = 265;
-			this.columns = Math.floor(
+			this.numberOfColumns = Math.floor(
 				(this.$refs.container.clientWidth - pageMargins) / cardWidth
 			);
 			const columnQueue = [];
-			for (let i = 0; i < this.columns; i++) {
+			for (let i = 0; i < this.numberOfColumns; i++) {
 				columnQueue[i] = [];
 			}
 
@@ -97,17 +96,19 @@ export default {
 		// Split images into a 2d array of columns first, then images.
 		splitImagesIntoColumns() {
 			for (let i = 0; i < this.images.length; i++) {
-				this.imageColumns[i % this.columns].push(this.images[i]);
+				this.imageColumns[i % this.numberOfColumns].push(
+					this.images[i]
+				);
 			}
 
-			for (let i = 0; i < this.columns; i++) {
+			for (let i = 0; i < this.numberOfColumns; i++) {
 				this.imageColumns[i].push();
 			}
 		},
 	},
 	data() {
 		return {
-			columns: 0,
+			numberOfColumns: 0,
 			imageColumns: [],
 			observer: null,
 			loadedImages: 0,
@@ -117,6 +118,7 @@ export default {
 		};
 	},
 	watch: {
+		// Regenerate columns whenever more images are loaded
 		images: function() {
 			this.updateColumns();
 		},

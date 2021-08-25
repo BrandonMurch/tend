@@ -1,11 +1,11 @@
-// Search autocomplete inspired from
-https://www.w3schools.com/howto/howto_js_autocomplete.asp
+<!-- A search bar with autocomplete. // Currently options are mocked from a json
+file. // Search autocomplete inspired from
+https://www.w3schools.com/howto/howto_js_autocomplete.asp -->
 
 <template>
 	<div style="display: inline;">
 		<!-- Create pop up if a plant has been selected through the search bar. -->
-		<!-- TODO: Can this be extracted to make search bar more reusable? -->
-		<PopUp
+		<PlantProfilePublic
 			v-if="searchResultForPopUp"
 			v-bind="searchResultForPopUp"
 			@close="searchResultForPopUp = null"
@@ -22,7 +22,7 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp
 						v-model="searchTerm"
 					/>
 					<div>
-						<!-- Populated with suggestions for autocomplete -->
+						<!-- Populated suggestions for autocomplete -->
 						<h3
 							v-for="suggestion in suggestions"
 							:key="suggestion"
@@ -45,13 +45,13 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp
 
 <script>
 import DropDown from "./DropDown.vue";
-import PopUp from "./PopUp.vue";
+import PlantProfilePublic from "./PlantProfilePublic.vue";
 
 import plantData from "../assets/json/plants.json";
 
 export default {
 	name: "SearchBar",
-	components: { DropDown, PopUp },
+	components: { DropDown, PlantProfilePublic },
 	props: { isOpen: Boolean },
 	watch: {
 		isOpen: function(value) {
@@ -78,6 +78,8 @@ export default {
 			this.searchTerm = "";
 			this.$emit("close");
 		},
+
+		// Perfom actions if a key has been typed within the search bar.
 		handleKeyUp(event) {
 			if (this.suggestions.length === 0) {
 				this.getSuggestions();
@@ -85,6 +87,7 @@ export default {
 			switch (event.key) {
 				// Submit search
 				case "Enter":
+					// Submit either the suggestion, or what is in the search bar depending if a suggestion has been selected.
 					if (this.focusedSuggestion === "") {
 						this.submitSearch(this.searchTerm);
 					} else {
@@ -127,15 +130,20 @@ export default {
 			return this.focusedSuggestion == suggestion;
 		},
 		getSuggestions() {
-			// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+			// Regex is for any possible suggestion that starts with what is currently in the search bar. The possible options are then filtered into suggestions using this regex.
+			//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+
+			// TODO: Update this for performance. The amount of possible selections will be reduced to the current suggestions. When the length of the input string shrinks, all options should be considered again.
 			const regexPattern = new RegExp(
 				"^" + this.searchTerm.toLowerCase() + ".*$"
 			);
-			//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
 			this.suggestions = this.searchOptions.filter((option) =>
 				regexPattern.test(option.toLowerCase())
 			);
 		},
+
+		// Check so see if the search result exists, then load a popup with it.
 		submitSearch(input) {
 			this.close();
 			const searchResult = plantData.find(
@@ -157,6 +165,7 @@ export default {
 	display: flex;
 }
 
+/* We don't want the suggestion to span the whole box. So left/translate is used. */
 .suggestion-text {
 	cursor: pointer;
 	width: fit-content;
@@ -192,5 +201,6 @@ export default {
 	font-size: 1.5rem;
 	padding: 1rem;
 	border-bottom: 2px solid gray;
+	outline: none;
 }
 </style>

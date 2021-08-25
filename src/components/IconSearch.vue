@@ -1,3 +1,5 @@
+<!-- Wrapper for the search icon. Has a small, or large size. -->
+
 <template>
 	<div
 		class="container"
@@ -27,7 +29,7 @@ export default {
 	props: {
 		isOpen: Boolean,
 		size: {
-			default: "small",
+			default: "large",
 			type: String,
 			validator: (value) => {
 				return ["small", "large"].includes(value);

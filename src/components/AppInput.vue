@@ -1,4 +1,10 @@
-// https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
+<!-- 
+An input component that applies common styling to all inputs. It also allows
+creation of many inputs from a list. Validation can be applied to individual
+inputs by putting all validation key/values into an object. Checkboxes are unable to be implemented due to issues with v-model.
+
+https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
+-->
 
 <template>
 	<div class="inputContainer" :class="{ halfInput: size === 'half' }">
@@ -12,12 +18,13 @@
 			:value="modelValue"
 			:required="required"
 			v-bind="validation"
-			@input="$emit('update:modelValue', $event.target.value)"
+			@change="$emit('update:modelValue', $event.target.value)"
 		>
+			<!-- Create an option that shows the label initially but is unselectable -->
 			<option value="" selected disabled>{{ label }}</option>
 			<option
 				v-for="option in options"
-				:key="option"
+				:key="option.value"
 				:value="option.value"
 			>
 				{{ option.text }}
@@ -77,7 +84,6 @@ export default {
 </script>
 
 <style scoped>
-/* input-container is only effective for checkboxes */
 .inputContainer {
 	display: flex;
 	justify-content: center;

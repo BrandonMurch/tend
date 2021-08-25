@@ -1,7 +1,7 @@
 <template>
 	<div class="application-container">
 		<div class="application-background"></div>
-		<NavigationBar v-if="isLoggedIn" />
+		<NavigationBar v-if="$route.path != '/'" />
 		<RouterView> </RouterView>
 	</div>
 </template>

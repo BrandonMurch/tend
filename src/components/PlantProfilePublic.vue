@@ -1,8 +1,12 @@
+<!-- Uses PopUp to display public facing information about a plant. Necessary
+information is passed in as props. -->
+
 <template>
+	<!-- Display box to send message on MessageIconClick. Replaces PopUp.  -->
 	<PopUpMessage
 		v-if="messageActive"
-		@cancelMessage="messageActive = false"
-		@sendMessage="submitMessage"
+		@cancel="messageActive = false"
+		@send="submitMessage"
 	/>
 	<PopUp v-else @close="$emit('close')">
 		<div
@@ -52,7 +56,7 @@ export default {
 			popUpWidth: null,
 			// Cannot put debounce(...) directly in the event
 			// listener or it will not be properly destroyed.
-			debounceUpdateSize: debounce(this.getPopUpThenResize),
+			debounceUpdateSize: debounce(this.updateSizeOfPopUpBasedOnImage),
 		};
 	},
 	methods: {
@@ -60,19 +64,21 @@ export default {
 			this.messageActive = false;
 			console.log(message);
 		},
-		getPopUpThenResize() {
-			if (!this.messageActive) {
-				this.updateSizeOfPopUpBasedOnImage({
-					target: this.$refs.image,
-				});
-			}
-		},
-		updateSizeOfPopUpBasedOnImage(event) {
+		//
+		// resizePopUpAfterWindowChange() {
+		// 	if (!this.messageActive) {
+		// 		this.updateSizeOfPopUpBasedOnImage({
+		// 			target: this.$refs.image,
+		// 		});
+		// 	}
+		// },
+		updateSizeOfPopUpBasedOnImage() {
+			const image = this.$refs.image;
 			if (window.innerWidth > 800) {
-				this.popUpWidth = event.target.width * 2 + "px";
-				this.popUpHeight = event.target.height + "px";
+				this.popUpWidth = image.width * 2 + "px";
+				this.popUpHeight = image.height + "px";
 			} else {
-				this.popUpWidth = event.target.width + "px";
+				this.popUpWidth = image.width + "px";
 				this.popUpHeight = "auto";
 			}
 		},
@@ -89,6 +95,8 @@ export default {
 <style scoped>
 .content-container {
 	overflow: hidden;
+	max-height: 95vh;
+	max-width: 95vw;
 }
 
 .text-container {
@@ -116,12 +124,10 @@ export default {
 }
 
 .action-container {
-	height: 3rem;
-	width: 100%;
 	position: relative;
 	display: flex;
 	justify-content: center;
-	margin: 1rem 0 3rem 0;
+	margin: 1rem 0 2rem 0;
 }
 
 @media (min-width: 800px) {
@@ -132,6 +138,7 @@ export default {
 	}
 
 	.image {
+		position: absolute;
 		max-width: 40vw;
 		max-height: 80vh;
 	}
@@ -143,7 +150,7 @@ export default {
 }
 
 @media (max-width: 800px) {
-	.popup {
+	.content-container {
 		overflow-y: scroll;
 		/* min-content adjusts the height to be as small as possible
             https://developer.mozilla.org/en-US/docs/Web/CSS/min-content */
@@ -172,17 +179,17 @@ export default {
 
 /* Scrollbar Modifications: https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp */
 
-.popup::-webkit-scrollbar,
+.content-container::-webkit-scrollbar,
 .text-container::-webkit-scrollbar {
 	width: 4px; /* width of the entire scrollbar */
 }
 
-.popup::-webkit-scrollbar-track,
+.content-container::-webkit-scrollbar-track,
 .text-container::-webkit-scrollbar-track {
 	background: transparent; /* color of the tracking area */
 }
 
-.popup::-webkit-scrollbar-thumb,
+.content-container::-webkit-scrollbar-thumb,
 .text-container::-webkit-scrollbar-thumb {
 	background-color: #bf763c; /* color of the scroll thumb */
 	border-radius: 20px; /* roundness of the scroll thumb */
@@ -190,7 +197,7 @@ export default {
 }
 
 .text-container,
-.popup {
+.content-container {
 	scrollbar-width: thin; /* "auto" or "thin" */
 	scrollbar-color: #bf763c transparent; /* scroll thumb and track */
 }

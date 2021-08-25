@@ -1,3 +1,5 @@
+<!-- SINGLETON. The form for users to log in. It doubles as a registration form as well. Directly interacts with the store/router after successful login. Currently mocked to always succeed. -->
+
 <template>
 	<div class="login-container">
 		<div class="logo-container">
@@ -11,7 +13,7 @@
 			@reset="resetForm"
 		>
 			<transition-group name="slide" appear>
-				<Input
+				<AppInput
 					v-for="input in getInputs()"
 					:key="input.label"
 					:label="input.label"
@@ -27,6 +29,7 @@
 					>Remember me:</label
 				>
 				<input
+					class="checkbox"
 					id="rememberMe"
 					type="checkbox"
 					v-model="formData.rememberMe"
@@ -36,21 +39,25 @@
 			</div>
 
 			<div class="button-container">
-				<Button
+				<AppButton
 					class="button"
 					:type="'submit'"
 					:form="'loginForm'"
 					@click="hasSubmitted = true"
 				>
 					submit
-				</Button>
-				<Button class="button" :type="'reset'" :form="'loginForm'">
+				</AppButton>
+				<AppButton class="button" :type="'reset'" :form="'loginForm'">
 					reset
-				</Button>
-				<Button class="button" type="button" @click="toggleRegister">
+				</AppButton>
+				<AppButton class="button" type="button" @click="toggleRegister">
 					{{ register ? "Login" : "register" }}
-				</Button>
+				</AppButton>
 			</div>
+			<!-- Remove for production versions -->
+			<h2 style="text-align: center">
+				Any Email/Password will work for testing.
+			</h2>
 		</form>
 	</div>
 </template>
@@ -60,8 +67,8 @@ import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
-import Button from "./AppButton.vue";
-import Input from "./AppInput.vue";
+import AppButton from "./AppButton.vue";
+import AppInput from "./AppInput.vue";
 import MainLogo from "./MainLogo.vue";
 
 const getDefaultForm = () => {
@@ -74,6 +81,7 @@ const getDefaultForm = () => {
 	};
 };
 
+// Inputs for the login form. Will be loaded into the AppInput component.
 const inputs = [
 	{
 		label: "Username",
@@ -112,7 +120,7 @@ const inputs = [
 
 export default {
 	name: "LogInForm",
-	components: { Button, Input, MainLogo },
+	components: { AppButton, AppInput, MainLogo },
 	setup() {
 		const store = useStore();
 		const router = useRouter();
@@ -161,6 +169,7 @@ export default {
 
 		const onSubmit = () => {
 			hasSubmitted.value = true;
+			console.log("test submit");
 			if (doPasswordsMatch()) {
 				// Get a name for the user
 				const username = formData.username
@@ -227,6 +236,10 @@ export default {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+}
+
+.checkbox {
+	cursor: pointer;
 }
 
 .checkboxLabel {

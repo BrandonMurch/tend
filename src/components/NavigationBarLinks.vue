@@ -1,3 +1,6 @@
+<!-- Creates navigation links based on the array passed in by NavigationBar.
+Different styles are applied on desktop vs. mobile. -->
+
 <template>
 	<div class="hide-div">
 		<div

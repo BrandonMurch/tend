@@ -1,19 +1,20 @@
+<!-- Component to hold the message icon. Emits 'message' when cliked. -->
+
 <template>
-	<div class="icon-container" @click="message">
-		<svg
-			class="message-icon"
-			xmlns="http://www.w3.org/2000/svg"
-			height="48px"
-			viewBox="0 0 24 24"
-			width="48px"
-			fill="#000000"
+	<svg
+		class="message-icon"
+		xmlns="http://www.w3.org/2000/svg"
+		height="48px"
+		viewBox="0 0 24 24"
+		width="48px"
+		@click="message"
+	>
 		>
-			<path d="M0 0h24v24H0z" fill="none" />
-			<path
-				d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-			/>
-		</svg>
-	</div>
+		<path d="M0 0h24v24H0z" fill="none" />
+		<path
+			d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+		/>
+	</svg>
 </template>
 
 <script>
@@ -28,10 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.icon-container {
-	height: 100%;
-}
-
 .message-icon {
 	fill: #bf753c;
 	cursor: pointer;

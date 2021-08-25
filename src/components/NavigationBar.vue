@@ -1,3 +1,6 @@
+<!-- The navigation bar for the website. On desktop it runs across the top, on
+mobile it will be a drop down. -->
+
 <template>
 	<nav class="navigation-bar">
 		<MainLogo />
@@ -5,18 +8,10 @@
 		<!-- Mobile Navigation -->
 		<div class="mobile-navigation">
 			<MenuIcon :isOpen="menuOpen" @click="toggleMenu" />
-			<SearchIcon
-				:isOpen="searchOpen"
-				@click="toggleSearch"
-				:size="'large'"
-			/>
+			<SearchIcon :isOpen="searchOpen" @click="toggleSearch" />
 			<DropDown class="drop-down" :isOpen="menuOpen">
 				<template v-slot:inside>
-					<NavigationLinks
-						v-if="isMobile"
-						:links="reverseLinks"
-						:dropDown="true"
-					/>
+					<NavigationLinks :links="reverseLinks" :dropDown="true" />
 				</template>
 			</DropDown>
 		</div>
@@ -28,11 +23,7 @@
 					<a class="search-text" @click="toggleSearch"> search </a>
 				</CloseIcon>
 			</div>
-			<NavigationLinks
-				v-if="!isMobile"
-				:dropDown="false"
-				:links="links"
-			/>
+			<NavigationLinks :dropDown="false" :links="links" />
 		</div>
 		<SearchBar :isOpen="searchOpen" @close="searchOpen = false" />
 	</nav>
@@ -61,7 +52,7 @@ export default {
 	data() {
 		return {
 			menuOpen: false,
-			isMobile: window.innerWidth < 800,
+			isMobile: false,
 			links: [
 				{ text: "logout", url: "/logout", name: "logout" },
 				{ text: "contact", url: "/contact", name: "contact" },
@@ -73,6 +64,7 @@ export default {
 		};
 	},
 	computed: {
+		// Reverse the order of links for the drop down menu. So links normally on the right, will be at the bottom.
 		reverseLinks: function() {
 			return [...this.links].reverse();
 		},
@@ -89,12 +81,10 @@ export default {
 		updateIsMobile() {
 			this.isMobile = window.innerWidth < 850;
 		},
-		updateActiveComponent(target) {
-			this.$emit("update:activeComponent", target);
-		},
 	},
 	created() {
 		window.addEventListener("resize", this.updateIsMobile);
+		this.updateIsMobile();
 	},
 	unmounted() {
 		window.removeEventListener("resize", this.updateIsMobile);
@@ -156,6 +146,8 @@ export default {
 }
 
 @media (max-width: 350px) {
+	/* Two row navigation bar
+		Logo on top, icons underneath. */
 	.mobile-navigation {
 		display: inline-block;
 		width: 12rem;

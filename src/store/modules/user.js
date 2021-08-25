@@ -1,8 +1,8 @@
 const state = () => {
     return {
-        isLoggedIn: true,
+        isLoggedIn: false,
         user: {
-            name: "Johnny",
+            name: "",
         }
     }
 }

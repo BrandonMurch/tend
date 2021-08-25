@@ -1,3 +1,5 @@
+<!-- Component that houses the logo image and text. -->
+
 <template>
 	<div class="logo-container">
 		<img class="logo-image" src="../assets/images/logo3.svg" alt="logo" />
@@ -26,7 +28,6 @@ export default {
 	position: relative;
 	left: -10px;
 	top: -1rem;
-	cursor: default;
 	font-weight: normal;
 	text-shadow: 2px 2px 2px grey;
 	margin: 2rem 0;

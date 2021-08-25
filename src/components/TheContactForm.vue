@@ -1,3 +1,6 @@
+<!-- SINGLETON. The view for the contact page. Contains a form that allows the
+user to submit a message to tend. -->
+
 <template>
 	<div class="contact-container">
 		<form
@@ -42,11 +45,45 @@
 import Button from "./AppButton.vue";
 import Input from "./AppInput.vue";
 
+const inputs = [
+	{
+		label: "Name:",
+		dataName: "name",
+		size: "half",
+	},
+	{
+		label: "email:",
+		type: "email",
+		dataName: "email",
+		size: "half",
+	},
+
+	{
+		label: "Message Type:",
+		type: "select",
+		options: [
+			{ text: "Account", value: "account" },
+			{
+				text: "Report Offensive Content",
+				value: "offensive",
+			},
+			{ text: "Bug Finding", value: "bug" },
+			{ text: "Other", value: "misc" },
+		],
+		dataName: "messageType",
+	},
+	{
+		label: "message:",
+		type: "textarea",
+		dataName: "message",
+	},
+];
+
 const getDefaultForm = () => {
 	return {
 		name: "",
 		email: "",
-		userMessage: "",
+		message: "",
 		messageType: "",
 	};
 };
@@ -62,59 +99,19 @@ export default {
 	},
 	methods: {
 		getInputs() {
-			return [
-				{
-					label: "Name:",
-					dataName: "name",
-					size: "half",
-				},
-				{
-					label: "email:",
-					type: "email",
-					dataName: "email",
-					size: "half",
-				},
-
-				{
-					label: "Message Type:",
-					type: "select",
-					options: [
-						{ text: "Account", value: "account" },
-						{
-							text: "Report Offensive Content",
-							value: "offensive",
-						},
-						{ text: "Bug Finding", value: "bug" },
-						{ text: "Other", value: "misc" },
-					],
-					dataName: "messageType",
-				},
-				{
-					label: "message:",
-					type: "textarea",
-					dataName: "message",
-				},
-			];
+			return inputs;
 		},
 		resetForm() {
 			this.hasSubmitted = false;
 			this.dataForm = getDefaultForm();
 		},
-		checkFieldsAreNotNull() {
-			for (let key of Object.keys(this.formData)) {
-				if (this.formData[key].length <= 0) {
-					return false;
-				}
-			}
-			return true;
-		},
+
 		onSubmit(event) {
-			if (this.checkFieldsAreNotNull()) {
-				alert(
-					`Thank you ${this.formData.userName}! We will get in touch shortly at ${this.formData.userEmail}.`
-				);
-				event.target.reset();
-			}
+			console.log(this.formData);
+			alert(
+				`Thank you ${this.formData.name}! We will get in touch shortly at ${this.formData.email}.`
+			);
+			event.target.reset();
 		},
 	},
 };
@@ -189,10 +186,6 @@ h1 {
 }
 
 @media (min-width: 800px) {
-	.desktop-side {
-		width: 46%;
-	}
-
 	.button {
 		width: 8rem;
 	}
@@ -204,6 +197,7 @@ h1 {
 	}
 }
 
+/* Without this, the policy links would overlap the form. */
 @media (max-height: 800px) {
 	.policy-container {
 		position: relative;
