@@ -1,3 +1,7 @@
+// Presents images within the space given. Arranges the image into columns. Once
+the bottom of the page is reached, 'moreImages' will be emitted. A slot is
+provided for a special card to be placed in the first place of the first column.
+
 <template>
 	<div ref="container" class="gallery-container">
 		<div
@@ -5,6 +9,7 @@
 			v-for="(column, index) in imageColumns"
 			:key="index"
 		>
+			<slot v-if="index == 0" />
 			<ImageCard
 				v-for="image in column"
 				:key="image.id"
@@ -19,7 +24,7 @@
 </template>
 
 <script>
-import ImageCard from "./ImageCard.vue";
+import ImageCard from "./CardImage.vue";
 import { debounce } from "../helpers/debounce.js";
 
 export default {
@@ -44,7 +49,7 @@ export default {
 		window.addEventListener("resize", this.debounceUpdateSize);
 	},
 	mounted() {
-		// When the bottom of the screen is reached. Ask for more images.
+		// Div with the reload ref is loaded at the bottom of the screen. Once this "intersects" the viewport (is displayed in the viewport) it will emit 'moreImages'. Ask for more images.
 		// https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 		this.observer = new IntersectionObserver((entries) => {
 			if (entries[0].isIntersecting === true) {
@@ -74,11 +79,12 @@ export default {
 			this.splitImagesIntoColumns();
 		},
 
+		// Find the width of the galleries current container. Find how many columns can fit inside and initialise the array.
 		initialiseColumns() {
-			const body_margins = 30;
-			const card_width = 265;
+			const pageMargins = 30;
+			const cardWidth = 265;
 			this.columns = Math.floor(
-				(this.$refs.container.clientWidth - body_margins) / card_width
+				(this.$refs.container.clientWidth - pageMargins) / cardWidth
 			);
 			const columnQueue = [];
 			for (let i = 0; i < this.columns; i++) {

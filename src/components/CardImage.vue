@@ -1,3 +1,6 @@
+// Presents an image inside a card. Hover for the title. Emits "imageLoaded" for
+keeping track of when all images are loaded on the page.
+
 <template>
 	<!-- 
         Wait until image is loaded before loading borders, overlay and text.
@@ -51,8 +54,7 @@ export default {
 .image {
 	width: 100%;
 	/* 
-        There was a small gap that was appearing at the bottom of my images. It seems that the browser treats
-        an image as text. So I used vertical-align to stop this, as discussed here:
+        There was a small gap that was appearing at the bottom of my images. It seems that the browser treats an image as text. So I used vertical-align to stop this, as discussed here:
 
         https://stackoverflow.com/questions/10844205/html-5-strange-img-always-adds-3px-margin-at-bottom 
         */

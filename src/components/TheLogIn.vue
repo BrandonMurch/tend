@@ -1,6 +1,8 @@
 <template>
-	<ImageGallery :images="images" @moreImages="getImageData()" />
-	<PopUp :closable="false" scrollable>
+	<ImageGallery :images="images" @moreImages="getImageData()">
+		<LogInForm class="formCard" />
+	</ImageGallery>
+	<PopUp class="formPopUp" :closable="false" scrollable>
 		<LogInForm />
 	</PopUp>
 </template>
@@ -51,4 +53,26 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 571px) {
+	.formPopUp {
+		display: none;
+	}
+
+	.formCard {
+		width: 230px;
+		padding: 0;
+		margin-bottom: 1rem;
+		box-shadow: 0 5px 5px grey;
+		border: 5px solid #b87d4b;
+		padding: 10px;
+		position: relative;
+		z-index: 10;
+	}
+}
+@media (min-width: 572px) {
+	.formCard {
+		display: none;
+	}
+}
+</style>
