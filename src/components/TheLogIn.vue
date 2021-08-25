@@ -8,7 +8,7 @@
 <script>
 import ImageGallery from "./ImageGallery.vue";
 import PopUp from "./PopUp.vue";
-import LogInForm from "./LoginForm.vue";
+import LogInForm from "./TheLoginForm.vue";
 import plantData from "../assets/json/plants.json";
 
 export default {

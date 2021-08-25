@@ -10,18 +10,22 @@
 			@submit.stop.prevent="onSubmit"
 			@reset="resetForm"
 		>
-			<Input
-				v-for="input in getInputs()"
-				:key="input.label"
-				:label="input.label"
-				:type="input.type"
-				:validation="input.validation"
-				required
-				v-model="formData[input.dataName]"
-			/>
+			<transition-group name="slide" appear>
+				<Input
+					v-for="input in getInputs()"
+					:key="input.label"
+					:label="input.label"
+					:type="input.type"
+					:validation="input.validation"
+					required
+					v-model="formData[input.dataName]"
+				/>
+			</transition-group>
 
 			<div class="checkbox-container">
-				<label for="rememberMe">Remember me:</label>
+				<label class="checkboxLabel" for="rememberMe"
+					>Remember me:</label
+				>
 				<input
 					id="rememberMe"
 					type="checkbox"
@@ -72,16 +76,16 @@ const getDefaultForm = () => {
 
 const inputs = [
 	{
-		label: "Email",
-		type: "email",
-		dataName: "email",
-		appearsIn: ["login", "register"],
-	},
-	{
 		label: "Username",
 		type: "text",
 		dataName: "username",
 		appearsIn: ["register"],
+	},
+	{
+		label: "Email",
+		type: "email",
+		dataName: "email",
+		appearsIn: ["login", "register"],
 	},
 
 	{
@@ -112,27 +116,16 @@ export default {
 	setup() {
 		const store = useStore();
 		const router = useRouter();
+
 		const register = ref(false);
 		const hasSubmitted = ref(false);
 		let formData = getDefaultForm();
 
+		// Dynamically create a list of inputs depending on which mode is selected.
 		const getInputs = () => {
 			return inputs.filter((input) =>
 				input.appearsIn.includes(register.value ? "register" : "login")
 			);
-		};
-
-		// Check that all fields contain some text, disregard confirm password and username if only loggin in.
-		const areAllFieldsNotNull = () => {
-			for (let input in inputs) {
-				if (
-					formData[input.data] == "" &&
-					(register || !input.appearsIn.includes("register"))
-				) {
-					return false;
-				}
-			}
-			return true;
 		};
 
 		// Set HTML5 custom error message on relevent password fields
@@ -145,6 +138,7 @@ export default {
 			}
 		};
 
+		// Check that both the password and confirm password fields match.
 		const doPasswordsMatch = () => {
 			if (
 				register.value &&
@@ -158,28 +152,27 @@ export default {
 			return true;
 		};
 
+		// Return the form to its initial state.
 		const resetForm = () => {
 			hasSubmitted.value = false;
 			setPasswordError("");
 			formData = getDefaultForm();
 		};
 
-		const onSubmit = (event) => {
+		const onSubmit = () => {
 			hasSubmitted.value = true;
-			if (
-				event.target.checkValidity() &&
-				areAllFieldsNotNull() &&
-				doPasswordsMatch()
-			) {
-				const name = formData.username
+			if (doPasswordsMatch()) {
+				// Get a name for the user
+				const username = formData.username
 					? formData.username
 					: formData.email.split("@")[0];
 
-				store.commit("user/logUserIn", name);
+				store.commit("user/logUserIn", username);
 				router.push("/explore");
 			}
 		};
 
+		// Toggle between register and login
 		const toggleRegister = () => {
 			resetForm();
 			register.value = !register.value;
@@ -200,36 +193,27 @@ export default {
 </script>
 
 <style scoped>
+/* css for the transition */
+@import "../assets/css/transitionFade.css";
+
 .logo-container {
+	height: 7rem;
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	height: 7rem;
 }
 
 .form {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	position: relative;
 }
 
 .button-container {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-}
-
-@media (max-width: 800px) {
-	.button {
-		width: 60%;
-	}
-}
-
-.errorMessage {
-	color: #3f463d;
-	width: 100%;
-	text-align: center;
-	margin: 0;
 }
 
 .login-container {
@@ -247,5 +231,11 @@ export default {
 
 .checkboxLabel {
 	color: #3f463d;
+}
+
+@media (max-width: 800px) {
+	.button {
+		width: 60%;
+	}
 }
 </style>

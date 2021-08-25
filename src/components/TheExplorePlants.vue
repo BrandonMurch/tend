@@ -1,11 +1,11 @@
 <template>
-	<SlideFadeTransition>
+	<transition name="fade">
 		<PlantProfilePublic
 			v-if="selectedPlant"
 			@close="selectedPlant = null"
 			v-bind="selectedPlant"
 		/>
-	</SlideFadeTransition>
+	</transition>
 
 	<div class="image-gallery">
 		<ImageGallery
@@ -20,7 +20,6 @@
 import ImageGallery from "./ImageGallery.vue";
 import plantData from "../assets/json/plants.json";
 import PlantProfilePublic from "./PlantProfilePublic.vue";
-import SlideFadeTransition from "./TransitionSlideFade.vue";
 
 export default {
 	name: "ExplorePlants",
@@ -58,12 +57,13 @@ export default {
 	components: {
 		ImageGallery,
 		PlantProfilePublic,
-		SlideFadeTransition,
 	},
 };
 </script>
 
 <style scoped>
+@import "../assets/css/transitionFade.css";
+
 .image-gallery {
 	display: flex;
 	align-content: center;
