@@ -1,0 +1,51 @@
+@font-face {
+	font-family: fell;
+	src: url("./IMFeENrm29P.ttf");
+}
+
+.noscript-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #dce0d1;
+}
+
+.noscript-message-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 30%;
+	min-height: 200px;
+	max-height: 400px;
+	width: 40%;
+	min-width: 300px;
+	max-width: 600px;
+}
+
+.noscript-logo-container {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 100px;
+}
+
+.noscript-logo {
+	height: 100px;
+	width: 100px;
+}
+
+.noscript-text {
+	font-family: "fell", sans-serif;
+	color: #b87d4b;
+	font-size: 30px;
+	text-align: center;
+}
+
+.noscript-logo-text {
+	font-size: 80px;
+	margin: 0;
+}
