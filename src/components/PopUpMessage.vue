@@ -2,18 +2,19 @@
 	<PopUp :closable="false">
 		<div class="message-container">
 			<textarea
+				:placeholder="`Send a message...`"
 				class="textarea"
 				v-model="message"
 				cols="30"
 				rows="10"
 			></textarea>
 			<div class="button-container">
-				<button class="button" @click="$emit('sendMessage', message)">
+				<AppButton @click="$emit('sendMessage', message)">
 					submit
-				</button>
-				<button class="button" @click="$emit('cancelMessage')">
+				</AppButton>
+				<AppButton @click="$emit('cancelMessage')">
 					cancel
-				</button>
+				</AppButton>
 			</div>
 		</div>
 	</PopUp>
@@ -21,10 +22,11 @@
 
 <script>
 import PopUp from "./PopUp.vue";
+import AppButton from "./AppButton.vue";
 
 export default {
 	name: "PopUpMessage",
-	components: { PopUp },
+	components: { PopUp, AppButton },
 	data() {
 		return {
 			message: "",
@@ -35,7 +37,6 @@ export default {
 
 <style scoped>
 .message-container {
-	/* margin: 1px; */
 	border-radius: 20px;
 	box-sizing: border-box;
 }
