@@ -87,7 +87,7 @@ export default {
 			this.menuOpen = !this.menuOpen;
 		},
 		updateIsMobile() {
-			this.isMobile = window.innerWidth < 800;
+			this.isMobile = window.innerWidth < 850;
 		},
 		updateActiveComponent(target) {
 			this.$emit("update:activeComponent", target);
@@ -131,7 +131,7 @@ export default {
 	font-weight: bold;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 850px) {
 	.mobile-navigation {
 		display: none;
 	}
@@ -145,7 +145,7 @@ export default {
 	}
 }
 
-@media (max-width: 799px) {
+@media (max-width: 849px) {
 	.desktop-navigation {
 		display: none;
 	}
