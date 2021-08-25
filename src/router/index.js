@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import store from '../store';
+import store from '../store';
 
 import ExplorePlants from '../components/TheExplorePlants.vue';
 import Contact from '../components/TheContactForm.vue';
@@ -18,20 +18,23 @@ const routes = [
     { path: '/:pathMatch(.*)', name: 'NotFound', component: NotFound },
 ]
 
+
 const router = createRouter({
     history: createWebHistory(),
+    base: '/',
     routes,
-    base: process.env.environment === 'development' ? '/' : '/tend/',
 })
 
 
-router.beforeEach(() => {
+router.beforeEach((to) => {
 
+
+    if (to.path == "/logout") {
+        store.commit("user/logOut");
+        return "/";
+    }
     // Re-Enable after development
 
-    // if (to.path == "/logout") {
-    //     store.commit("user/logOut");
-    //     return "/";
     // } else if (to.path != "/" && !store.getters['user/isLoggedIn']) {
     //     return "/";
     // } else if (to.path == "/" && store.getters['user/isLoggedIn']) {
