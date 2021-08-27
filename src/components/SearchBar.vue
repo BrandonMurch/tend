@@ -10,7 +10,6 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp -->
 			v-bind="searchResultForPopUp"
 			@close="searchResultForPopUp = null"
 		/>
-		<h1>{{ searchTerm }}</h1>
 		<DropDown :isOpen="isOpen">
 			<template v-slot:inside>
 				<div class="search-container" ref="searchbar">
