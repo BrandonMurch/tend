@@ -13,7 +13,7 @@ either be displayed in a pop-up or as part of the gallery. -->
 <script>
 import ImageGallery from "./ImageGallery.vue";
 import PopUp from "./PopUp.vue";
-import LogInForm from "./TheLoginForm.vue";
+import LogInForm from "./TheLogInForm.vue";
 import plantData from "../assets/json/plants.json";
 import { debounce } from "../helpers/debounce";
 
