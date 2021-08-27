@@ -113,7 +113,7 @@ export default {
 .search-desktop {
 	width: 4rem;
 	height: 2rem;
-	margin: 2rem 2rem 2rem 1rem;
+	margin: 2rem 3rem 2rem 1rem;
 	float: right;
 }
 
