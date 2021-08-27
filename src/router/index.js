@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import store from '../store';
 
-import ExplorePlants from '../components/TheExplorePlants.vue';
-import Contact from '../components/TheContactForm.vue';
-import MyPlants from '../components/TheMyPlants.vue';
-import LearnPlants from '../components/TheLearnPlants.vue';
-import NotFound from '../components/TheNotFound.vue';
-import LogIn from '../components/TheLogIn.vue';
+// Dynamically import routes for increased performance. 
+const ExplorePlants = () => import('../components/TheExplorePlants.vue');
+const Contact = () => import('../components/TheContactForm.vue');
+const MyPlants = () => import('../components/TheMyPlants.vue');
+const LearnPlants = () => import('../components/TheLearnPlants.vue');
+const NotFound = () => import('../components/TheNotFound.vue');
+const LogIn = () => import('../components/TheLogIn.vue');
 
 
 const routes = [
