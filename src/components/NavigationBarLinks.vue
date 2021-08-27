@@ -12,6 +12,7 @@ Different styles are applied on desktop vs. mobile. -->
 				class="navigation-link"
 				:class="{ activeLink: isActive(link.name), dropDown: dropDown }"
 				:to="link.url"
+				@click="$emit('close')"
 			>
 				{{ link.text }}
 			</RouterLink>

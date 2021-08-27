@@ -11,7 +11,11 @@ mobile it will be a drop down. -->
 			<SearchIcon :isOpen="searchOpen" @click="toggleSearch" />
 			<DropDown class="drop-down" :isOpen="menuOpen">
 				<template v-slot:inside>
-					<NavigationLinks :links="reverseLinks" :dropDown="true" />
+					<NavigationLinks
+						@close="menuOpen = false"
+						:links="reverseLinks"
+						:dropDown="true"
+					/>
 				</template>
 			</DropDown>
 		</div>
