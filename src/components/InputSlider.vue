@@ -6,6 +6,9 @@
 		<div
 			class="slide-container"
 			role="button"
+			:aria-label="
+				'Toggle between ' + option1.text + ' and ' + option2.text
+			"
 			@click="
 				$emit(
 					'update:modelValue',
@@ -22,6 +25,8 @@
 		<div class="option">
 			{{ option2.text }}
 		</div>
+		<!-- https://developers.google.com/web/fundamentals/accessibility/semantics-aria/ -->
+		<div :aria-label="'Selected: ' + value"></div>
 	</div>
 </template>
 
@@ -41,7 +46,6 @@ export default {
 .container {
 	position: relative;
 	height: 4rem;
-	margin-left: 3rem;
 	display: flex;
 }
 

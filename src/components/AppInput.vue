@@ -7,10 +7,21 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 -->
 
 <template>
-	<div :class="{ inputContainer: !stealth, halfInput: size === 'half' }">
+	<div
+		:class="{
+			inputContainer: !stealth,
+			stealthContainer: stealth,
+			halfInput: size === 'half',
+		}"
+	>
 		<!-- label with hidden class for use with accessibility readers. -->
-		<label class="hidden" :for="label">{{ label }}</label>
 		<slot name="icon" />
+		<label
+			:class="type == 'checkbox' ? 'stealth-input' : 'hidden'"
+			:for="label"
+			>{{ label }}</label
+		>
+
 		<select
 			v-if="type == 'select'"
 			:id="label"
@@ -45,6 +56,20 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 				)
 			"
 		/>
+		<input
+			v-else-if="type == 'checkbox'"
+			:id="label"
+			class="checkbox"
+			:class="stealth ? 'stealth-input' : 'inputBox'"
+			:checked="modelValue"
+			@click="$emit('update:modelValue', !modelValue)"
+			:placeholder="label"
+			:type="type"
+			v-bind="validation"
+		/>
+		<!--
+			@click=""
+			-->
 
 		<textarea
 			v-else-if="type === 'textarea'"
@@ -79,7 +104,7 @@ export default {
 	components: { InputSlider },
 	emits: ["update:modelValue"],
 	props: {
-		modelValue: String,
+		modelValue: [String, Boolean],
 		label: String,
 		required: Boolean,
 		options: Array,
@@ -101,6 +126,11 @@ export default {
 			},
 		},
 	},
+	methods: {
+		check() {
+			console.log("CLICK");
+		},
+	},
 };
 </script>
 
@@ -109,6 +139,11 @@ export default {
 	display: flex;
 	justify-content: center;
 	width: 100%;
+}
+
+.stealthContainer {
+	display: flex;
+	align-content: left;
 }
 
 .inputBox {
@@ -126,6 +161,10 @@ export default {
 .inputBox:focus {
 	outline: none;
 	border: 4px solid #bf763c;
+}
+
+.checkbox {
+	margin: 0 1rem;
 }
 
 form.submitted .inputBox:invalid {

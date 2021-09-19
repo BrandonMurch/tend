@@ -4,7 +4,26 @@
         "title": "monstera deliciosa",
         "subtitle": "Big Boy",
         "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pretium rhoncus nisi vel tempus. Sed luctus lacus vel vehicula sollicitudin. Suspendisse auctor non ante sed faucibus. Etiam semper interdum bibendum. Morbi efficitur ut dui ac mollis. Nullam venenatis erat dapibus augue lacinia tempus et ut lacus. Vivamus ornare mollis metus a rhoncus. Pellentesque vel euismod purus, eu dignissim mi. Nulla facilisi. Curabitur eget dictum mauris. In malesuada imperdiet dapibus. Donec nec congue nisi. Etiam maximus fermentum ultricies. Nullam in justo nibh. Proin feugiat aliquam turpis a tristique. Morbi iaculis eget enim ac viverra. ",
-        "id": 1001
+        "id": 1001,
+        "settings": {
+            "notes": [
+                {
+                    "date": "2021-9-3",
+                    "text": "Gave an extra prune, is growing strong!"
+                },
+                {
+                    "date": "2021-9-1",
+                    "text": "Noticed some brown leaves, might be under watering?"
+                }
+            ],
+            "species": "monstera deliciosa",
+            "indoor-outdoor": "Outdoors",
+            "locationEnabled": false,
+            "water-freqency": "Daily",
+            "fertilize-frequency": "Monthly",
+            "prune-frequency": "Monthly",
+            "repot-frequency": "Annually"
+        }
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",

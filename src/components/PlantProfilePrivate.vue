@@ -1,26 +1,32 @@
 <template>
-	<div class="plants-container">
-		<ImageGallery
-			:images="plants"
-			@itemClick="onImageClick"
-			@moreImages="getImageData"
-		/>
-	</div>
-	<div class="settings-container" :style="{ width: width }">
-		<Input
-			stealth
-			v-model="plant.subtitle"
-			style="font-size: 4rem; color: #3f463d; "
-		/>
-
-		<img class="plant-image" :src="plant.imageSource" :alt="plant.title" />
-		<keep-alive>
-			<component
-				:is="activeTab"
-				:id="plant.id"
-				:settings="plant.settings"
+	<div style="position: relative;">
+		<div class="plants-container">
+			<ImageGallery
+				:images="plants"
+				@itemClick="onImageClick"
+				@moreImages="getImageData"
 			/>
-		</keep-alive>
+		</div>
+		<div class="settings-container" :style="{ width: width }">
+			<Input
+				stealth
+				v-model="plant.subtitle"
+				style="font-size: 4rem; color: #3f463d; "
+			/>
+
+			<img
+				class="plant-image"
+				:src="plant.imageSource"
+				:alt="plant.title"
+			/>
+			<keep-alive>
+				<component
+					:is="activeTab"
+					:id="plant.id"
+					:settings="plant.settings"
+				/>
+			</keep-alive>
+		</div>
 	</div>
 </template>
 
@@ -34,7 +40,7 @@ import PlantProfilePrivateSettings from "./PlantProfilePrivateSettings.vue";
 import Input from "./AppInput.vue";
 
 const GALLERY_WIDTH = 330;
-const SETTINGS_MARGIN = 80;
+const SETTINGS_MARGIN = 100;
 
 export default {
 	name: "PlantProfilePublic",
@@ -61,8 +67,6 @@ export default {
 		if (plant.value.settings == undefined) {
 			plant.value.settings = {};
 		}
-
-		console.log(plant.value);
 
 		resizeSettings();
 
@@ -112,7 +116,7 @@ console.log(id);
 }
 
 .plant-image {
-	width: 100%;
+	width: 98%;
 	max-height: 80vh;
 	border: 3px solid #b87d4b;
 	border-radius: 20px;
@@ -121,10 +125,8 @@ console.log(id);
 
 .settings-container {
 	position: absolute;
-	right: 40px;
-	z-index: 11;
-	display: inline-block;
-	/* float: right; */
+	right: 0;
+	max-width: 95vw;
 }
 
 @media (min-width: 1200px) {

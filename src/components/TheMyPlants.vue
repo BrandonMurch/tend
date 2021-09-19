@@ -1,6 +1,6 @@
 <template>
 	<div class="gallery-container">
-		<ImageGallery :images="plants" />
+		<ImageGallery :images="plants" @itemClick="openPlantSettings" />
 	</div>
 </template>
 
@@ -8,6 +8,7 @@
 import ImageGallery from "./ImageGallery.vue";
 import { getPlantData } from "../composables/mockPlantData";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
 	name: "MyPlants",
@@ -22,8 +23,17 @@ export default {
 
 		getImageData();
 
+		const router = useRouter();
+		const openPlantSettings = (selectedPlant) => {
+			router.push({
+				name: "private-plant",
+				params: { id: selectedPlant.id },
+			});
+		};
+
 		return {
 			plants,
+			openPlantSettings,
 		};
 	},
 };
@@ -34,5 +44,11 @@ export default {
 	width: 50vw;
 	height: 100vh;
 	float: right;
+}
+
+@media (max-width: 850px) {
+	.gallery-container {
+		width: 100%;
+	}
 }
 </style>

@@ -85,7 +85,7 @@ export default {
 			this.numberOfColumns = Math.floor(
 				(this.$refs.container.clientWidth - pageMargins) / cardWidth
 			);
-			if (this.numberOfColumns == 0) {
+			if (this.numberOfColumns <= 0) {
 				this.numberOfColumns = 1;
 			}
 			const columnQueue = [];

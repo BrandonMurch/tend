@@ -1,4 +1,10 @@
 <template>
+	<PlantNotes
+		:enabled="notesOpen"
+		:value="formData.notes"
+		@update:notes="(notes) => (formData.notes = notes)"
+		@close="notesOpen = false"
+	/>
 	<form
 		id="plantSettings"
 		@submit.stop.prevent="onSubmit"
@@ -18,7 +24,10 @@
 			</template>
 		</Input>
 
-		<button class="stealth-input button-single-line">
+		<button
+			class="stealth-input button-single-line"
+			@click="notesOpen = true"
+		>
 			<IconNotes class="button-icon" /> see plant notes
 		</button>
 
@@ -52,7 +61,9 @@ import IconCut from "./IconCut.vue";
 import IconFlowerPot from "./IconFlowerPot.vue";
 import IconRoof from "./IconRoof.vue";
 import IconNotes from "./IconNotes.vue";
+import IconLocation from "./IconLocation.vue";
 import IconExclamation from "./IconExclamation.vue";
+import PlantNotes from "./PlantNotes.vue";
 import { getSpecies, updatePlant } from "../composables/mockPlantData";
 import { ref } from "vue";
 
@@ -62,8 +73,10 @@ export default {
 		settings: Object,
 		id: Number,
 	},
-	components: { Button, Input, IconNotes, IconExclamation },
+	components: { Button, Input, IconNotes, IconExclamation, PlantNotes },
 	setup(props) {
+		const notesOpen = ref(false);
+
 		const speciesOptions = [];
 		for (const species of getSpecies()) {
 			speciesOptions.push({
@@ -77,7 +90,7 @@ export default {
 			{ text: "Daily", value: "Daily" },
 			{ text: "Weekly", value: "Weekly" },
 			{ text: "Monthly", value: "Monthly" },
-			{ text: "Annually", value: "Anually" },
+			{ text: "Annually", value: "Annually" },
 			{ text: "Every 2 Years", value: "Every 2 Years" },
 		];
 
@@ -100,11 +113,12 @@ export default {
 				icon: IconRoof,
 			},
 			// Checkbox??
-			// {
-			// 	label: "message:",
-			// 	type: "textarea",
-			// 	dataName: "message",
-			// },
+			{
+				label: "Location: ",
+				type: "checkbox",
+				dataName: "locationEnabled",
+				icon: IconLocation,
+			},
 			{
 				label: "Water:",
 				type: "select",
@@ -136,12 +150,13 @@ export default {
 		];
 
 		const getDefaultForm = () => {
-			if (props.settings != undefined) {
+			if (Object.keys(props.settings).length != 0) {
 				return props.settings;
 			}
 
 			return {
-				"indoor-outdoor": "Indoors",
+				"indoor-outdoor": "Outdoors",
+				locationEnabled: true,
 			};
 		};
 
@@ -158,9 +173,15 @@ export default {
 			updatePlant();
 		};
 
-		console.log(formData.value);
-
-		return { inputs, formData, hasSubmitted, resetForm, onSubmit };
+		return {
+			inputs,
+			formData,
+			hasSubmitted,
+			resetForm,
+			onSubmit,
+			notesOpen,
+			// updateNotes,
+		};
 	},
 };
 </script>

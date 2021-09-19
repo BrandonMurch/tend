@@ -1,3 +1,6 @@
+// A group of functions that will mock a backend. These can easily be replaced with AJAX calls when a backend has been setup.
+
+
 import plantData from "../assets/json/plants.json";
 import { ref } from "vue";
 
@@ -59,4 +62,8 @@ export const getSpecies = () => {
 
 export const updatePlant = (plant) => {
     alert(`Sucessfully updated ${plant.subtitle}!`)
+}
+
+export const addPlantNote = (note) => {
+    console.log(`Successfully added note from ${note.date}!`);
 }
