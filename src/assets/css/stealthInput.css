@@ -1,0 +1,11 @@
+.stealth-input {
+	border: none;
+	background-color: transparent;
+	font-family: fell, serif;
+	line-height: 4rem;
+	font-size: inherit;
+	color: inherit;
+	cursor: pointer;
+	height: 4rem;
+	text-transform: lowercase;
+}

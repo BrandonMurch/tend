@@ -20,7 +20,8 @@
 
 <script>
 import ImageGallery from "./ImageGallery.vue";
-import plantData from "../assets/json/plants.json";
+// import plantData from "../assets/json/plants.json";
+import { getPlantData } from "../composables/mockPlantData";
 import PlantProfilePublic from "./PlantProfilePublic.vue";
 
 export default {
@@ -40,24 +41,9 @@ export default {
 	},
 
 	methods: {
-		// Duplicate examples to fill the screen into images array.
-		getDataStub() {
-			const images = [];
-
-			for (let i = 0; i < 5; i++) {
-				for (let j = 0; j < 7; j++) {
-					let copy = { ...plantData[j] };
-					copy.id = copy.id + 7 * i + this.currentImageRound * 7 * 5;
-					images.push(copy);
-				}
-			}
-
-			return images;
-		},
-
 		getImageData() {
 			// New array to trigger watch updates.
-			this.images = [...this.images, ...this.getDataStub()];
+			this.images = [...this.images, ...getPlantData()];
 		},
 	},
 	created() {

@@ -15,6 +15,7 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp -->
 				<div class="search-container" ref="searchbar">
 					<!-- Search bar -->
 					<input
+						role="search"
 						@keyup="handleKeyUp"
 						class="search-input"
 						type="text"

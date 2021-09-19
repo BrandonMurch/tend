@@ -7,14 +7,14 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 -->
 
 <template>
-	<div class="inputContainer" :class="{ halfInput: size === 'half' }">
+	<div :class="{ inputContainer: !stealth, halfInput: size === 'half' }">
 		<!-- label with hidden class for use with accessibility readers. -->
 		<label class="hidden" :for="label">{{ label }}</label>
-
+		<slot name="icon" />
 		<select
 			v-if="type == 'select'"
 			:id="label"
-			class="inputBox"
+			:class="stealth ? 'stealth-input' : 'inputBox'"
 			:value="modelValue"
 			:required="required"
 			v-bind="validation"
@@ -31,10 +31,25 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 			</option>
 		</select>
 
+		<InputSlider
+			v-else-if="type === 'slider'"
+			:option1="options[0]"
+			:option2="options[1]"
+			:value="modelValue"
+			@update:modelValue="
+				$emit(
+					'update:modelValue',
+					modelValue == options[0].value
+						? options[1].value
+						: options[0].value
+				)
+			"
+		/>
+
 		<textarea
 			v-else-if="type === 'textarea'"
 			:id="label"
-			class="inputBox"
+			:class="stealth ? 'stealth-input' : 'inputBox'"
 			:value="modelValue"
 			:required="required"
 			@input="$emit('update:modelValue', $event.target.value)"
@@ -45,7 +60,7 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 		<input
 			v-else
 			:id="label"
-			class="inputBox"
+			:class="stealth ? 'stealth-input' : 'inputBox'"
 			:value="modelValue"
 			:required="required"
 			@input="$emit('update:modelValue', $event.target.value)"
@@ -57,8 +72,11 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 </template>
 
 <script>
+import InputSlider from "./InputSlider.vue";
+
 export default {
 	name: "Input",
+	components: { InputSlider },
 	emits: ["update:modelValue"],
 	props: {
 		modelValue: String,
@@ -70,6 +88,10 @@ export default {
 			default: "text",
 			type: String,
 		},
+		stealth: {
+			default: false,
+			type: Boolean,
+		},
 
 		size: {
 			default: "full",
@@ -79,7 +101,6 @@ export default {
 			},
 		},
 	},
-	setup() {},
 };
 </script>
 

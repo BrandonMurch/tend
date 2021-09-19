@@ -62,7 +62,7 @@ export default {
 				{ text: "contact", url: "/contact", name: "contact" },
 				{ text: "learn", url: "/explore", name: "learn" },
 				{ text: "explore", url: "/explore", name: "explore" },
-				{ text: "my plants", url: "/explore", name: "my-plants" },
+				{ text: "my plants", url: "/my-plants", name: "my-plants" },
 			],
 			searchOpen: false,
 		};

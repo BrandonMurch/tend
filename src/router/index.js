@@ -5,6 +5,7 @@ import store from '../store';
 const ExplorePlants = () => import('../components/TheExplorePlants.vue');
 const Contact = () => import('../components/TheContactForm.vue');
 const MyPlants = () => import('../components/TheMyPlants.vue');
+const PlantProfilePrivate = () => import('../components/PlantProfilePrivate.vue');
 const LearnPlants = () => import('../components/TheLearnPlants.vue');
 const NotFound = () => import('../components/TheNotFound.vue');
 const LogIn = () => import('../components/TheLogIn.vue');
@@ -14,7 +15,9 @@ const routes = [
     { path: '/', name: '/', component: LogIn },
     { path: '/explore', name: 'explore', component: ExplorePlants },
     { path: '/contact', name: 'contact', component: Contact },
+    { path: '/my-plants/:id', name: 'private-plant', component: PlantProfilePrivate },
     { path: '/my-plants', name: 'my-plants', component: MyPlants },
+
     { path: '/learn', name: 'learn', component: LearnPlants },
     { path: '/:pathMatch(.*)', name: 'NotFound', component: NotFound },
 ]
