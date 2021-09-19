@@ -23,7 +23,7 @@ export default {
 <style scoped>
 @import "../assets/css/defaultIcon.css";
 .icon {
-	margin: 1rem auto;
+	margin: 1rem 0;
 	height: 2rem;
 	border-radius: 40px;
 	background-color: #ffde2f;

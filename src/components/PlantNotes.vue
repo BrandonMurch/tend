@@ -45,7 +45,7 @@ export default {
 			};
 			addPlantNote(newNote);
 
-			emit("update:notes", [...notes.value, newNote]);
+			emit("update:notes", [newNote, ...notes.value]);
 
 			newNoteText.value = "";
 		};

@@ -17,6 +17,7 @@ const routes = [
     { path: '/contact', name: 'contact', component: Contact },
     { path: '/my-plants/:id', name: 'private-plant', component: PlantProfilePrivate },
     { path: '/my-plants', name: 'my-plants', component: MyPlants },
+    { path: '/species/:name', name: 'species', component: NotFound },
 
     { path: '/learn', name: 'learn', component: LearnPlants },
     { path: '/:pathMatch(.*)', name: 'NotFound', component: NotFound },

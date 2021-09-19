@@ -9,3 +9,8 @@
 	height: 4rem;
 	text-transform: lowercase;
 }
+
+.stealth-input:focus {
+	border-bottom: 4px solid #3d6b56;
+	outline: none;
+}

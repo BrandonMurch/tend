@@ -6,12 +6,15 @@
 		@close="notesOpen = false"
 	/>
 	<form
+		novalidate
 		id="plantSettings"
+		class="input-container"
 		@submit.stop.prevent="onSubmit"
 		@reset="resetForm"
 		:class="{ submitted: hasSubmitted }"
 	>
 		<Input
+			class="input"
 			v-for="input in inputs"
 			:key="input.label"
 			v-bind="input"
@@ -25,20 +28,31 @@
 		</Input>
 
 		<button
-			class="stealth-input button-single-line"
+			class="stealth-input button-single-line input"
 			@click="notesOpen = true"
+			type="button"
 		>
 			<IconNotes class="button-icon" /> see plant notes
 		</button>
-
-		<button class="stealth-input button-single-line">
+		<button
+			class="stealth-input button-single-line input"
+			type="button"
+			@click="
+				() => {
+					$router.push({
+						name: 'species',
+						params: { name: formData.species },
+					});
+				}
+			"
+		>
 			<IconExclamation class="button-icon" /> help my plant!
 		</button>
 
 		<div class="button-container">
 			<Button
 				class="button"
-				:type="'submit'"
+				type="submit"
 				:form="'plantSettings'"
 				@click="hasSubmitted = true"
 			>
@@ -64,8 +78,8 @@ import IconNotes from "./IconNotes.vue";
 import IconLocation from "./IconLocation.vue";
 import IconExclamation from "./IconExclamation.vue";
 import PlantNotes from "./PlantNotes.vue";
-import { getSpecies, updatePlant } from "../composables/mockPlantData";
-import { ref } from "vue";
+import { getSpecies } from "../composables/mockPlantData";
+import { ref, computed } from "vue";
 
 export default {
 	name: "PlantProfilePrivateSettings",
@@ -74,7 +88,8 @@ export default {
 		id: Number,
 	},
 	components: { Button, Input, IconNotes, IconExclamation, PlantNotes },
-	setup(props) {
+	emits: ["update:settings"],
+	setup(props, { emit }) {
 		const notesOpen = ref(false);
 
 		const speciesOptions = [];
@@ -149,28 +164,17 @@ export default {
 			},
 		];
 
-		const getDefaultForm = () => {
-			if (Object.keys(props.settings).length != 0) {
-				return props.settings;
-			}
-
-			return {
-				"indoor-outdoor": "Outdoors",
-				locationEnabled: true,
-			};
-		};
-
-		const formData = ref(getDefaultForm());
+		const formData = computed(() => props.settings);
 
 		let hasSubmitted = false;
 
 		const resetForm = () => {
 			hasSubmitted = false;
-			formData.value = getDefaultForm();
+			formData.value = props.settings;
 		};
 
 		const onSubmit = () => {
-			updatePlant();
+			emit("update:settings", formData);
 		};
 
 		return {
@@ -180,7 +184,6 @@ export default {
 			resetForm,
 			onSubmit,
 			notesOpen,
-			// updateNotes,
 		};
 	},
 };
@@ -188,6 +191,12 @@ export default {
 
 <style scoped>
 @import "../assets/css/stealthInput.css";
+
+.button-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
 
 .button-single-line {
 	display: block;
@@ -197,5 +206,31 @@ export default {
 .input-icon {
 	float: left;
 	margin-right: 1rem;
+}
+
+.input-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.input {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+@media (min-width: 500px) {
+	.input {
+		width: 40%;
+		margin: 0 5%;
+	}
+}
+
+@media (min-width: 1200px) {
+	.input {
+		width: 20%;
+		margin: 0 5%;
+	}
 }
 </style>

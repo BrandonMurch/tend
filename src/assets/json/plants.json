@@ -19,7 +19,7 @@
             "species": "monstera deliciosa",
             "indoor-outdoor": "Outdoors",
             "locationEnabled": false,
-            "water-freqency": "Daily",
+            "water-frequency": "Daily",
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Annually"
@@ -30,41 +30,155 @@
         "title": "dryopteris affinis",
         "subtitle": "Ferny",
         "text": "Nullam mattis purus sit amet est facilisis porta. Donec semper tincidunt sapien, nec finibus dolor scelerisque vitae. Vivamus faucibus lacus vitae mi dignissim pharetra. Pellentesque id risus varius, varius nisi sed, ultricies ipsum. Vivamus scelerisque, metus a feugiat sagittis, dolor orci varius purus, sit amet tempus ante magna in nisi. Quisque sagittis sit amet sem sed dignissim. Ut convallis diam non arcu placerat vehicula. Nullam non vehicula quam. Ut maximus quam quis massa interdum scelerisque. Integer iaculis ante nisl, vitae accumsan enim suscipit eget. Nunc vitae orci ut massa blandit vestibulum. ",
-        "id": 1002
+        "id": 1002,
+        "settings": {
+            "notes": [
+                {
+                    "date": "2021-9-3",
+                    "text": "This is a comment"
+                },
+                {
+                    "date": "2021-9-1",
+                    "text": "This is another comment"
+                }
+            ],
+            "species": "dryopteris affinis",
+            "indoor-outdoor": "Indoors",
+            "locationEnabled": false,
+            "water-frequency": "Weekly",
+            "fertilize-frequency": "Monthly",
+            "prune-frequency": "Monthly",
+            "repot-frequency": "Weekly"
+        }
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1493552152660-f915ab47ae9d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
         "title": "Ficus Elastica",
         "subtitle": "The Rubber Plant",
         "text": "The only plant that actively hates water and sun.",
-        "id": 1003
+        "id": 1003,
+        "settings": {
+            "notes": [
+                {
+                    "date": "2021-9-3",
+                    "text": "This is a comment"
+                },
+                {
+                    "date": "2021-9-1",
+                    "text": "This is another comment"
+                }
+            ],
+            "species": "ficus elastica",
+            "indoor-outdoor": "Indoors",
+            "locationEnabled": true,
+            "water-frequency": "Weekly",
+            "fertilize-frequency": "Monthly",
+            "prune-frequency": "Monthly",
+            "repot-frequency": "Weekly"
+        }
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1509223197845-458d87318791?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=859&q=80",
         "title": "Doristeina Hildebrandtii",
         "subtitle": "Dori",
         "text": "Grabbed this fella from the local nursery 5 years ago. He's thriving!",
-        "id": 1004
+        "id": 1004,
+        "settings": {
+            "notes": [
+                {
+                    "date": "2021-9-3",
+                    "text": "This is a comment"
+                },
+                {
+                    "date": "2021-9-1",
+                    "text": "This is another comment"
+                }
+            ],
+            "species": "doristeina hildebrandtii",
+            "indoor-outdoor": "Indoors",
+            "locationEnabled": false,
+            "water-frequency": "Weekly",
+            "fertilize-frequency": "Monthly",
+            "prune-frequency": "Monthly",
+            "repot-frequency": "Weekly"
+        }
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1505209363824-91ef02e9445a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=633&q=80",
         "title": "Geranium",
         "subtitle": "Flower McFlowerpants",
         "text": "These colourful flowers love a little afternoon sun!",
-        "id": 1005
+        "id": 1005,
+        "settings": {
+            "notes": [
+                {
+                    "date": "2021-9-3",
+                    "text": "This is a comment"
+                },
+                {
+                    "date": "2021-9-1",
+                    "text": "This is another comment"
+                }
+            ],
+            "species": "geranium",
+            "indoor-outdoor": "Indoors",
+            "locationEnabled": false,
+            "water-frequency": "Weekly",
+            "fertilize-frequency": "Monthly",
+            "prune-frequency": "Monthly",
+            "repot-frequency": "Weekly"
+        }
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1615794799010-49687e006646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=663&q=80",
-        "title": "cupressaceae Juniperus",
+        "title": "cupressaceae juniperus",
         "subtitle": "Juniper",
         "text": "4 years old, trained with wire for that elegant curve. Has indoor vacations some times.",
-        "id": 1006
+        "id": 1006,
+        "settings": {
+            "notes": [
+                {
+                    "date": "2021-9-3",
+                    "text": "This is a comment"
+                },
+                {
+                    "date": "2021-9-1",
+                    "text": "This is another comment"
+                }
+            ],
+            "species": "cupressaceae juniperus",
+            "indoor-outdoor": "Indoors",
+            "locationEnabled": false,
+            "water-frequency": "Weekly",
+            "fertilize-frequency": "Monthly",
+            "prune-frequency": "Monthly",
+            "repot-frequency": "Weekly"
+        }
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1582862058398-c157c8424b54?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=564&q=80",
         "title": "Orchid",
         "subtitle": "Mr. Flower",
         "text": "Nullam mattis purus sit amet est facilisis porta. Donec semper tincidunt sapien, nec finibus dolor scelerisque vitae. Vivamus faucibus lacus vitae mi dignissim pharetra. Pellentesque id risus varius, varius nisi sed, ultricies ipsum. Vivamus scelerisque, metus a feugiat sagittis, dolor orci varius purus, sit amet tempus ante magna in nisi. Quisque sagittis sit amet sem sed dignissim. Ut convallis diam non arcu placerat vehicula. Nullam non vehicula quam. Ut maximus quam quis massa interdum scelerisque. Integer iaculis ante nisl, vitae accumsan enim suscipit eget. Nunc vitae orci ut massa blandit vestibulum.",
-        "id": 1007
+        "id": 1007,
+        "settings": {
+            "notes": [
+                {
+                    "date": "2021-9-3",
+                    "text": "This is a comment"
+                },
+                {
+                    "date": "2021-9-1",
+                    "text": "This is another comment"
+                }
+            ],
+            "species": "orchid",
+            "indoor-outdoor": "Indoors",
+            "locationEnabled": false,
+            "water-frequency": "Weekly",
+            "fertilize-frequency": "Monthly",
+            "prune-frequency": "Monthly",
+            "repot-frequency": "Weekly"
+        }
     }
 ]
