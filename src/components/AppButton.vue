@@ -2,7 +2,14 @@
  -->
 
 <template>
-	<button class="button" :type="type" :form="form"><slot /></button>
+	<button
+		class="button"
+		:class="{ 'delete-button': deleteButton }"
+		:type="type"
+		:form="form"
+	>
+		<slot />
+	</button>
 </template>
 
 <script>
@@ -11,6 +18,10 @@ export default {
 	props: {
 		type: String,
 		form: String,
+		deleteButton: {
+			type: Boolean,
+			default: false,
+		},
 	},
 };
 </script>
@@ -37,5 +48,13 @@ export default {
 	height: 2.1rem;
 	transform: scalex(1.1);
 	transition: 0.5s;
+}
+
+.delete-button {
+	background-color: #770000;
+}
+
+.delete-button:hover {
+	background-color: #770000;
 }
 </style>

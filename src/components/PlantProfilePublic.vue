@@ -28,6 +28,34 @@ information is passed in as props. -->
 					<HeartIcon />
 					<MessageIcon @message="messageActive = true" />
 				</div>
+				<CardListWithTextbox
+					buttonText="add comment"
+					:values="localComments"
+					@add="
+						(commentText) => {
+							newComment = {
+								id:
+									localComments.length > 0
+										? localComments[0].id + 1
+										: 1001,
+								datetime: new Date(),
+								body: commentText,
+							};
+							localComments = [newComment, ...localComments];
+							addPlantComment(newComment);
+						}
+					"
+					@delete="
+						(commentId) => {
+							localComments = [
+								...localComments.filter(
+									(comment) => comment.id != commentId
+								),
+							];
+							deletePlantComment(commen);
+						}
+					"
+				/>
 			</div>
 		</div>
 	</PopUp>
@@ -37,20 +65,34 @@ information is passed in as props. -->
 import PopUp from "./PopUp.vue";
 import HeartIcon from "./IconHeart.vue";
 import MessageIcon from "./IconMessage.vue";
+import CardListWithTextbox from "./CardListWithTextbox.vue";
+import {
+	addPlantComment,
+	deletePlantComment,
+} from "../composables/mockPlantData";
+
 import { debounce } from "../helpers/debounce";
 import PopUpMessage from "./PopUpMessage.vue";
 
 export default {
 	name: "PlantProfilePublic",
-	components: { PopUp, PopUpMessage, HeartIcon, MessageIcon },
+	components: {
+		PopUp,
+		PopUpMessage,
+		HeartIcon,
+		MessageIcon,
+		CardListWithTextbox,
+	},
 	props: {
 		imageSource: String,
 		title: String,
 		subtitle: String,
 		text: String,
+		comments: Array,
 	},
 	data() {
 		return {
+			localComments: this.comments,
 			messageActive: false,
 			popUpHeight: null,
 			popUpWidth: null,
@@ -64,14 +106,13 @@ export default {
 			this.messageActive = false;
 			console.log(message);
 		},
-		//
-		// resizePopUpAfterWindowChange() {
-		// 	if (!this.messageActive) {
-		// 		this.updateSizeOfPopUpBasedOnImage({
-		// 			target: this.$refs.image,
-		// 		});
-		// 	}
-		// },
+		addPlantComment(comment) {
+			console.log(comment);
+			addPlantComment(comment);
+		},
+		deletePlantComment(id) {
+			deletePlantComment(id);
+		},
 		updateSizeOfPopUpBasedOnImage() {
 			const image = this.$refs.image;
 			if (window.innerWidth > 800) {

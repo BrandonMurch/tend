@@ -62,6 +62,7 @@ export default {
 		Button,
 		NotificationShape,
 	},
+	emits: ["toggleOpen"],
 	props: {
 		messages: Array,
 		position: Number,

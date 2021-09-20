@@ -8,10 +8,12 @@
         "settings": {
             "notes": [
                 {
+                    "id": 1002,
                     "date": "2021-9-3",
                     "text": "Gave an extra prune, is growing strong!"
                 },
                 {
+                    "id": 1001,
                     "date": "2021-9-1",
                     "text": "Noticed some brown leaves, might be under watering?"
                 }
@@ -27,6 +29,20 @@
         "actions": [
             "water",
             "repot"
+        ],
+        "comments": [
+            {
+                "id": 1002,
+                "body": "This is an example Comment!",
+                "title": "Sarah Bronson",
+                "datetime": "2021-09-13T10:44:33"
+            },
+            {
+                "id": 1001,
+                "body": "What a great plant!",
+                "title": "Sarah Bronson",
+                "datetime": "2021-09-13T10:44:33"
+            }
         ]
     },
     {
@@ -38,10 +54,12 @@
         "settings": {
             "notes": [
                 {
+                    "id": 1002,
                     "date": "2021-9-3",
                     "text": "This is a comment"
                 },
                 {
+                    "id": 1001,
                     "date": "2021-9-1",
                     "text": "This is another comment"
                 }
@@ -57,6 +75,20 @@
         "actions": [
             "water",
             "fertilize"
+        ],
+        "comments": [
+            {
+                "id": 1002,
+                "body": "This is an example Comment!",
+                "sender": "Sarah Bronson",
+                "datetime": "2021-09-13T10:44:33"
+            },
+            {
+                "id": 1001,
+                "body": "What a great plant!",
+                "sender": "Sarah Bronson",
+                "datetime": "2021-09-13T10:44:33"
+            }
         ]
     },
     {
@@ -68,10 +100,12 @@
         "settings": {
             "notes": [
                 {
+                    "id": 1002,
                     "date": "2021-9-3",
                     "text": "This is a comment"
                 },
                 {
+                    "id": 1001,
                     "date": "2021-9-1",
                     "text": "This is another comment"
                 }
@@ -84,7 +118,21 @@
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
         },
-        "actions": []
+        "actions": [],
+        "comments": [
+            {
+                "id": 1002,
+                "body": "This is an example Comment!",
+                "sender": "Sarah Bronson",
+                "datetime": "2021-09-13T10:44:33"
+            },
+            {
+                "id": 1001,
+                "body": "What a great plant!",
+                "sender": "Sarah Bronson",
+                "datetime": "2021-09-13T10:44:33"
+            }
+        ]
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1509223197845-458d87318791?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=859&q=80",
@@ -95,10 +143,12 @@
         "settings": {
             "notes": [
                 {
+                    "id": 1002,
                     "date": "2021-9-3",
                     "text": "This is a comment"
                 },
                 {
+                    "id": 1001,
                     "date": "2021-9-1",
                     "text": "This is another comment"
                 }
@@ -113,7 +163,8 @@
         },
         "actions": [
             "fertilize"
-        ]
+        ],
+        "comments": []
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1505209363824-91ef02e9445a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=633&q=80",
@@ -124,10 +175,12 @@
         "settings": {
             "notes": [
                 {
+                    "id": 1002,
                     "date": "2021-9-3",
                     "text": "This is a comment"
                 },
                 {
+                    "id": 1001,
                     "date": "2021-9-1",
                     "text": "This is another comment"
                 }
@@ -140,7 +193,8 @@
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
         },
-        "actions": []
+        "actions": [],
+        "comments": []
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1615794799010-49687e006646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=663&q=80",
@@ -151,10 +205,12 @@
         "settings": {
             "notes": [
                 {
+                    "id": 1002,
                     "date": "2021-9-3",
                     "text": "This is a comment"
                 },
                 {
+                    "id": 1001,
                     "date": "2021-9-1",
                     "text": "This is another comment"
                 }
@@ -167,7 +223,8 @@
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
         },
-        "actions": []
+        "actions": [],
+        "comments": []
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1582862058398-c157c8424b54?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=564&q=80",
@@ -178,10 +235,12 @@
         "settings": {
             "notes": [
                 {
+                    "id": 1002,
                     "date": "2021-9-3",
                     "text": "This is a comment"
                 },
                 {
+                    "id": 1001,
                     "date": "2021-9-1",
                     "text": "This is another comment"
                 }
@@ -194,6 +253,7 @@
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
         },
-        "actions": []
+        "actions": [],
+        "comments": []
     }
 ]

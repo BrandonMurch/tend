@@ -7,6 +7,7 @@
         https://www.geeksforgeeks.org/how-to-check-an-image-is-loaded-or-not-in-vuejs/
     -->
 	<div :class="{ imageContainer: isLoaded, hiddenContainer: !isLoaded }">
+		<slot v-if="isLoaded" />
 		<img class="image" :src="imageSource" :alt="title" @load="onLoaded" />
 		<div v-if="isLoaded" class="image-overlay">
 			<p class="image-hover-text">{{ title }}</p>

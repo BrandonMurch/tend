@@ -67,3 +67,20 @@ export const updatePlant = (plant) => {
 export const addPlantNote = (note) => {
     console.log(`Successfully added note from ${note.date}!`);
 }
+
+export const deletePlantNote = (noteid) => {
+    console.log(`Successfully deleted note with id ${noteid}!`);
+}
+
+export const addPlantComment = (comment) => {
+    console.log(`Successfully added note from ${comment.date}!`);
+}
+
+export const deletePlantComment = (commentId) => {
+    console.log(`Successfully deleted note with id ${commentId}!`);
+}
+
+export const deletePlant = (plantId) => {
+    console.log(`Deleting ${plantId}`)
+    alert('Plant successfully deleted')
+}

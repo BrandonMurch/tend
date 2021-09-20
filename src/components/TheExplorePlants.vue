@@ -20,7 +20,6 @@
 
 <script>
 import ImageGallery from "./ImageGallery.vue";
-// import plantData from "../assets/json/plants.json";
 import { getPlantData } from "../composables/mockPlantData";
 import PlantProfilePublic from "./PlantProfilePublic.vue";
 

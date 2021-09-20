@@ -1,8 +1,20 @@
 <template>
 	<PlantNotes
 		:enabled="notesOpen"
-		:value="formData.notes"
-		@update:notes="(notes) => (formData.notes = notes)"
+		:values="formData.notes"
+		@add:note="
+			(note) => {
+				note.id = formData.notes[0].id + 1;
+				formData.notes = [note, ...formData.notes];
+			}
+		"
+		@delete:note="
+			(noteid) => {
+				formData.notes = [
+					...formData.notes.filter((note) => note.id != noteid),
+				];
+			}
+		"
 		@close="notesOpen = false"
 	/>
 	<form
@@ -58,8 +70,11 @@
 			>
 				save
 			</Button>
-			<Button class="button" :type="'reset'" :form="'plantSettings'">
+			<Button class="button" type="reset" :form="'plantSettings'">
 				cancel
+			</Button>
+			<Button deleteButton type="button" @click="$emit('delete')">
+				Delete
 			</Button>
 		</div>
 	</form>
@@ -79,7 +94,7 @@ import IconLocation from "./IconLocation.vue";
 import IconExclamation from "./IconExclamation.vue";
 import PlantNotes from "./PlantNotes.vue";
 import { getSpecies } from "../composables/mockPlantData";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 export default {
 	name: "PlantProfilePrivateSettings",
@@ -88,7 +103,7 @@ export default {
 		id: Number,
 	},
 	components: { Button, Input, IconNotes, IconExclamation, PlantNotes },
-	emits: ["update:settings"],
+	emits: ["update:settings", "delete"],
 	setup(props, { emit }) {
 		const notesOpen = ref(false);
 
@@ -127,7 +142,6 @@ export default {
 				dataName: "indoor-outdoor",
 				icon: IconRoof,
 			},
-			// Checkbox??
 			{
 				label: "Location: ",
 				type: "checkbox",
@@ -164,7 +178,33 @@ export default {
 			},
 		];
 
+		const getLocation = () => {
+			const locationSuccess = (position) => {
+				formData.value.location = `${position.coords.latitude}, ${position.coords.longitude}`;
+			};
+
+			return navigator.geolocation.getCurrentPosition(
+				locationSuccess,
+				() => {
+					alert("Location error. Please try again later.");
+					formData.value.locationEnabled = false;
+				}
+			);
+		};
+
+		if (props.settings.locationEnabled) {
+			getLocation();
+		}
+
 		const formData = computed(() => props.settings);
+		const locationEnabled = computed(() => formData.value.locationEnabled);
+		watch(locationEnabled, () => {
+			if (formData.value.locationEnabled && navigator.geolocation) {
+				getLocation();
+			}
+
+			formData.value.location = "";
+		});
 
 		let hasSubmitted = false;
 
@@ -184,6 +224,7 @@ export default {
 			resetForm,
 			onSubmit,
 			notesOpen,
+			location,
 		};
 	},
 };

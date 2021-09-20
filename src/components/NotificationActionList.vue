@@ -27,7 +27,7 @@
 <script>
 import NotificationShape from "./NotificationShape.vue";
 export default {
-	name: "NotificationActionList",
+	name: "NotificationAction",
 	components: { NotificationShape },
 	props: {
 		colour: String,

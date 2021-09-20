@@ -85,13 +85,13 @@ export default {
 		};
 
 		const plantsForActions = (actionString) => {
-			const waterNeeded = [];
+			const actionNeeded = [];
 			for (let plant of plants.value) {
 				if (plant.actions.includes(actionString)) {
-					waterNeeded.push(plant);
+					actionNeeded.push(plant);
 				}
 			}
-			return waterNeeded;
+			return actionNeeded;
 		};
 
 		const getImageData = () => {
