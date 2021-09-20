@@ -103,7 +103,6 @@ import windowSizeWatcher from "../composables/windowSizeWatcher";
 import ImageGallery from "./ImageGallery.vue";
 import PlantProfilePrivateSettings from "./PlantProfilePrivateSettings.vue";
 import PlantProfileBiography from "./PlantProfileBiography.vue";
-import { updatePlant } from "../composables/mockPlantData";
 import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
 import IconWater from "./Icons/IconWater.vue";
@@ -227,6 +226,10 @@ export default {
 					(action) => action != type
 				);
 			}
+		};
+
+		const updatePlant = () => {
+			store.commit("plants/update", plant);
 		};
 
 		const confirmThenDeletePlant = () => {

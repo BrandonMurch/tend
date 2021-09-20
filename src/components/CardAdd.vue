@@ -40,14 +40,19 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-content: center;
+	height: 200px;
+	flex-wrap: wrap;
+	cursor: pointer;
 }
 
 .image {
-	width: 100%;
-	/* 
+	width: 50%;
+	height: 50%;
+	fill: #b87d4b;
+	/*
         There was a small gap that was appearing at the bottom of my images. It seems that the browser treats an image as text. So I used vertical-align to stop this, as discussed here:
 
-        https://stackoverflow.com/questions/10844205/html-5-strange-img-always-adds-3px-margin-at-bottom 
+        https://stackoverflow.com/questions/10844205/html-5-strange-img-always-adds-3px-margin-at-bottom
         */
 	vertical-align: middle;
 }

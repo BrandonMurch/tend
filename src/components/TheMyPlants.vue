@@ -1,55 +1,17 @@
 <template>
 	<NotificationBar :plants="plants" />
-	<!-- <div class="notification-container">
-		<NotificationActionList
-			@toggleOpen="() => changeActiveTab(4)"
-			:position="4"
-			:isOpen="activeTab == 4"
-			:plants="plantsForActions('water')"
-			colour="#136e9e"
-		>
-			<IconWater class="notification-icon" />
-		</NotificationActionList>
-		<NotificationActionList
-			@toggleOpen="() => changeActiveTab(3)"
-			:position="3"
-			:isOpen="activeTab == 3"
-			:plants="plantsForActions('fertilize')"
-			colour="#3D6B56"
-		>
-			<IconMushroom class="notification-icon" />
-		</NotificationActionList>
-		<NotificationActionList
-			@toggleOpen="() => changeActiveTab(2)"
-			:position="2"
-			:isOpen="activeTab == 2"
-			:plants="plantsForActions('repot')"
-			colour="#BF763C"
-		>
-			<IconFlowerPot class="notification-icon" />
-		</NotificationActionList>
-
-		<MessageNotifications
-			:messages="getMessages()"
-			:position="1"
-			@toggleOpen="() => changeActiveTab(1)"
-			:isOpen="activeTab == 1"
-		/>
-		<TipOfTheDay
-			:position="0"
-			:isOpen="activeTab == 0"
-			@toggleOpen="() => changeActiveTab(0)"
-		/>
-	</div> -->
 
 	<div class="gallery-container">
-		<ImageGallery :images="plants" @itemClick="openPlantSettings" />
+		<ImageGallery :images="plants" @itemClick="openPlantSettings">
+			<CardAdd @click="addPlant" class="add-card" />
+		</ImageGallery>
 	</div>
 </template>
 
 <script>
 import ImageGallery from "./ImageGallery.vue";
 import NotificationBar from "./NotificationBar.vue";
+import CardAdd from "./CardAdd.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getMessages } from "../composables/mockMessages";
@@ -60,12 +22,18 @@ export default {
 	components: {
 		ImageGallery,
 		NotificationBar,
+		CardAdd,
 	},
 	setup() {
 		const store = useStore();
 		const router = useRouter();
 
 		const plants = ref(store.getters["plants/all"]);
+
+		const addPlant = () => {
+			store.commit("plants/add", prompt("Enter a new plant name: "));
+			plants.value = [...store.getters["plants/all"]];
+		};
 
 		const openPlantSettings = (selectedPlant) => {
 			router.push({
@@ -78,6 +46,7 @@ export default {
 			plants,
 			openPlantSettings,
 			getMessages,
+			addPlant,
 		};
 	},
 };
@@ -102,6 +71,9 @@ export default {
 	margin-top: 5rem;
 }
 
+.add-card {
+	height: 10rem;
+}
 @media (max-width: 850px) {
 	.gallery-container,
 	.notification-container {

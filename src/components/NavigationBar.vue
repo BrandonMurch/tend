@@ -9,7 +9,7 @@ mobile it will be a drop down. -->
 		<div class="mobile-navigation">
 			<MenuIcon :isOpen="menuOpen" @click="toggleMenu" />
 			<SearchIcon :isOpen="searchOpen" @click="toggleSearch" />
-			<DropDown class="drop-down" :isOpen="menuOpen">
+			<DropDown class="drop-down" :isOpen="menuOpen" insetShadow>
 				<template v-slot:inside>
 					<NavigationLinks
 						@close="menuOpen = false"

@@ -3,7 +3,7 @@ menu. Handles animation. Use an external button to modify the isOpen prop to
 open/close component. -->
 
 <template>
-	<div class="container" ref="container">
+	<div class="container" :class="{ shadow: insetShadow }" ref="container">
 		<div ref="contents">
 			<!-- Named slots, in the future would like to add more parts to the drop down
 			https://vuejs.org/v2/guide/components-slots.html#Named-Slots-->
@@ -19,7 +19,7 @@ export default {
 	name: "DropDown",
 	props: {
 		isOpen: Boolean,
-		shadow: {
+		insetShadow: {
 			default: false,
 			type: Boolean,
 		},
