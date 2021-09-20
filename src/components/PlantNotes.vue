@@ -3,13 +3,13 @@
 		<PopUp v-if="enabled" @close="$emit('close')">
 			<div class="card-container">
 				<Input type="textarea" v-model="newNoteText" />
-				<Button @click="addNote">
+				<Button @click="addNote" class="save-button">
 					Save Note
 				</Button>
 				<CardText
 					v-for="note of value"
 					:key="note.date"
-					:title="note.date"
+					:title="getFormattedDate(note.date)"
 					:text="note.text"
 				/>
 			</div>
@@ -22,7 +22,7 @@ import PopUp from "./PopUp.vue";
 import CardText from "./CardText.vue";
 import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
-import getFormattedDate from "../composables/getFormattedDate";
+import { getFormattedDate } from "../composables/getFormattedDate";
 import { ref } from "vue";
 import { addPlantNote } from "../composables/mockPlantData";
 export default {
@@ -41,7 +41,7 @@ export default {
 		const addNote = () => {
 			const newNote = {
 				text: newNoteText.value,
-				date: getFormattedDate(),
+				date: new Date().toISOString(),
 			};
 			addPlantNote(newNote);
 
@@ -65,5 +65,8 @@ export default {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+}
+.save-button {
+	margin-bottom: 1rem;
 }
 </style>

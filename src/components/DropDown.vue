@@ -19,6 +19,10 @@ export default {
 	name: "DropDown",
 	props: {
 		isOpen: Boolean,
+		shadow: {
+			default: false,
+			type: Boolean,
+		},
 	},
 	setup(props) {
 		const contents = ref(null);
@@ -53,10 +57,13 @@ export default {
 	/* Container should be larger than its parent to hide left and right inset shadows. */
 	left: -10%;
 	width: 120%;
-	box-shadow: inset 0px 0px 4px 4px grey;
 	overflow: hidden;
 	/* Hide until javascript loads */
 	height: 0;
+}
+
+.shadow {
+	box-shadow: inset 0px 0px 4px 4px grey;
 }
 </style>
 

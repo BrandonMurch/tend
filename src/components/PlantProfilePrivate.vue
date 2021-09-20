@@ -1,5 +1,5 @@
 <template>
-	<div style="position: relative;">
+	<div style="position: relative; display:flex; justify-content: center;">
 		<div class="plants-container">
 			<ImageGallery
 				:images="plants"
@@ -15,8 +15,9 @@
 				v-model="plant.subtitle"
 				style="font-size: 4rem; color: #3f463d; "
 			/>
-
 			<img
+				@touchstart="startSwipe"
+				@touchend="endSwipe"
 				class="plant-image"
 				:src="plant.imageSource"
 				:alt="plant.title"
@@ -84,6 +85,7 @@ export default {
 		const width = ref();
 		const plant = ref(getSinglePlant(id.value));
 		const plants = ref([]);
+		let swipeStart = 0;
 
 		const getProps = () => {
 			if (activeTab.value == "PlantProfilePrivateSettings") {
@@ -104,7 +106,7 @@ export default {
 					GALLERY_WIDTH -
 					SETTINGS_MARGIN}px`;
 			} else {
-				width.value = `${window.innerWidth}px`;
+				width.value = `${window.innerWidth - window.innerWidth / 10}px`;
 			}
 		};
 
@@ -131,6 +133,36 @@ export default {
 			router.push({ name: "private-plant", params: { id: plant.id } });
 		};
 
+		const previousPlant = () => {
+			if (plant.value.id != plants.value[0].id) {
+				router.push({
+					name: "private-plant",
+					params: { id: plant.value.id - 1 },
+				});
+			}
+		};
+		const nextPlant = () => {
+			if (plant.value.id != plants.value[plants.value.length - 1].id) {
+				router.push({
+					name: "private-plant",
+					params: { id: plant.value.id + 1 },
+				});
+			}
+		};
+
+		const startSwipe = (event) => {
+			swipeStart = event.changedTouches[0].clientX;
+		};
+
+		const endSwipe = (event) => {
+			let swipeDifference = swipeStart - event.changedTouches[0].clientX;
+			if (swipeDifference < -70) {
+				previousPlant();
+			} else if (swipeDifference > 70) {
+				nextPlant();
+			}
+		};
+
 		// Load first round of images
 		getImageData();
 
@@ -144,6 +176,8 @@ export default {
 			getImageData,
 			getProps,
 			updatePlant,
+			startSwipe,
+			endSwipe,
 		};
 	},
 };

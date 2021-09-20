@@ -23,7 +23,11 @@
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Annually"
-        }
+        },
+        "actions": [
+            "water",
+            "repot"
+        ]
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
@@ -49,7 +53,11 @@
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
-        }
+        },
+        "actions": [
+            "water",
+            "fertilize"
+        ]
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1493552152660-f915ab47ae9d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
@@ -75,7 +83,8 @@
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
-        }
+        },
+        "actions": []
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1509223197845-458d87318791?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=859&q=80",
@@ -101,7 +110,10 @@
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
-        }
+        },
+        "actions": [
+            "fertilize"
+        ]
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1505209363824-91ef02e9445a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=633&q=80",
@@ -127,7 +139,8 @@
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
-        }
+        },
+        "actions": []
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1615794799010-49687e006646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=663&q=80",
@@ -153,7 +166,8 @@
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
-        }
+        },
+        "actions": []
     },
     {
         "imageSource": "https://images.unsplash.com/photo-1582862058398-c157c8424b54?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=564&q=80",
@@ -179,6 +193,7 @@
             "fertilize-frequency": "Monthly",
             "prune-frequency": "Monthly",
             "repot-frequency": "Weekly"
-        }
+        },
+        "actions": []
     }
 ]
