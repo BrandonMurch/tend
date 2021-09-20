@@ -9,6 +9,10 @@ const PlantProfilePrivate = () => import('../components/PlantProfilePrivate.vue'
 const LearnPlants = () => import('../components/TheLearnPlants.vue');
 const NotFound = () => import('../components/TheNotFound.vue');
 const LogIn = () => import('../components/TheLogIn.vue');
+const ArticleDisplay = () => import('../components/ArticleDisplay.vue');
+const QuestionsViewList = () => import('../components/QuestionsViewList.vue');
+const QuestionsViewSingle = () => import('../components/QuestionsViewSingle.vue');
+const SpeciesView = () => import('../components/SpeciesView.vue');
 
 
 const routes = [
@@ -17,8 +21,11 @@ const routes = [
     { path: '/contact', name: 'contact', component: Contact },
     { path: '/my-plants/:id', name: 'private-plant', component: PlantProfilePrivate },
     { path: '/my-plants', name: 'my-plants', component: MyPlants },
-    { path: '/species/:name', name: 'species', component: NotFound },
+    { path: '/species/:name', name: 'species', component: SpeciesView },
 
+    { path: '/learn/articles/:id', name: 'articles', component: ArticleDisplay },
+    { path: '/learn/questions/:answered/:id', name: 'question', component: QuestionsViewSingle },
+    { path: '/learn/questions/:answered', name: 'questions-list', component: QuestionsViewList },
     { path: '/learn', name: 'learn', component: LearnPlants },
     { path: '/:pathMatch(.*)', name: 'NotFound', component: NotFound },
 ]

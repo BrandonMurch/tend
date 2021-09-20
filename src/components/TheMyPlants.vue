@@ -2,7 +2,11 @@
 	<NotificationBar :plants="plants" />
 
 	<div class="gallery-container">
-		<ImageGallery :images="plants" @itemClick="openPlantSettings">
+		<ImageGallery
+			:images="plants"
+			@itemClick="openPlantSettings"
+			includeActions
+		>
 			<CardAdd @click="addPlant" class="add-card" />
 		</ImageGallery>
 	</div>
@@ -68,7 +72,6 @@ export default {
 	width: 45vw;
 	height: 100vh;
 	float: right;
-	margin-top: 5rem;
 }
 
 .add-card {
@@ -82,6 +85,7 @@ export default {
 	}
 	.gallery-container {
 		height: 100%;
+		margin-top: 5rem;
 	}
 
 	.notification-icon {

@@ -106,7 +106,10 @@ export default {
 	props: {
 		modelValue: [String, Boolean],
 		label: String,
-		required: Boolean,
+		required: {
+			type: Boolean,
+			default: false,
+		},
 		options: Array,
 		validation: Object,
 		type: {

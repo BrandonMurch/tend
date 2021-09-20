@@ -2,14 +2,17 @@
 
 <template>
 	<div class="container">
-		<IconTrash
-			v-if="deletable"
-			class="trash-icon"
-			@click="$emit('delete')"
-		/>
-		<h1>{{ title }}</h1>
-		<h4>{{ subtitle }}</h4>
-		<p>{{ text }}</p>
+		<img :src="imageSource" alt="title" class="image" />
+		<div class="text-container">
+			<IconTrash
+				v-if="deletable"
+				class="trash-icon"
+				@click="$emit('delete')"
+			/>
+			<h1>{{ title }}</h1>
+			<h4>{{ subtitle }}</h4>
+			<p>{{ text }}</p>
+		</div>
 	</div>
 </template>
 
@@ -29,6 +32,7 @@ export default {
 			default: "",
 			type: String,
 		},
+		imageSource: String,
 	},
 };
 </script>
@@ -43,7 +47,26 @@ export default {
 	margin-bottom: 1rem;
 	overflow: hidden;
 	padding: 10px;
+	max-height: 10rem;
+	cursor: pointer;
 }
+
+.text-container {
+	width: 70%;
+	float: right;
+	display: inline-block;
+}
+
+.image {
+	position: relative;
+	width: 25%;
+	max-height: 15rem;
+	top: -20px;
+	left: -20px;
+	border-radius: 20px 0 0 20px;
+	display: inline-block;
+}
+
 .trash-icon {
 	position: absolute;
 	top: -5px;

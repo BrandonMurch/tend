@@ -6,9 +6,11 @@ import router from './router';
 
 import App from './App.vue';
 
+const vue = createApp(App)
 
-
-createApp(App)
-    .use(router)
+vue.use(router)
     .use(store)
     .mount('#app')
+
+vue.config.performance = true;
+vue.config.devtools = true;

@@ -12,7 +12,7 @@ const getters = {
         return state.messages;
     },
     one: (state) => (id) => {
-        return state.messages.find(message => message.id = id);
+        return state.messages.find(message => message.id == id);
     }
 }
 

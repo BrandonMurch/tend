@@ -136,11 +136,8 @@ export default {
 		const width = ref();
 
 		const store = useStore();
-		console.log(id.value);
 		const plant = ref(store.getters["plants/one"](id.value));
-		console.log(plant.value.title);
 		const plants = ref(store.getters["plants/all"]);
-		console.log(plants.value);
 		let swipeStart = 0;
 
 		const getProps = () => {

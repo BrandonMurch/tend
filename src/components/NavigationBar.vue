@@ -60,7 +60,7 @@ export default {
 			links: [
 				{ text: "logout", url: "/logout", name: "logout" },
 				{ text: "contact", url: "/contact", name: "contact" },
-				{ text: "learn", url: "/explore", name: "learn" },
+				{ text: "learn", url: "/learn", name: "learn" },
 				{ text: "explore", url: "/explore", name: "explore" },
 				{ text: "my plants", url: "/my-plants", name: "my-plants" },
 			],

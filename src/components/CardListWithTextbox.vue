@@ -7,18 +7,21 @@
 		<Button @click="add" class="save-button">
 			{{ buttonText }}
 		</Button>
-		<CardText
-			v-for="note of values"
-			:key="note.date"
-			:title="note.title || ''"
-			:subtitle="
-				note.subtitle ||
-					getFormattedDate(note.date || note.datetime) ||
-					''
-			"
-			:text="note.text || note.body"
-			@delete="$emit('delete', note.id)"
-		/>
+		<transition-group name="fade">
+			<CardText
+				v-for="note of values"
+				:key="note.id"
+				:title="note.title || note.user || ''"
+				:subtitle="
+					note.subtitle ||
+						getFormattedDate(note.date || note.datetime) ||
+						''
+				"
+				:text="note.text || note.body"
+				@delete="$emit('delete', note.id)"
+				:deletable="deletable"
+			/>
+		</transition-group>
 	</div>
 </template>
 
@@ -37,11 +40,14 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		deletable: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	components: { Input, Button, CardText },
 	emits: ["add", "delete"],
 	setup(props, { emit }) {
-		console.log(props.values);
 		const newText = ref("");
 		const add = () => {
 			if (newText.value.length > 0) {
@@ -55,6 +61,8 @@ export default {
 </script>
 
 <style scoped>
+@import "../assets/css/transitionFade.css";
+
 .card-container {
 	padding: 3rem;
 	max-height: 80vh;

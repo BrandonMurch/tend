@@ -15,6 +15,7 @@ provided for a special card to be placed in the first place of the first column.
 				v-bind="image"
 				@imageLoaded="setAllImagesLoadedIfTrue"
 				@click="$emit('itemClick', image)"
+				:actions="includeActions ? image.actions : []"
 			/>
 		</div>
 	</div>
@@ -33,6 +34,10 @@ export default {
 	},
 	props: {
 		images: Array,
+		includeActions: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ["itemClick", "moreImages"],
 
