@@ -1,5 +1,6 @@
 <template>
-	<div class="notification-container">
+	<NotificationBar :plants="plants" />
+	<!-- <div class="notification-container">
 		<NotificationActionList
 			@toggleOpen="() => changeActiveTab(4)"
 			:position="4"
@@ -39,7 +40,7 @@
 			:isOpen="activeTab == 0"
 			@toggleOpen="() => changeActiveTab(0)"
 		/>
-	</div>
+	</div> -->
 
 	<div class="gallery-container">
 		<ImageGallery :images="plants" @itemClick="openPlantSettings" />
@@ -48,59 +49,24 @@
 
 <script>
 import ImageGallery from "./ImageGallery.vue";
-import NotificationActionList from "./NotificationActionList.vue";
-import MessageNotifications from "./MessageNotifications.vue";
-import TipOfTheDay from "./TipOfTheDay.vue";
-import IconWater from "./Icons/IconWater.vue";
-import IconMushroom from "./Icons/IconMushroom.vue";
-import IconFlowerPot from "./Icons/IconFlowerPot.vue";
-import { getPlantData } from "../composables/mockPlantData";
+import NotificationBar from "./NotificationBar.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { getMessages } from "../composables/mockMessages";
+import { useStore } from "vuex";
 
 export default {
 	name: "MyPlants",
 	components: {
 		ImageGallery,
-		NotificationActionList,
-		MessageNotifications,
-		IconWater,
-		IconMushroom,
-		IconFlowerPot,
-		TipOfTheDay,
+		NotificationBar,
 	},
 	setup() {
-		const plants = ref([]);
-
-		const activeTab = ref(-1);
-
-		const changeActiveTab = (position) => {
-			if (activeTab.value == position) {
-				activeTab.value = -1;
-			} else {
-				activeTab.value = position;
-			}
-		};
-
-		const plantsForActions = (actionString) => {
-			const actionNeeded = [];
-			for (let plant of plants.value) {
-				if (plant.actions.includes(actionString)) {
-					actionNeeded.push(plant);
-				}
-			}
-			return actionNeeded;
-		};
-
-		const getImageData = () => {
-			// New array to trigger watch updates.
-			plants.value = [...plants.value, ...getPlantData()];
-		};
-
-		getImageData();
-
+		const store = useStore();
 		const router = useRouter();
+
+		const plants = ref(store.getters["plants/all"]);
+
 		const openPlantSettings = (selectedPlant) => {
 			router.push({
 				name: "private-plant",
@@ -111,10 +77,7 @@ export default {
 		return {
 			plants,
 			openPlantSettings,
-			plantsForActions,
 			getMessages,
-			activeTab,
-			changeActiveTab,
 		};
 	},
 };
@@ -139,18 +102,14 @@ export default {
 	margin-top: 5rem;
 }
 
-.notification-icon {
-	height: 3rem;
-	fill: #dce0d1;
-	color: #dce0d1;
-	margin-left: 1rem;
-}
-
 @media (max-width: 850px) {
 	.gallery-container,
 	.notification-container {
 		width: 100%;
 		max-width: none;
+	}
+	.gallery-container {
+		height: 100%;
 	}
 
 	.notification-icon {

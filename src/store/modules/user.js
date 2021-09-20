@@ -1,9 +1,10 @@
+
 const state = () => {
     return {
         isLoggedIn: false,
         user: {
             name: "",
-        }
+        },
     }
 }
 
@@ -30,7 +31,9 @@ const mutations = {
     logOut(state) {
         state.isLoggedIn = false;
         state.user.name = null;
-    }
+    },
+
+
 }
 
 

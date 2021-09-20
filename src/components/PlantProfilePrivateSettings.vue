@@ -100,7 +100,7 @@ export default {
 	name: "PlantProfilePrivateSettings",
 	props: {
 		settings: Object,
-		id: Number,
+		id: String,
 	},
 	components: { Button, Input, IconNotes, IconExclamation, PlantNotes },
 	emits: ["update:settings", "delete"],

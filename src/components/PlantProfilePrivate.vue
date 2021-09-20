@@ -97,12 +97,13 @@
 <script>
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { ref } from "vue";
+import { useStore } from "vuex";
 import { getSinglePlant, getPlantData } from "../composables/mockPlantData";
 import windowSizeWatcher from "../composables/windowSizeWatcher";
 import ImageGallery from "./ImageGallery.vue";
 import PlantProfilePrivateSettings from "./PlantProfilePrivateSettings.vue";
 import PlantProfileBiography from "./PlantProfileBiography.vue";
-import { updatePlant, deletePlant } from "../composables/mockPlantData";
+import { updatePlant } from "../composables/mockPlantData";
 import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
 import IconWater from "./Icons/IconWater.vue";
@@ -134,8 +135,13 @@ export default {
 		const router = useRouter();
 		const id = ref(route.params.id);
 		const width = ref();
-		const plant = ref(getSinglePlant(id.value));
-		const plants = ref([]);
+
+		const store = useStore();
+		console.log(id.value);
+		const plant = ref(store.getters["plants/one"](id.value));
+		console.log(plant.value.title);
+		const plants = ref(store.getters["plants/all"]);
+		console.log(plants.value);
 		let swipeStart = 0;
 
 		const getProps = () => {
@@ -227,7 +233,7 @@ export default {
 			if (
 				confirm(`Are you sure you want to delete ${plant.value.title}`)
 			) {
-				deletePlant(plant.value.id);
+				store.commit("plants/delete", plant.value.id);
 				router.push({ name: "my-plants" });
 			}
 		};
@@ -255,7 +261,6 @@ export default {
 	},
 };
 </script>
-console.log(id);
 
 <style scoped>
 @import "../assets/css/stealthInput.css";
