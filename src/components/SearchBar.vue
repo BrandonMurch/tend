@@ -10,7 +10,7 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp -->
 			v-bind="searchResultForPopUp"
 			@close="searchResultForPopUp = null"
 		/>
-		<DropDown :isOpen="isOpen">
+		<DropDown :isOpen="isOpen" insetShadow>
 			<template v-slot:inside>
 				<div class="search-container" ref="searchbar">
 					<!-- Search bar -->
@@ -147,11 +147,18 @@ export default {
 		// Check so see if the search result exists, then load a popup with it.
 		submitSearch(input) {
 			this.close();
-			const searchResult = plantData.find(
-				(plant) => plant.title.toLowerCase() == input
-			);
+			const searchResult = this.$store.getters["plants/species"](input);
 			if (searchResult) {
-				this.searchResultForPopUp = searchResult;
+				if (this.$route.path.includes("my-plants")) {
+					this.$router.push({
+						name: "private-plant",
+						params: {
+							id: searchResult.id,
+						},
+					});
+				} else {
+					this.searchResultForPopUp = searchResult;
+				}
 			} else {
 				alert("Your search could not be found.");
 			}
