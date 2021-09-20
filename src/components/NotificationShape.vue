@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import IconDownArrow from "./IconDownArrow.vue";
+import IconDownArrow from "./Icons/IconDownArrow.vue";
 import DropDown from "./DropDown.vue";
 export default {
 	name: "NotificationShape",

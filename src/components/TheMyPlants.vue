@@ -51,9 +51,9 @@ import ImageGallery from "./ImageGallery.vue";
 import NotificationActionList from "./NotificationActionList.vue";
 import MessageNotifications from "./MessageNotifications.vue";
 import TipOfTheDay from "./TipOfTheDay.vue";
-import IconWater from "./IconWater.vue";
-import IconMushroom from "./IconMushroom.vue";
-import IconFlowerPot from "./IconFlowerPot.vue";
+import IconWater from "./Icons/IconWater.vue";
+import IconMushroom from "./Icons/IconMushroom.vue";
+import IconFlowerPot from "./Icons/IconFlowerPot.vue";
 import { getPlantData } from "../composables/mockPlantData";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
@@ -76,7 +76,6 @@ export default {
 		const activeTab = ref(-1);
 
 		const changeActiveTab = (position) => {
-			console.log(position);
 			if (activeTab.value == position) {
 				activeTab.value = -1;
 			} else {

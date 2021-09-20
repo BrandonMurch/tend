@@ -63,8 +63,8 @@ information is passed in as props. -->
 
 <script>
 import PopUp from "./PopUp.vue";
-import HeartIcon from "./IconHeart.vue";
-import MessageIcon from "./IconMessage.vue";
+import HeartIcon from "./Icons/IconHeart.vue";
+import MessageIcon from "./Icons/IconMessage.vue";
 import CardListWithTextbox from "./CardListWithTextbox.vue";
 import {
 	addPlantComment,

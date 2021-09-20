@@ -12,16 +12,18 @@
 		preserveAspectRatio="xMidYMid meet"
 		viewBox="0 0 24 24"
 	>
-		<path
-			d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6l-6 6l-1.41-1.41z"
-			fill="currentColor"
-		/>
+		<g transform="translate(24 0) scale(-1 1)">
+			<path
+				d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6l-6 6l-1.41-1.41z"
+				fill="currentColor"
+			/>
+		</g>
 	</svg>
 </template>
 
 <script>
 export default {
-	name: "IconRight",
+	name: "IconLeft",
 	data() {
 		return {};
 	},
@@ -29,5 +31,5 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/defaultIcon.css";
+@import "../../assets/css/defaultIcon.css";
 </style>

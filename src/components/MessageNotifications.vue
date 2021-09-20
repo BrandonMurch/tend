@@ -47,7 +47,7 @@
 <script>
 import PopUp from "./PopUp.vue";
 import NotificationShape from "./NotificationShape.vue";
-import IconEnvelope from "./IconEnvelope.vue";
+import IconEnvelope from "./Icons/IconEnvelope.vue";
 import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
 import { ref } from "vue";

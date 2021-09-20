@@ -17,7 +17,7 @@ background will be tinted to draw focus to the content. -->
 </template>
 
 <script>
-import CloseIcon from "./IconClose.vue";
+import CloseIcon from "./Icons/IconClose.vue";
 
 export default {
 	name: "PopUp",

@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/defaultIcon.css";
+@import "../../assets/css/defaultIcon.css";
 .icon {
 	margin: 1rem 0;
 	height: 2rem;

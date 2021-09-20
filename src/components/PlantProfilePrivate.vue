@@ -105,11 +105,11 @@ import PlantProfileBiography from "./PlantProfileBiography.vue";
 import { updatePlant, deletePlant } from "../composables/mockPlantData";
 import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
-import IconWater from "./IconWater.vue";
-import IconMushroom from "./IconMushroom.vue";
-import IconFlowerPot from "./IconFlowerPot.vue";
-import IconLeft from "./IconLeft.vue";
-import IconRight from "./IconRight.vue";
+import IconWater from "./Icons/IconWater.vue";
+import IconMushroom from "./Icons/IconMushroom.vue";
+import IconFlowerPot from "./Icons/IconFlowerPot.vue";
+import IconLeft from "./Icons/IconLeft.vue";
+import IconRight from "./Icons/IconRight.vue";
 
 const GALLERY_WIDTH = 330;
 const SETTINGS_MARGIN = 80;

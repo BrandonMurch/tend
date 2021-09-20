@@ -19,7 +19,7 @@
 
 <script>
 import NotificationShape from "./NotificationShape.vue";
-import IconLightBulb from "./IconLightBulb.vue";
+import IconLightBulb from "./Icons/IconLightBulb.vue";
 import { getTipOfTheDay } from "../composables/mockTipOfTheDay";
 export default {
 	name: "TipOfTheDay",

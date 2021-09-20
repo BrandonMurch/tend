@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import IconTrash from "./IconTrash";
+import IconTrash from "./Icons/IconTrash";
 export default {
 	name: "CardText",
 	components: { IconTrash },

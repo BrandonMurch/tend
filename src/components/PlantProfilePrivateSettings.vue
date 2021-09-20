@@ -81,17 +81,17 @@
 </template>
 
 <script>
-import IconLeaf from "./IconLeaf.vue";
+import IconLeaf from "./Icons/IconLeaf.vue";
 import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
-import IconWater from "./IconWater.vue";
-import IconMushroom from "./IconMushroom.vue";
-import IconCut from "./IconCut.vue";
-import IconFlowerPot from "./IconFlowerPot.vue";
-import IconRoof from "./IconRoof.vue";
-import IconNotes from "./IconNotes.vue";
-import IconLocation from "./IconLocation.vue";
-import IconExclamation from "./IconExclamation.vue";
+import IconWater from "./Icons/IconWater.vue";
+import IconMushroom from "./Icons/IconMushroom.vue";
+import IconCut from "./Icons/IconCut.vue";
+import IconFlowerPot from "./Icons/IconFlowerPot.vue";
+import IconRoof from "./Icons/IconRoof.vue";
+import IconNotes from "./Icons/IconNotes.vue";
+import IconLocation from "./Icons/IconLocation.vue";
+import IconExclamation from "./Icons/IconExclamation.vue";
 import PlantNotes from "./PlantNotes.vue";
 import { getSpecies } from "../composables/mockPlantData";
 import { ref, computed, watch } from "vue";
