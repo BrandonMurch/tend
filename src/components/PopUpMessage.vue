@@ -1,5 +1,11 @@
-<!-- A PopUp window that allows a user to send a message to the owner of the
-plant. -->
+<!--
+Description: 	A PopUp window that allows a user to send a message to the 
+				owner of the plant.
+	
+Emits:
+	send 		Send the message. Passes along the messages text.
+	cancel 		Close the popup.
+-->
 
 <template>
 	<PopUp :closable="false">

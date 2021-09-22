@@ -1,14 +1,35 @@
+<!--
+Description: Styling for the notification bars.
+Props: 
+	colour  	The colour of the notification bar in hexadecimal.
+
+	isOpen		Boolean. Whether the notification bar is open or closed.
+
+	position 	Number. The position within the bar. Used to offset the 
+				notification bar due to necesssary absolute position. 
+
+	count 		Number. The number of active notifications within the bar.
+
+Emits: 
+	toggleOpen 	Toggles the notification bar open and close.
+-->
+
 <template>
 	<div
 		class="notification-bar"
 		:class="{ 'notification-bar-open': isOpen }"
-		:style="{ 'background-color': colour, right: `${position * 20}%` }"
+		:style="{
+			'background-color': colour,
+			/* Dynamically offset the notification bar based on the position. */
+			right: `${position * (100 / 6)}%`,
+		}"
 	>
 		<div class="visible-bar" @click="$emit('toggleOpen')">
 			<slot name="icon" />
 			<h1 class="count">{{ count }}</h1>
 			<IconDownArrow class="dropdown" />
 		</div>
+		<!-- A small connector between the dropdown and the bar. It makes it look like the bar is extending into the drop down.  -->
 		<div
 			class="join-div"
 			:class="{ 'join-div-open': isOpen }"
@@ -26,6 +47,7 @@
 		class="mobile-drop-container"
 		:style="{
 			'background-color': colour,
+			/* If the left most or right most tabs are open, those corners shouldn't be rounded.  */
 			'border-radius': configureCornerRadius(),
 		}"
 	>
@@ -94,7 +116,7 @@ export default {
 }
 
 .notification-bar {
-	width: 60%;
+	width: 80%;
 	min-height: 3rem;
 	height: min-content;
 	border-radius: 30px;
@@ -107,47 +129,10 @@ export default {
 	transition-property: border-radius;
 }
 
-.link {
-	background-color: transparent;
-	border: none;
-	font-family: fell, sans-serif;
-	font-size: 1rem;
-	color: #dce0d1;
-}
-
-.link-container {
-	width: 100%;
-	display: block;
-	text-align: center;
-	padding: 0.5rem;
-}
-
-.notification-icon {
-	color: #dce0d1;
-	margin-left: 1rem;
-	height: 3rem;
-}
-
 .dropdown {
 	float: right;
 	margin-right: 0.5rem;
 	cursor: pointer;
-	color: #dce0d1;
-}
-
-.text-container {
-	width: 80%;
-	padding: 10%;
-}
-
-.title {
-	text-align: center;
-	margin-top: 0;
-	color: #dce0d1;
-}
-
-.tip {
-	margin: 4px;
 	color: #dce0d1;
 }
 
@@ -169,7 +154,7 @@ export default {
 
 @media (max-width: 850px) {
 	.notification-bar {
-		width: 19%;
+		width: 16%;
 		overflow: visible;
 		position: absolute;
 	}
@@ -187,10 +172,6 @@ export default {
 
 	.visible-bar {
 		justify-content: center;
-	}
-
-	.notification-icon {
-		margin-left: 0;
 	}
 
 	.desktop-drop {

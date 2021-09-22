@@ -1,3 +1,5 @@
+<!-- Base Component. Contains the navigation bar, and the router view. The router will handle which major section components to display based on the url path. -->
+
 <template>
 	<div class="application-container">
 		<div class="application-background"></div>
@@ -22,6 +24,7 @@ export default {
 		const store = useStore();
 
 		return {
+			// Watch store for changes is logged in status.
 			isLoggedIn: computed(() => store.getters["user/isLoggedIn"]),
 		};
 	},

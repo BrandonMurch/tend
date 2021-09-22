@@ -1,20 +1,22 @@
+<!--
+Description: 
+					Contains all the settings for a plant within a form. When saved, all settings will be stored.
+Props: 
+	settings		Plant settings. See the list below for all possible 		
+					settings. 
+	id				The plants id
+	
+Emits: 
+	update:settings Update the settings.
+	delete			Delete the plant.
+
+-->
 <template>
 	<PlantNotes
 		:enabled="notesOpen"
 		:values="formData.notes"
-		@add:note="
-			(note) => {
-				note.id = formData.notes[0].id + 1;
-				formData.notes = [note, ...formData.notes];
-			}
-		"
-		@delete:note="
-			(noteid) => {
-				formData.notes = [
-					...formData.notes.filter((note) => note.id != noteid),
-				];
-			}
-		"
+		@add:note="addNote"
+		@delete:note="deleteNote"
 		@close="notesOpen = false"
 	/>
 	<form
@@ -22,7 +24,7 @@
 		id="plantSettings"
 		class="input-container"
 		@submit.stop.prevent="onSubmit"
-		@reset="resetForm"
+		@reset.stop.prevent="resetForm"
 		:class="{ submitted: hasSubmitted }"
 	>
 		<Input
@@ -34,6 +36,7 @@
 			required
 			stealth
 		>
+			<!-- Allow each input to have an associated icon. -->
 			<template v-slot:icon>
 				<component class="input-icon" :is="input.icon" />
 			</template>
@@ -92,9 +95,9 @@ import IconRoof from "./Icons/IconRoof.vue";
 import IconNotes from "./Icons/IconNotes.vue";
 import IconLocation from "./Icons/IconLocation.vue";
 import IconExclamation from "./Icons/IconExclamation.vue";
-import PlantNotes from "./PlantNotes.vue";
-import { getSpecies } from "../composables/mockPlantData";
-import { ref, computed, watch } from "vue";
+import PlantNotes from "./PlantProfilePrivateNotes.vue";
+import { ref, watch, computed, watchEffect } from "vue";
+import { useStore } from "vuex";
 
 export default {
 	name: "PlantProfilePrivateSettings",
@@ -105,16 +108,21 @@ export default {
 	components: { Button, Input, IconNotes, IconExclamation, PlantNotes },
 	emits: ["update:settings", "delete"],
 	setup(props, { emit }) {
+		const store = useStore();
 		const notesOpen = ref(false);
+		let hasSubmitted = false;
 
-		const speciesOptions = [];
-		for (const species of getSpecies()) {
-			speciesOptions.push({
-				text: species,
-				value: species,
+		// Get the list of species and format them for options.
+		const getSpeciesList = () => {
+			const list = [{ text: "Add New Species", value: "new" }];
+			store.getters["plants/allSpecies"].forEach((species) => {
+				list.push({ text: species, value: species });
 			});
-		}
+			return list;
+		};
+		const speciesOptions = ref(getSpeciesList());
 
+		// All options for time based settings.
 		const timeOptions = [
 			{ text: "Auto", value: "Auto" },
 			{ text: "Daily", value: "Daily" },
@@ -124,11 +132,12 @@ export default {
 			{ text: "Every 2 Years", value: "Every 2 Years" },
 		];
 
-		const inputs = [
+		// All inputs
+		const inputs = computed(() => [
 			{
 				label: "Species:",
 				type: "select",
-				options: speciesOptions,
+				options: speciesOptions.value,
 				dataName: "species",
 				icon: IconLeaf,
 			},
@@ -176,45 +185,71 @@ export default {
 				dataName: "repot-frequency",
 				icon: IconFlowerPot,
 			},
-		];
+		]);
+		const formData = ref(props.settings);
+		watch(
+			() => props.settings,
+			(current) => {
+				formData.value = current;
+			}
+		);
 
 		const getLocation = () => {
 			const locationSuccess = (position) => {
 				formData.value.location = `${position.coords.latitude}, ${position.coords.longitude}`;
 			};
 
-			return navigator.geolocation.getCurrentPosition(
-				locationSuccess,
-				() => {
-					alert("Location error. Please try again later.");
-					formData.value.locationEnabled = false;
-				}
-			);
-		};
-
-		if (props.settings.locationEnabled) {
-			getLocation();
-		}
-
-		const formData = computed(() => props.settings);
-		const locationEnabled = computed(() => formData.value.locationEnabled);
-		watch(locationEnabled, () => {
-			if (formData.value.locationEnabled && navigator.geolocation) {
-				getLocation();
+			// Only get the location if it is enabled, and has not already been taken.
+			if (
+				formData.value.locationEnabled &&
+				navigator.geolocation &&
+				!formData.value.location
+			) {
+				navigator.geolocation.getCurrentPosition(
+					locationSuccess,
+					() => {
+						alert("Location error. Please try again later.");
+						formData.value.locationEnabled = false;
+					}
+				);
 			}
 
-			formData.value.location = "";
-		});
+			// If location is disabled, ensure the location is cleared.
+			if (!formData.value.locationEnabled) {
+				formData.value.location = "";
+			}
+		};
 
-		let hasSubmitted = false;
+		getLocation();
+
+		watchEffect(formData, getLocation());
 
 		const resetForm = () => {
 			hasSubmitted = false;
-			formData.value = props.settings;
+			formData.value = { ...props.settings };
 		};
 
 		const onSubmit = () => {
-			emit("update:settings", formData);
+			// Create a new species.
+			if (formData.value.species == "new") {
+				const species = prompt("Please enter in species name: ");
+				formData.value.species = species;
+			}
+			speciesOptions.value = getSpeciesList();
+			emit("update:settings", formData.value);
+		};
+
+		const addNote = (newNote) => {
+			formData.value.notes.unshift(newNote);
+			formData.value = { ...formData.value };
+			emit("update:settings", formData.value);
+		};
+
+		const deleteNote = (noteId) => {
+			formData.value.notes = [
+				...formData.value.notes.filter((note) => note.id != noteId),
+			];
+			emit("update:settings", formData.value);
 		};
 
 		return {
@@ -225,14 +260,14 @@ export default {
 			onSubmit,
 			notesOpen,
 			location,
+			addNote,
+			deleteNote,
 		};
 	},
 };
 </script>
 
 <style scoped>
-@import "../assets/css/stealthInput.css";
-
 .button-container {
 	width: 100%;
 	display: flex;
@@ -259,6 +294,7 @@ export default {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	min-width: 10rem;
 }
 
 @media (min-width: 500px) {

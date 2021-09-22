@@ -1,3 +1,5 @@
+<!-- SINGLETON. The area where users can come to learn more about plants and discuss with others. This connects to articles and questions.  -->
+
 <template>
 	<transition name="fade">
 		<PopUpTextBox
@@ -49,7 +51,7 @@
 
 		<div class="category-container">
 			<transition-group name="fade">
-				<CardSmallImage
+				<CardImageSmall
 					v-for="article of articles"
 					:key="article.id"
 					:text="article.text"
@@ -57,6 +59,7 @@
 					:subtitle="getFormattedDate(article.datetime)"
 					:imageSource="article.imageSource"
 					@click="
+						// Go to a specific article.
 						$router.push({
 							name: 'articles',
 							params: { id: article.id },
@@ -82,19 +85,20 @@
 import Button from "./AppButton.vue";
 import Input from "./AppInput.vue";
 import PopUpTextBox from "./PopUpTextBox.vue";
-import CardSmallImage from "./CardSmallImage.vue";
+import CardImageSmall from "./CardImageSmall.vue";
 import { getFormattedDate } from "../composables/getFormattedDate";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 export default {
 	name: "LearnPlants",
-	components: { Button, Input, CardSmallImage, PopUpTextBox },
+	components: { Button, Input, CardImageSmall, PopUpTextBox },
 	setup() {
 		const askQuestionOpen = ref(false);
 		const store = useStore();
 		const selectedCategory = ref(null);
 		const numberOfArticlesDisplaying = ref(2);
 
+		// Get categories and format them for an select element.
 		const getCategories = () => {
 			const options = [];
 			for (let option of store.getters["learn/categories/all"]) {
@@ -103,6 +107,18 @@ export default {
 			return options;
 		};
 
+		// See if there are more articles. Display a load more button if there are.
+		const checkForMoreArticles = () =>
+			store.getters["learn/articles/all"].length >
+			numberOfArticlesDisplaying.value;
+
+		const areThereMoreArticles = ref(checkForMoreArticles());
+
+		watch(numberOfArticlesDisplaying, () => {
+			areThereMoreArticles.value = checkForMoreArticles();
+		});
+
+		// Get articles based on category.
 		const getRelevantArticles = () => {
 			if (
 				selectedCategory.value == "all" ||
@@ -119,29 +135,22 @@ export default {
 			}
 		};
 
-		const checkForMoreArticles = () =>
-			store.getters["learn/articles/all"].length >
-			numberOfArticlesDisplaying.value;
-
-		const areThereMoreArticles = ref(checkForMoreArticles());
-
-		watch(numberOfArticlesDisplaying, () => {
-			areThereMoreArticles.value = checkForMoreArticles();
-		});
-
 		const articles = ref(getRelevantArticles());
 
+		// Watch for more articles or a category change and then fetch articles.
 		watch(numberOfArticlesDisplaying, () => {
 			articles.value = getRelevantArticles();
 		});
 		watch(selectedCategory, () => {
 			articles.value = getRelevantArticles();
+			areThereMoreArticles.value = checkForMoreArticles();
 		});
 
 		const getMoreArticles = () => {
 			numberOfArticlesDisplaying.value += 5;
 		};
 
+		// Ask a question.
 		const askQuestion = (questionText) => {
 			store.commit("learn/questions/add", {
 				text: questionText,

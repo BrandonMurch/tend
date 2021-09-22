@@ -1,3 +1,16 @@
+<!--
+Description: 	Contains the inbox for the user within a drop down shape.
+
+Props: 		
+	Position	Integer. Used to offset the notification bar within the mobile
+				menu.
+
+	isOpen		Boolean value, whether or not the menu is open.
+
+Emits:
+	toggleOpen	Toggle the menu open or close.
+-->
+
 <template>
 	<NotificationShape
 		:position="position"
@@ -33,10 +46,7 @@
 				<h3>Sent at {{ getFormattedDate(activeMessage.datetime) }}</h3>
 				<p>{{ activeMessage.body }}</p>
 				<Input type="textarea" v-model="response" />
-				<Button
-					class="send-button"
-					@click="() => sendmessage(constructResponse())"
-				>
+				<Button class="send-button" @click="sendMessage">
 					send
 				</Button>
 				<Button deleteButton @click="deleteMessage"> delete </Button>
@@ -53,7 +63,6 @@ import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
 import { ref } from "vue";
 import { useStore } from "vuex";
-import { sendMessage } from "../composables/mockMessages";
 import { getFormattedDate } from "../composables/getFormattedDate";
 export default {
 	name: "MessageNotifications",
@@ -92,6 +101,11 @@ export default {
 				body: response,
 				datetime: new Date(),
 			};
+		};
+
+		const sendMessage = () => {
+			alert("Message sent!");
+			activeMessage.value = null;
 		};
 
 		return {

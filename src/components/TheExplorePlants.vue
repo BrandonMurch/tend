@@ -20,7 +20,7 @@
 
 <script>
 import ImageGallery from "./ImageGallery.vue";
-import { getPlantData } from "../composables/mockPlantData";
+import { plantFactory } from "../composables/mockPlantData";
 import PlantProfilePublic from "./PlantProfilePublic.vue";
 
 export default {
@@ -40,9 +40,10 @@ export default {
 	},
 
 	methods: {
+		getPlantData: plantFactory(),
 		getImageData() {
 			// New array to trigger watch updates.
-			this.images = [...this.images, ...getPlantData()];
+			this.images = [...this.images, ...this.getPlantData()];
 		},
 	},
 	created() {

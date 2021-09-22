@@ -1,6 +1,15 @@
-<!-- A higher order function that renders any of its children within a drop down
-menu. Handles animation. Use an external button to modify the isOpen prop to
-open/close component. -->
+<!--
+Description:  	A higher order function that renders any of its children within
+				a drop down menu. Handles animation. Use an external button to 
+				modify the isOpen prop to open/close component.
+
+Props: 
+
+	isOpen		Is the drop down open? Open and close by changing this prop.
+
+	insetShadow	Change the visual of the dropDown to include an inset shadow.
+
+-->
 
 <template>
 	<div class="container" :class="{ shadow: insetShadow }" ref="container">
@@ -66,5 +75,3 @@ export default {
 	box-shadow: inset 0px 0px 4px 4px grey;
 }
 </style>
-
-// https://markus.oberlehner.net/blog/refs-and-the-vue-3-composition-api/

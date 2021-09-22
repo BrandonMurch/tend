@@ -55,9 +55,11 @@
 				</AppButton>
 			</div>
 			<!-- Remove for production versions -->
-			<h2 style="text-align: center">
-				Any Email/Password will work for testing.
-			</h2>
+			<div style="width: 100%">
+				<h2 style="text-align: center">
+					Any Email/Password will work for testing.
+				</h2>
+			</div>
 		</form>
 	</div>
 </template>
@@ -127,7 +129,7 @@ export default {
 
 		const register = ref(false);
 		const hasSubmitted = ref(false);
-		let formData = getDefaultForm();
+		let formData = ref(getDefaultForm());
 
 		// Dynamically create a list of inputs depending on which mode is selected.
 		const getInputs = () => {
@@ -141,7 +143,7 @@ export default {
 			document.getElementById("Password").setCustomValidity(error);
 			if (register.value) {
 				document
-					.getElementById("Confirm Password")
+					.getElementById("ConfirmPassword")
 					.setCustomValidity(error);
 			}
 		};
@@ -150,7 +152,7 @@ export default {
 		const doPasswordsMatch = () => {
 			if (
 				register.value &&
-				formData.password != formData.confirmPassword
+				formData.value.password != formData.value.confirmPassword
 			) {
 				setPasswordError("Password and Confirm Password must match.");
 				return false;
@@ -164,20 +166,19 @@ export default {
 		const resetForm = () => {
 			hasSubmitted.value = false;
 			setPasswordError("");
-			formData = getDefaultForm();
+			formData.value = getDefaultForm();
 		};
 
 		const onSubmit = () => {
 			hasSubmitted.value = true;
-			console.log("test submit");
 			if (doPasswordsMatch()) {
 				// Get a name for the user
-				const username = formData.username
-					? formData.username
-					: formData.email.split("@")[0];
+				const username = formData.value.username
+					? formData.value.username
+					: formData.value.email.split("@")[0];
 
-				store.commit("user/logUserIn", username);
-				router.push("/explore");
+				store.commit("user/logIn", username);
+				router.push("/my-plants");
 			}
 		};
 
@@ -185,6 +186,10 @@ export default {
 		const toggleRegister = () => {
 			resetForm();
 			register.value = !register.value;
+		};
+
+		const test = (value, dataName) => {
+			formData.value[dataName] = value;
 		};
 
 		return {
@@ -195,6 +200,7 @@ export default {
 			onSubmit,
 			toggleRegister,
 			resetForm,
+			test,
 		};
 	},
 	methods: {},

@@ -1,3 +1,7 @@
+<!--
+Description: Displays a single question, with all responses. Also includes a textbox for replies.  
+-->
+
 <template>
 	<div class="question-container">
 		<CardListWithTextbox

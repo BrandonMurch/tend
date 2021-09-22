@@ -1,6 +1,14 @@
-<!-- A search bar with autocomplete. // Currently options are mocked from a json
-file. // Search autocomplete inspired from
+<!-- 
+
+// Search autocomplete inspired from
 https://www.w3schools.com/howto/howto_js_autocomplete.asp -->
+
+<!--
+Description: 
+				A search bar with autocomplete. Will autocomplete with different results based on the path. 
+Props: 
+	isOpen		Boolean. Whether or not the search bar is open or closed.  
+-->
 
 <template>
 	<div style="display: inline;">
@@ -48,8 +56,6 @@ https://www.w3schools.com/howto/howto_js_autocomplete.asp -->
 import DropDown from "./DropDown.vue";
 import PlantProfilePublic from "./PlantProfilePublic.vue";
 
-import plantData from "../assets/json/plants.json";
-
 export default {
 	name: "SearchBar",
 	components: { DropDown, PlantProfilePublic },
@@ -64,7 +70,7 @@ export default {
 	data() {
 		return {
 			searchTerm: "",
-			searchOptions: plantData.map((plant) => plant.title.toLowerCase()),
+			searchOptions: this.getOptions(),
 			suggestions: [],
 			focusedIndex: -1,
 			focusedSuggestion: "",
@@ -72,6 +78,20 @@ export default {
 		};
 	},
 	methods: {
+		// Get the options based on the url path.
+		getOptions() {
+			if (
+				this.$route.path.includes("my-plants") ||
+				this.$route.path.includes("explore")
+			) {
+				return this.$store.getters["plants/allSpecies"];
+			} else if (this.$route.path.includes("learn")) {
+				return this.$store.getters["learn/articles/all"].map(
+					(article) => article.title
+				);
+			}
+		},
+		// Reset state and close.
 		close() {
 			this.suggestions = [];
 			this.focusedIndex = -1;

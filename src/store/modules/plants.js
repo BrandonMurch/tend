@@ -1,3 +1,5 @@
+//  Store all plant data. 
+
 import plantData from '../../assets/json/plants.json';
 
 const state = () => {
@@ -14,9 +16,29 @@ const getters = {
     one: (state) => (id) => {
         return state.plants.find(plant => plant.id == id);
     },
+    latest: (state) => {
+        return state.plants[state.plants.length - 1];
+    },
+    allSpecies: (state) => {
+        const speciesList = []
+        state.plants.forEach(plant => {
+            if (plant.settings.species.length > 0) {
+                speciesList.push(plant.settings.species);
+
+            }
+        });
+        return speciesList.sort();
+
+    },
     species: (state) => (species) => {
         return state.plants.find(plant => plant.settings.species == species);
-    }
+    },
+    comments: (state) => (id) => {
+        return state.plants.find(plant => plant.id == id).comments
+    },
+    notes: (state) => (id) => {
+        return state.plants.find(plant => plant.id == id).notes
+    },
 }
 
 const mutations = {
@@ -47,10 +69,29 @@ const mutations = {
 
     delete(state, plantId) {
         state.plants = state.plants.filter(plant => plant.id !== plantId);
+    },
+
+
+
+
+
+}
+
+
+const actions = {
+    addComment({ state, commit, rootState }, { id, comment }) {
+        const plant = state.plants.find(plant => plant.id === id);
+        const new_comment = {
+            id: (plant.comments.length > 0 ? plant.comments[0].id : 1001) + 1,
+            body: comment,
+            datetime: new Date().toISOString(),
+            user: rootState.user.name,
+        }
+        plant.comments.unshift(new_comment)
+
+        commit('update', plant);
+
     }
-
-
-
 }
 
 
@@ -60,5 +101,6 @@ export default {
     namespaced: true,
     state,
     getters,
-    mutations
+    mutations,
+    actions
 }

@@ -1,4 +1,6 @@
-<!-- A version of CardImage that allows the user to add a new object (usually a new plant profile) -->
+<!--
+Description: A version of CardImage that allows the user to add a new object (usually a new plant profile)
+-->
 
 <template>
 	<!-- 

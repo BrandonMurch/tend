@@ -1,3 +1,5 @@
+<!-- SINGLETON. This is a basic 404 (notfound) landing page, for paths which cannot be found.  -->
+
 <template>
 	<h1 class="warning">
 		(404) <br />

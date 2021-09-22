@@ -1,4 +1,15 @@
-<!-- Presents text with a title inside a card -->
+<!--
+Description: 			Presents text with a title and subtitle inside a card.
+
+Props: 
+	deletable			Optional prop. If present, the card can be deleted.
+	
+	title				Title of the card
+	
+	subtitle			Optional Prop. Subtitle of the card
+
+	text				Main text
+-->
 
 <template>
 	<div class="container">
@@ -48,7 +59,6 @@ export default {
 	position: absolute;
 	top: -5px;
 	right: 5px;
-	/* color:  */
 	transition: 0.5s;
 	cursor: pointer;
 }

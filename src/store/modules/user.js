@@ -1,21 +1,20 @@
-
+// Store information about the user.
 const state = () => {
     return {
-        isLoggedIn: false,
-        user: {
-            name: "",
-        },
+        isLoggedIn: true,
+        name: "brandon",
     }
 }
 
 
 const getters = {
-    username: (state) => {
-        console.log(state)
+    name: (state) => {
         if (state.isLoggedIn) {
-            return state.user.name;
+            return state.name;
+        } else {
+            throw new Error("There is no user logged in.")
+
         }
-        throw new Error("There is no user logged in.")
     },
     isLoggedIn: (state) => {
         return state.isLoggedIn;
@@ -23,14 +22,13 @@ const getters = {
 }
 
 const mutations = {
-    logUserIn(state, name) {
+    logIn(state, name) {
         state.isLoggedIn = true;
-        state.user.name = name;
+        state.name = name;
     },
-
     logOut(state) {
         state.isLoggedIn = false;
-        state.user.name = null;
+        state.name = "";
     },
 
 

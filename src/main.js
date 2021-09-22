@@ -12,5 +12,5 @@ vue.use(router)
     .use(store)
     .mount('#app')
 
-vue.config.performance = true;
-vue.config.devtools = true;
+// vue.config.performance = true;
+// vue.config.devtools = true;

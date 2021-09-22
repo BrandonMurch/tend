@@ -1,10 +1,19 @@
-<!-- Creates navigation links based on the array passed in by NavigationBar.
-Different styles are applied on desktop vs. mobile. -->
+<!--  -->
+
+<!--
+Description: 		Creates navigation links based on the array passed in by 
+					NavigationBar. Different styles are applied on desktop vs. mobile.
+Props: 
+	links			a list of link objects. They must include a vue-router 	
+					name, a url, and a dispay text.
+
+	dropDown		Boolean. Whether the links are for the drop down menu or 					the desktop menu.
+-->
 
 <template>
 	<div class="hide-div">
 		<div
-			v-for="link in links"
+			v-for="link of links"
 			:key="link.text"
 			:class="{ linkContainer: dropDown }"
 		>

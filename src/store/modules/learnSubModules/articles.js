@@ -24,18 +24,28 @@ const getters = {
 }
 
 const mutations = {
-    add(state, article) {
-        // Add future verification.
-        state.articles.push(article);
+    update(state, articleToUpdate) {
+        const index = state.articles.findIndex(article => article.id == articleToUpdate.id);
+        state.articles[index] = articleToUpdate;
     },
-
-    delete(state, articleId) {
-        state.articles = state.articles.filter(article => {
-            return article.id != articleId
-        });
-    }
 }
 
+
+const actions = {
+    addComment({ state, commit, rootState }, { id, text }) {
+        const article = state.articles.find(currentArticle => currentArticle.id == id);
+        const new_comment = {
+            id: (article.comments.length > 0 ? article.comments[0].id : 1001) + 1,
+            body: text,
+            datetime: new Date().toISOString(),
+            user: rootState.user.name,
+        }
+        article.comments.unshift(new_comment)
+
+        commit('update', article);
+
+    }
+}
 
 
 
@@ -43,5 +53,6 @@ export default {
     namespaced: true,
     state,
     getters,
-    mutations
+    mutations,
+    actions
 }

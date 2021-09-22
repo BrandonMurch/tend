@@ -1,9 +1,32 @@
-<!-- 
-An input component that applies common styling to all inputs. It also allows
-creation of many inputs from a list. Validation can be applied to individual
-inputs by putting all validation key/values into an object. Checkboxes are unable to be implemented due to issues with v-model.
+<!--
+Description: 		An input component that applies common styling to all 	 
+					inputs. It also allows creation of many inputs from a list.
 
-https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
+Props: 
+	modelValue:		Used for v-model. The value provided to v-model will appear 				in this component as modelValue.
+	
+	required: 		Optional parameter. Make the input mandatory if provided.
+
+	options: 		A list of options for the select, or custom slider inputs. 
+					Needs an array of objects containing a text field (to display) and a value field to store.
+
+	validation		Validation for the inputs. Passed in as an object for all 					validationfields. For example: 
+						validation: {
+							minlength: 8,
+							maxlength: 30,
+						}
+	type			The type of input. Example: "text", "checkbox", "email", etc
+
+	stealth			Applies the stealth styling without a border or background. 
+
+	size			Either "full" or "half" for full width inputs or half.
+
+Emits: 
+update:modelValue	Works with v-model. Used to update the data source within 						the parent. Passes back the input field value.
+
+Notes: 
+					Notes on v-model with custom components: https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
+
 -->
 
 <template>
@@ -14,17 +37,20 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 			halfInput: size === 'half',
 		}"
 	>
-		<!-- label with hidden class for use with accessibility readers. -->
+		<!-- An Icon slot -->
 		<slot name="icon" />
+
+		<!-- label with hidden class for use with accessibility readers. -->
 		<label
 			:class="type == 'checkbox' ? 'stealth-input' : 'hidden'"
-			:for="label"
+			:for="id"
 			>{{ label }}</label
 		>
 
+		<!-- SELECT -->
 		<select
 			v-if="type == 'select'"
-			:id="label"
+			:id="id"
 			:class="stealth ? 'stealth-input' : 'inputBox'"
 			:value="modelValue"
 			:required="required"
@@ -42,7 +68,9 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 			</option>
 		</select>
 
+		<!-- Custom Input Slider -->
 		<InputSlider
+			:id="id"
 			v-else-if="type === 'slider'"
 			:option1="options[0]"
 			:option2="options[1]"
@@ -56,9 +84,11 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 				)
 			"
 		/>
+
+		<!-- Checkbox -->
 		<input
 			v-else-if="type == 'checkbox'"
-			:id="label"
+			:id="id"
 			class="checkbox"
 			:class="stealth ? 'stealth-input' : 'inputBox'"
 			:checked="modelValue"
@@ -66,14 +96,13 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 			:placeholder="label"
 			:type="type"
 			v-bind="validation"
+			style="max-height"
 		/>
-		<!--
-			@click=""
-			-->
 
+		<!-- Textarea -->
 		<textarea
 			v-else-if="type === 'textarea'"
-			:id="label"
+			:id="id"
 			:class="stealth ? 'stealth-input' : 'inputBox'"
 			:value="modelValue"
 			:required="required"
@@ -82,9 +111,10 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 			v-bind="validation"
 		/>
 
+		<!-- Text Based Input -->
 		<input
 			v-else
-			:id="label"
+			:id="id"
 			:class="stealth ? 'stealth-input' : 'inputBox'"
 			:value="modelValue"
 			:required="required"
@@ -92,12 +122,15 @@ https://v3.vuejs.org/guide/component-basics.html#using-v-model-on-components
 			:placeholder="label"
 			:type="type"
 			v-bind="validation"
+			@blur="$emit('blur')"
 		/>
 	</div>
 </template>
 
 <script>
 import InputSlider from "./InputSlider.vue";
+import { removeWhiteSpace } from "../composables/stringManipulation";
+import { computed } from "vue";
 
 export default {
 	name: "Input",
@@ -129,15 +162,22 @@ export default {
 			},
 		},
 	},
-	methods: {
-		check() {
-			console.log("CLICK");
-		},
+	setup(props) {
+		const id = computed(() => {
+			if (props.label) {
+				return removeWhiteSpace(props.label);
+			} else {
+				return "";
+			}
+		});
+		return { id };
 	},
 };
 </script>
 
 <style scoped>
+@import "../assets/css/stealthInput.css";
+
 .inputContainer {
 	display: flex;
 	justify-content: center;
@@ -159,6 +199,7 @@ export default {
 	font-size: 1rem;
 	padding: 0.5rem;
 	background-color: rgba(255, 255, 255, 0.4);
+	text-align: inherit;
 }
 
 .inputBox:focus {

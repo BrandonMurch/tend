@@ -1,3 +1,6 @@
+// Stores user messages.
+
+
 import messages from '../../assets/json/messages.json';
 
 const state = () => {
@@ -5,7 +8,6 @@ const state = () => {
         messages: messages
     }
 }
-
 
 const getters = {
     all: (state) => {
