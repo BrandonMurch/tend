@@ -35,10 +35,6 @@ user to submit a message to tend. -->
 			</div>
 		</form>
 	</div>
-	<div class="policy-container">
-		<a class="footer-link" href="#">Terms of Use</a>
-		<a class="footer-link" href="#">Privacy Policy</a>
-	</div>
 </template>
 
 <script>
@@ -107,7 +103,6 @@ export default {
 		},
 
 		onSubmit(event) {
-			console.log(this.formData);
 			alert(
 				`Thank you ${this.formData.name}! We will get in touch shortly at ${this.formData.email}.`
 			);

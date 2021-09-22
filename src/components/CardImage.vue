@@ -1,5 +1,22 @@
-<!-- Presents an image inside a card. Hover for the title. Emits "imageLoaded" for keeping track of when all images are loaded on the page.
- -->
+<!--
+Description: 		Presents an image inside a card. Hover for darker overlay 
+					if title is provided.
+
+Props: 				
+	imageSource		URL for image file to be displayed.
+	
+	title			Title to be displayed within the overlay.
+
+	actions			Possible actions from this image card. These will be 
+					displayed in the form of a clickable icon. So far there is 
+					"water", "repot" and "fertilize".
+Emits: 
+	imageLoaded		Called when the image has loaded. Useful for keeping track 					of when all images have loaded in a gallery.
+
+	performAction 	When an action button is called. Will return the action type
+
+	imageClick		Called when the image is clicked.
+-->
 
 <template>
 	<!-- 
@@ -7,58 +24,39 @@
         https://www.geeksforgeeks.org/how-to-check-an-image-is-loaded-or-not-in-vuejs/
     -->
 	<div :class="{ imageContainer: isLoaded, hiddenContainer: !isLoaded }">
-		<slot v-if="isLoaded" />
 		<img class="image" :src="imageSource" :alt="title" @load="onLoaded" />
-		<div v-if="isLoaded" class="image-overlay">
+
+		<div
+			v-if="isLoaded && title"
+			class="image-overlay"
+			@click="$emit('imageClick')"
+			role="link"
+			tabindex="0"
+		>
 			<p class="image-hover-text">{{ title }}</p>
 		</div>
-		<div
-			v-if="actions.includes('water')"
-			class="water-icon"
-			@click="() => performAction('water', 'watered')"
-			:style="{
-				left: `${actions.indexOf('water') * 3}rem`,
-			}"
-		>
-			<IconWater class="inner-icon" />
-		</div>
-		<div
-			v-if="actions.includes('repot')"
-			class="pot-icon"
-			@click="() => performAction('repot', 'repotted')"
-			:style="{
-				left: `${actions.indexOf('repot') * 3}rem`,
-			}"
-		>
-			<IconFlowerPot class="inner-icon" />
-		</div>
-		<div
-			v-if="actions.includes('fertilize')"
-			class="mushroom-icon"
-			@click="() => performAction('fertilize', 'fertilized')"
-			:style="{
-				left: `${actions.indexOf('fertilize') * 3}rem`,
-			}"
-		>
-			<IconMushroom class="inner-icon" />
-		</div>
+
+		<IconBarAction
+			:actions="actions"
+			v-if="isLoaded"
+			@performAction="(type) => $emit('performAction', type)"
+			class="icon-bar"
+		/>
 	</div>
 </template>
 
 <script>
-import IconWater from "./Icons/IconWater.vue";
-import IconMushroom from "./Icons/IconMushroom.vue";
-import IconFlowerPot from "./Icons/IconFlowerPot.vue";
+import IconBarAction from "./IconBarAction.vue";
 
 export default {
 	name: "ImageCard",
-	components: { IconWater, IconMushroom, IconFlowerPot },
+	components: { IconBarAction },
 	props: {
 		imageSource: String,
 		title: String,
 		actions: Array,
 	},
-	emits: ["imageLoaded"],
+	emits: ["imageLoaded", "performAction", "imageClick"],
 	data() {
 		return {
 			isLoaded: false,
@@ -68,11 +66,6 @@ export default {
 		onLoaded() {
 			this.isLoaded = true;
 			this.$emit("imageLoaded");
-		},
-		performAction(type, verb) {
-			if (confirm(`Have you ${verb} your plant?`)) {
-				actions = actions.filter((action) => action != type);
-			}
 		},
 	},
 };
@@ -85,7 +78,7 @@ export default {
 
 .imageContainer {
 	position: relative;
-	width: 250px;
+	width: 100%;
 	border: 3px solid #b87d4b;
 	border-radius: 20px;
 	box-shadow: 0 5px 5px grey;
@@ -139,34 +132,9 @@ export default {
 	transition: 0.7s;
 }
 
-.water-icon,
-.pot-icon,
-.mushroom-icon {
+.icon-bar {
 	position: absolute;
-	border-radius: 50%;
 	top: 0;
-	height: 3rem;
-	width: 3rem;
-	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-}
-
-.water-icon {
-	background-color: #136e9e;
 	left: 0;
-}
-.pot-icon {
-	background-color: #bf763c;
-	left: 4rem;
-}
-.mushroom-icon {
-	background-color: #bf763c;
-	left: 8rem;
-}
-
-.inner-icon {
-	height: 3rem;
 }
 </style>

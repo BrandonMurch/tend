@@ -1,4 +1,13 @@
-<!-- An button component that applies common styling throughout the application
+<!--
+ Description: An button wrapper that applies common styling throughout the application
+
+ Props: 
+	type			Pass through the relevent button type for the native HTML 
+					button. Useful with forms.
+	form			Pass through the relevent form ID for the native HTML 
+					button.
+	deleteButton 	Apply unique red styling for delete buttons.
+ Emits: 
  -->
 
 <template>

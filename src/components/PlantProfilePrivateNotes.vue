@@ -1,3 +1,16 @@
+<!--
+Description: 
+				Contains the plants notes within a popup window. New notes can be added using the textarea. Notes can be deleted with the trash icon.
+Props: 
+	enabled		Boolean. Determines whether or not to show the pop up.
+	values		An array that stores the notes. 
+
+Emits: 
+	close		Close the pop up.
+	add:note 	Add a note.
+	delete:note Delete a note.
+-->
+
 <template>
 	<transition name="fade">
 		<PopUp v-if="enabled" @close="$emit('close')">
@@ -7,6 +20,7 @@
 				@add="addNote"
 				@delete="deleteNote"
 				scroll
+				deletable
 			/>
 		</PopUp>
 	</transition>
@@ -15,9 +29,7 @@
 <script>
 import PopUp from "./PopUp.vue";
 import CardListWithTextbox from "./CardListWithTextbox.vue";
-import { getFormattedDate } from "../composables/getFormattedDate";
 import { ref } from "vue";
-import { addPlantNote, deletePlantNote } from "../composables/mockPlantData";
 export default {
 	components: { PopUp, CardListWithTextbox },
 	name: "PlantNotes",
@@ -27,25 +39,22 @@ export default {
 		values: Array,
 	},
 	setup(props, { emit }) {
-		// const newNoteText = ref("");
 		const notes = ref(props.value);
 
 		const addNote = (text) => {
 			const newNote = {
+				id: props.values.length > 0 ? props.values[0].id + 1 : 1001,
 				text,
 				date: new Date().toISOString(),
 			};
-			addPlantNote(newNote);
 
 			emit("add:note", newNote);
 		};
 
 		const deleteNote = (noteId) => {
-			deletePlantNote(noteId);
-
 			emit("delete:note", noteId);
 		};
-		return { getFormattedDate, notes, addNote, deleteNote };
+		return { notes, addNote, deleteNote };
 	},
 };
 </script>

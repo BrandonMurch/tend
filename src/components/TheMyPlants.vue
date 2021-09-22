@@ -1,11 +1,16 @@
 <template>
-	<NotificationBar :plants="plants" />
+	<NotificationBar :plants="plants" ref="notificationArea" />
 
-	<div class="gallery-container">
+	<div
+		class="gallery-container"
+		v-if="galleryWidth"
+		:style="{ width: galleryWidth }"
+	>
 		<ImageGallery
 			:images="plants"
 			@itemClick="openPlantSettings"
 			includeActions
+			@performAction="performPlantAction"
 		>
 			<CardAdd @click="addPlant" class="add-card" />
 		</ImageGallery>
@@ -13,13 +18,15 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
 import ImageGallery from "./ImageGallery.vue";
 import NotificationBar from "./NotificationBar.vue";
 import CardAdd from "./CardAdd.vue";
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { getMessages } from "../composables/mockMessages";
-import { useStore } from "vuex";
+import windowSizeWatcher from "../composables/windowSizeWatcher";
+import { debounce } from "../helpers/debounce.js";
 
 export default {
 	name: "MyPlants",
@@ -31,12 +38,21 @@ export default {
 	setup() {
 		const store = useStore();
 		const router = useRouter();
+		const notificationArea = ref(null);
+		const galleryWidth = ref();
 
 		const plants = ref(store.getters["plants/all"]);
 
 		const addPlant = () => {
-			store.commit("plants/add", prompt("Enter a new plant name: "));
-			plants.value = [...store.getters["plants/all"]];
+			const newPlantName = prompt("Enter a new plant name: ");
+			if (newPlantName) {
+				store.commit("plants/add");
+				plants.value = [...store.getters["plants/all"]];
+				router.push({
+					name: "private-plant",
+					params: { id: store.getters["plants/latest"].id },
+				});
+			}
 		};
 
 		const openPlantSettings = (selectedPlant) => {
@@ -46,11 +62,41 @@ export default {
 			});
 		};
 
+		const performPlantAction = ({ id, action: performedAction }) => {
+			const selectedPlant = store.getters["plants/one"](id);
+			selectedPlant.actions = selectedPlant.actions.filter(
+				(action) => action != performedAction
+			);
+
+			store.commit("plants/update", selectedPlant);
+			plants.value = [...store.getters["plants/all"]];
+		};
+
+		const readjustGalleryArea = debounce(() => {
+			if (window.innerWidth >= 850) {
+				galleryWidth.value =
+					window.innerWidth -
+					notificationArea.value.$el.clientWidth -
+					40 +
+					"px";
+			} else {
+				galleryWidth.value = window.innerWidth - 70 + "px";
+			}
+		});
+
+		onMounted(() => {
+			readjustGalleryArea();
+		});
+
+		windowSizeWatcher(readjustGalleryArea);
+
 		return {
 			plants,
 			openPlantSettings,
-			getMessages,
 			addPlant,
+			performPlantAction,
+			notificationArea,
+			galleryWidth,
 		};
 	},
 };
@@ -58,7 +104,7 @@ export default {
 
 <style scoped>
 .notification-container {
-	width: 45vw;
+	width: 30vw;
 	max-width: 600px;
 	height: min-content;
 	float: left;
@@ -85,7 +131,10 @@ export default {
 	}
 	.gallery-container {
 		height: 100%;
-		margin-top: 5rem;
+		margin: auto;
+		float: none;
+		position: relative;
+		top: 6rem;
 	}
 
 	.notification-icon {

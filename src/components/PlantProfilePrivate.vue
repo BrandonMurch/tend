@@ -1,5 +1,14 @@
+<!--
+Description: 	The private profile page for a plant. Will allow the user to 
+				change settings, and perform actions. Gets its information through the url path, and the vuex store.
+-->
+
 <template>
-	<div style="position: relative; display:flex; justify-content: center;">
+	<!-- Don't load the component if the id in the URL is not valid. -->
+	<div
+		v-if="validId"
+		style="position: relative; display:flex; justify-content: center;"
+	>
 		<div class="plants-container">
 			<ImageGallery
 				:images="plants"
@@ -13,54 +22,16 @@
 				stealth
 				class="name-input"
 				v-model="plant.subtitle"
-				style="  "
+				@blur="updateName"
 			/>
 			<div class="image-container">
-				<img
-					@touchstart="startSwipe"
-					@touchend="endSwipe"
-					class="plant-image"
-					:src="plant.imageSource"
-					:alt="plant.title"
+				<CardImageSwipeWrapper
+					:imageSource="plant.imageSource"
+					:actions="plant.actions"
+					@performAction="performAction"
+					@swipeLeft="previousPlant"
+					@swipeRight="nextPlant"
 				/>
-				<IconLeft
-					class="left-icon direction-icon"
-					@click="previousPlant"
-				/>
-				<IconRight
-					class="right-icon direction-icon"
-					@click="nextPlant"
-				/>
-				<div
-					v-if="plant.actions.includes('water')"
-					class="water-icon"
-					@click="() => performAction('water', 'watered')"
-					:style="{
-						left: `${plant.actions.indexOf('water') * 3}rem`,
-					}"
-				>
-					<IconWater class="inner-icon" />
-				</div>
-				<div
-					v-if="plant.actions.includes('repot')"
-					class="pot-icon"
-					@click="() => performAction('repot', 'repotted')"
-					:style="{
-						left: `${plant.actions.indexOf('repot') * 3}rem`,
-					}"
-				>
-					<IconFlowerPot class="inner-icon" />
-				</div>
-				<div
-					v-if="plant.actions.includes('fertilize')"
-					class="mushroom-icon"
-					@click="() => performAction('fertilize', 'fertilized')"
-					:style="{
-						left: `${plant.actions.indexOf('fertilize') * 3}rem`,
-					}"
-				>
-					<IconMushroom class="inner-icon" />
-				</div>
 			</div>
 
 			<div class="mode-toggle-container">
@@ -71,10 +42,12 @@
 					Public
 				</Button>
 			</div>
+
+			<!-- Toggles between the public and private settings with the buttons above. -->
 			<div class="settings">
 				<component
 					:is="activeTab"
-					v-bind="getProps()"
+					v-bind="getProps"
 					@update:settings="
 						(settings) => {
 							plant.settings = settings;
@@ -96,51 +69,50 @@
 
 <script>
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
-import { getSinglePlant, getPlantData } from "../composables/mockPlantData";
 import windowSizeWatcher from "../composables/windowSizeWatcher";
 import ImageGallery from "./ImageGallery.vue";
 import PlantProfilePrivateSettings from "./PlantProfilePrivateSettings.vue";
 import PlantProfileBiography from "./PlantProfileBiography.vue";
 import Input from "./AppInput.vue";
 import Button from "./AppButton.vue";
-import IconWater from "./Icons/IconWater.vue";
-import IconMushroom from "./Icons/IconMushroom.vue";
-import IconFlowerPot from "./Icons/IconFlowerPot.vue";
-import IconLeft from "./Icons/IconLeft.vue";
-import IconRight from "./Icons/IconRight.vue";
+import CardImageSwipeWrapper from "./CardImageSwipeWrapper.vue";
+import checkForValidId from "../composables/checkForValidId.js";
 
 const GALLERY_WIDTH = 330;
 const SETTINGS_MARGIN = 80;
 
 export default {
-	name: "PlantProfilePublic",
+	name: "PlantProfilePrivate",
 	components: {
 		ImageGallery,
 		PlantProfilePrivateSettings,
 		Input,
 		Button,
 		PlantProfileBiography,
-		IconWater,
-		IconMushroom,
-		IconFlowerPot,
-		IconLeft,
-		IconRight,
+		CardImageSwipeWrapper,
 	},
 	setup() {
-		const activeTab = ref("PlantProfilePrivateSettings");
 		const route = useRoute();
 		const router = useRouter();
-		const id = ref(route.params.id);
-		const width = ref();
 
+		//  Get the plant information from the store.
+		const id = ref(route.params.id);
 		const store = useStore();
 		const plant = ref(store.getters["plants/one"](id.value));
-		const plants = ref(store.getters["plants/all"]);
-		let swipeStart = 0;
 
-		const getProps = () => {
+		// Check to ensure the ID is valid.
+		const validId = ref(checkForValidId(router, plant.value));
+		if (!validId.value) {
+			return;
+		}
+
+		const activeTab = ref("PlantProfilePrivateSettings");
+		const plants = ref(store.getters["plants/all"]);
+
+		//  Create props for the dynamic components.
+		const getProps = computed(() => {
 			if (activeTab.value == "PlantProfilePrivateSettings") {
 				return {
 					id: plant.value.id,
@@ -151,8 +123,11 @@ export default {
 					biography: plant.value.text,
 				};
 			}
-		};
+			return {};
+		});
 
+		// Dynamically assign the width of the settings based on the width of the gallery.
+		const width = ref();
 		const resizeSettings = () => {
 			if (window.innerWidth > 850) {
 				width.value = `${window.innerWidth -
@@ -162,30 +137,26 @@ export default {
 				width.value = `${window.innerWidth - window.innerWidth / 10}px`;
 			}
 		};
-
-		if (plant.value.settings == undefined) {
-			plant.value.settings = {};
-		}
-
 		resizeSettings();
-
 		windowSizeWatcher(resizeSettings);
 
-		//  Handle changes between different plant ids
+		//  Handle changes between different plant ids in the URL
 		onBeforeRouteUpdate((to, from, next) => {
-			plant.value = getSinglePlant(to.params.id);
+			plant.value = store.getters["plants/one"](to.params.id);
 			next();
 		});
 
+		// Get all plants from the store, and the images to place in the gallery.
 		const getImageData = () => {
 			// New array to trigger watch updates.
-			plants.value = [...plants.value, ...getPlantData()];
+			plants.value = [...plants.value, ...store.getters["plants/all"]];
 		};
 		// Go to a new id using Vue-Router
 		const onImageClick = (plant) => {
 			router.push({ name: "private-plant", params: { id: plant.id } });
 		};
 
+		// For mobile users, switch to the previous/next plant.
 		const previousPlant = () => {
 			if (plant.value.id != plants.value[0].id) {
 				router.push({
@@ -204,31 +175,20 @@ export default {
 			}
 		};
 
-		const startSwipe = (event) => {
-			swipeStart = event.changedTouches[0].clientX;
+		// Water, fertilize or repot a plant.
+		const performAction = (action) => {
+			plant.value.actions = plant.value.actions.filter(
+				(currentAction) => currentAction != action
+			);
 		};
 
-		const endSwipe = (event) => {
-			let swipeDifference = swipeStart - event.changedTouches[0].clientX;
-			if (swipeDifference < -70) {
-				previousPlant();
-			} else if (swipeDifference > 70) {
-				nextPlant();
-			}
+		// Update a plant in the store.
+		const updatePlant = (updatedPlant) => {
+			store.commit("plants/update", updatedPlant);
+			plants.value = [...store.getters["plants/all"]];
 		};
 
-		const performAction = (type, verb) => {
-			if (confirm(`Have you ${verb} your plant?`)) {
-				plant.value.actions = plant.value.actions.filter(
-					(action) => action != type
-				);
-			}
-		};
-
-		const updatePlant = () => {
-			store.commit("plants/update", plant);
-		};
-
+		// First confirm, then delete the plant.
 		const confirmThenDeletePlant = () => {
 			if (
 				confirm(`Are you sure you want to delete ${plant.value.title}`)
@@ -241,9 +201,14 @@ export default {
 		// Load first round of images
 		getImageData();
 
+		const updateName = () => {
+			store.commit("plants/update", plant.value);
+		};
+
 		return {
 			id,
 			plant,
+			updateName,
 			plants,
 			onImageClick,
 			width,
@@ -251,20 +216,17 @@ export default {
 			getImageData,
 			getProps,
 			updatePlant,
-			startSwipe,
-			endSwipe,
 			performAction,
 			previousPlant,
 			nextPlant,
 			confirmThenDeletePlant,
+			validId,
 		};
 	},
 };
 </script>
 
 <style scoped>
-@import "../assets/css/stealthInput.css";
-
 .mode-toggle-container {
 	width: 100%;
 	display: flex;
@@ -305,56 +267,6 @@ export default {
 	justify-content: center;
 }
 
-.direction-icon {
-	position: absolute;
-	top: 50%;
-	height: 5rem;
-	width: 5rem;
-	transform: translate(-20%, -50%);
-	cursor: pointer;
-}
-
-.left-icon {
-	left: 0;
-	transform: translate(-20%, -50%);
-}
-
-.right-icon {
-	right: 0;
-	transform: translate(10%, -50%);
-}
-
-.water-icon,
-.pot-icon,
-.mushroom-icon {
-	position: absolute;
-	border-radius: 50%;
-	top: 0;
-	height: 3rem;
-	width: 3rem;
-	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-}
-
-.water-icon {
-	background-color: #136e9e;
-	left: 0;
-}
-.pot-icon {
-	background-color: #bf763c;
-	left: 4rem;
-}
-.mushroom-icon {
-	background-color: #bf763c;
-	left: 8rem;
-}
-
-.inner-icon {
-	height: 3rem;
-}
-
 .name-input {
 	width: 100%;
 	font-size: 4rem;
@@ -365,12 +277,6 @@ export default {
 .settings {
 	width: 90%;
 	margin: 10%;
-}
-
-@media (min-width: 851px) {
-	.direction-icon {
-		display: none;
-	}
 }
 
 @media (min-width: 1200px) {

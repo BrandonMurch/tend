@@ -1,3 +1,16 @@
+<!--
+Description: 	Contains a random tip of the day within a drop down shape.
+
+Props: 		
+	Position	Integer. Used to offset the notification bar within the mobile
+				menu.
+
+	isOpen		Boolean value, whether or not the menu is open.
+
+Emits:
+	toggleOpen	Toggle the menu open or close.
+-->
+
 <template>
 	<NotificationShape
 		:position="position"

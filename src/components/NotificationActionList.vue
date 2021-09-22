@@ -1,3 +1,21 @@
+<!--
+Description: 	A drop down menu that uses NotificationShape. It displays the 
+				number of necessary actions to perform. Within the drop down it includes a list of plants that need that particular action.
+				
+Props: 
+	colour		The colour of the notification bar
+
+	plants: 	The plants that need this particular action.
+
+	Position	Integer. Used to offset the notification bar within the mobile
+				menu.
+
+	isOpen		Boolean value, whether or not the menu is open.
+
+Emits:
+	toggleOpen	Toggle the menu open or close.
+-->
+
 <template>
 	<NotificationShape
 		:position="position"

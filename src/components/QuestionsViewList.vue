@@ -1,3 +1,7 @@
+<!--
+Description:  	Lists all relevant questions using CardText components. 
+-->
+
 <template>
 	<div class="question-container">
 		<transition-group name="fade">
@@ -47,5 +51,8 @@ export default {
 @import "../assets/css/transitionFade.css";
 .question-container {
 	position: relative;
+	width: 90vw;
+	max-width: 800px;
+	margin: auto;
 }
 </style>

@@ -1,5 +1,18 @@
-<!-- Uses PopUp to display public facing information about a plant. Necessary
-information is passed in as props. -->
+<!--
+Description: 
+					Uses PopUp to display public facing information about a plant using the PopUp component.
+Props: 
+
+	imageSource		The url for the plant's photo.
+	title			The plants species.
+	subtitle		The plants name.
+	text			A bio about the plant. 
+	comments 		A list of comments.
+	id				The plant's id
+	baseId			Since some plants are duplicated for mocking purposes, this 
+					is the id off which they are based.
+Emits: 
+-->
 
 <template>
 	<!-- Display box to send message on MessageIconClick. Replaces PopUp.  -->
@@ -11,16 +24,22 @@ information is passed in as props. -->
 	<PopUp v-else @close="$emit('close')">
 		<div
 			class="content-container"
+			:class="{ 'content-container-mobile': isMobile }"
 			:style="{ height: popUpHeight, width: popUpWidth }"
 		>
 			<img
-				class="image"
+				:class="getImageClass()"
 				:src="imageSource"
 				:alt="title"
 				@load="updateSizeOfPopUpBasedOnImage"
-				ref="image"
+				ref="imageRef"
 			/>
-			<div class="text-container">
+			<div
+				class="text-container"
+				:class="
+					isMobile ? 'text-container-mobile' : 'text-container-full'
+				"
+			>
 				<h3 class="title">{{ title }}</h3>
 				<h4 class="subtitle">{{ subtitle }}</h4>
 				<p class="paragraph">{{ text }}</p>
@@ -33,26 +52,7 @@ information is passed in as props. -->
 					:values="localComments"
 					@add="
 						(commentText) => {
-							newComment = {
-								id:
-									localComments.length > 0
-										? localComments[0].id + 1
-										: 1001,
-								datetime: new Date(),
-								body: commentText,
-							};
-							localComments = [newComment, ...localComments];
-							addPlantComment(newComment);
-						}
-					"
-					@delete="
-						(commentId) => {
-							localComments = [
-								...localComments.filter(
-									(comment) => comment.id != commentId
-								),
-							];
-							deletePlantComment(commen);
+							addPlantComment(commentText);
 						}
 					"
 				/>
@@ -66,13 +66,11 @@ import PopUp from "./PopUp.vue";
 import HeartIcon from "./Icons/IconHeart.vue";
 import MessageIcon from "./Icons/IconMessage.vue";
 import CardListWithTextbox from "./CardListWithTextbox.vue";
-import {
-	addPlantComment,
-	deletePlantComment,
-} from "../composables/mockPlantData";
-
 import { debounce } from "../helpers/debounce";
 import PopUpMessage from "./PopUpMessage.vue";
+import { ref, onMounted } from "vue";
+import windowSizeWatcher from "../composables/windowSizeWatcher";
+import { useStore } from "vuex";
 
 export default {
 	name: "PlantProfilePublic",
@@ -89,46 +87,79 @@ export default {
 		subtitle: String,
 		text: String,
 		comments: Array,
+		id: Number,
+		baseId: Number,
 	},
-	data() {
-		return {
-			localComments: this.comments,
-			messageActive: false,
-			popUpHeight: null,
-			popUpWidth: null,
-			// Cannot put debounce(...) directly in the event
-			// listener or it will not be properly destroyed.
-			debounceUpdateSize: debounce(this.updateSizeOfPopUpBasedOnImage),
-		};
-	},
-	methods: {
-		submitMessage(message) {
-			this.messageActive = false;
+	setup(props) {
+		const store = useStore();
+
+		const localComments = ref(props.comments);
+		const messageActive = ref(false);
+		const sizeHasBeenChecked = ref(false);
+		const isMobile = ref(false);
+		const popUpHeight = ref(null);
+		const popUpWidth = ref(null);
+		const imageRef = ref(null);
+
+		const submitMessage = (message) => {
 			console.log(message);
-		},
-		addPlantComment(comment) {
-			console.log(comment);
-			addPlantComment(comment);
-		},
-		deletePlantComment(id) {
-			deletePlantComment(id);
-		},
-		updateSizeOfPopUpBasedOnImage() {
-			const image = this.$refs.image;
-			if (window.innerWidth > 800) {
-				this.popUpWidth = image.width * 2 + "px";
-				this.popUpHeight = image.height + "px";
+			messageActive.value = false;
+		};
+
+		const addPlantComment = (comment) => {
+			store.dispatch("plants/addComment", { id: props.baseId, comment });
+			localComments.value = store.getters["plants/comments"](
+				props.baseId
+			);
+		};
+
+		// resize PopUp based on image size/ratio.
+		function updateSizeOfPopUpBasedOnImage() {
+			const image = imageRef.value;
+			sizeHasBeenChecked.value = true;
+
+			if (window.innerWidth <= 1000 || image.width > image.height) {
+				isMobile.value = true;
+				popUpWidth.value = image.width + "px";
+				popUpHeight.value = "auto";
 			} else {
-				this.popUpWidth = image.width + "px";
-				this.popUpHeight = "auto";
+				isMobile.value = false;
+				popUpWidth.value = image.width * 2 + "px";
+				popUpHeight.value = image.height + "px";
 			}
-		},
-	},
-	created() {
-		window.addEventListener("resize", this.debounceUpdateSize);
-	},
-	unmounted() {
-		window.removeEventListener("resize", this.debounceUpdateSize);
+		}
+
+		// Used to get inital image size.
+		const getImageClass = () => {
+			if (!sizeHasBeenChecked.value) {
+				return "unset-image";
+			} else if (!isMobile.value) {
+				return "image-full";
+			} else {
+				return "image-mobile";
+			}
+		};
+
+		// Cannot put debounce(...) directly in the event
+		// listener or it will not be properly destroyed.
+		const debounceUpdateSize = debounce(updateSizeOfPopUpBasedOnImage);
+		windowSizeWatcher(debounceUpdateSize);
+
+		onMounted(() => {
+			updateSizeOfPopUpBasedOnImage();
+		});
+
+		return {
+			localComments,
+			messageActive,
+			isMobile,
+			popUpHeight,
+			popUpWidth,
+			imageRef,
+			submitMessage,
+			addPlantComment,
+			getImageClass,
+		};
 	},
 };
 </script>
@@ -171,51 +202,46 @@ export default {
 	margin: 1rem 0 2rem 0;
 }
 
-@media (min-width: 800px) {
-	.popup {
-		min-width: 40vw;
-		max-width: 80vw;
-		max-height: 80vh;
-	}
-
-	.image {
-		position: absolute;
-		max-width: 40vw;
-		max-height: 80vh;
-	}
-
-	.text-container {
-		width: 44%;
-		margin-right: 2%;
-	}
+.unset-image {
+	max-width: 90vw;
+	max-height: 70vh;
 }
 
-@media (max-width: 800px) {
-	.content-container {
-		overflow-y: scroll;
-		/* min-content adjusts the height to be as small as possible
+.image-full {
+	position: absolute;
+	max-width: 50%;
+	max-height: 100%;
+}
+
+.text-container-full {
+	width: 44%;
+	margin-right: 2%;
+}
+
+.content-container-mobile {
+	overflow-y: scroll;
+	/* min-content adjusts the height to be as small as possible
             https://developer.mozilla.org/en-US/docs/Web/CSS/min-content */
-		width: min-content;
-		max-height: 90vh;
-	}
+	width: min-content;
+	max-height: 90vh;
+}
 
-	.image {
-		max-height: 70vh;
-		max-width: 80vw;
-		position: relative;
-	}
+.image-mobile {
+	max-height: 70vh;
+	max-width: 90vw;
+	position: relative;
+}
 
-	.close {
-		fill: #3f463d;
-		stroke: black;
-	}
+.close-mobile {
+	fill: #3f463d;
+	stroke: black;
+}
 
-	.text-container {
-		float: none;
-		width: 90%;
-		position: relative;
-		left: 5%;
-	}
+.text-container-mobile {
+	float: none;
+	width: 90%;
+	position: relative;
+	left: 5%;
 }
 
 /* Scrollbar Modifications: https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp */

@@ -1,10 +1,9 @@
-//vue.config.js
 module.exports = {
 
-    // publicPath: process.env.NODE_ENV === 'production'
-    //     ? '/tend/'
-    //     : '/',
+    // ENABLE THIS FOR PRODUCTION.
+    // mode: 'production',
 
+    // https://stackoverflow.com/questions/62023604/where-to-find-or-how-to-set-htmlwebpackplugin-options-title-in-project-created-w
     chainWebpack: config => {
         config
             .plugin('html')
@@ -15,4 +14,3 @@ module.exports = {
     }
 }
 
-// https://stackoverflow.com/questions/62023604/where-to-find-or-how-to-set-htmlwebpackplugin-options-title-in-project-created-w

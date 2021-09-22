@@ -1,5 +1,18 @@
-<!--Component that will render whatever is passed within a centred "popup". The
-background will be tinted to draw focus to the content. -->
+<!--. -->
+
+<!--
+Description:  	Component that will render whatever is passed within a centred 
+				"popup". The background will be tinted to draw focus to the content
+
+Props: 
+	closable:	Whether the popup can be closed by the user. Useful for login 
+				screens.
+
+	scrollable	Boolean.  Instead of covering the background, the window is 
+				still scrollable meaning the popup will disappear off the top of the screen.
+Slots:
+	default		Will be displayed inside the pop up.
+-->
 
 <template>
 	<div :class="{ container: !scrollable }">

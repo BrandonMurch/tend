@@ -9,10 +9,10 @@ const PlantProfilePrivate = () => import('../components/PlantProfilePrivate.vue'
 const LearnPlants = () => import('../components/TheLearnPlants.vue');
 const NotFound = () => import('../components/TheNotFound.vue');
 const LogIn = () => import('../components/TheLogIn.vue');
-const ArticleDisplay = () => import('../components/ArticleDisplay.vue');
+const DisplayArticle = () => import('../components/DisplayArticle.vue');
 const QuestionsViewList = () => import('../components/QuestionsViewList.vue');
 const QuestionsViewSingle = () => import('../components/QuestionsViewSingle.vue');
-const SpeciesView = () => import('../components/SpeciesView.vue');
+const DisplaySpecies = () => import('../components/DisplaySpecies.vue');
 
 
 const routes = [
@@ -21,13 +21,15 @@ const routes = [
     { path: '/contact', name: 'contact', component: Contact },
     { path: '/my-plants/:id', name: 'private-plant', component: PlantProfilePrivate },
     { path: '/my-plants', name: 'my-plants', component: MyPlants },
-    { path: '/species/:name', name: 'species', component: SpeciesView },
+    { path: '/species/:name', name: 'species', component: DisplaySpecies },
 
-    { path: '/learn/articles/:id', name: 'articles', component: ArticleDisplay },
+    { path: '/learn/articles/:id', name: 'articles', component: DisplayArticle },
     { path: '/learn/questions/:answered/:id', name: 'question', component: QuestionsViewSingle },
     { path: '/learn/questions/:answered', name: 'questions-list', component: QuestionsViewList },
     { path: '/learn', name: 'learn', component: LearnPlants },
-    { path: '/:pathMatch(.*)', name: 'NotFound', component: NotFound },
+
+    { path: '/404', name: 'not-found', component: NotFound },
+    { path: '/:pathMatch(.*)', component: NotFound },
 ]
 
 
@@ -38,20 +40,16 @@ const router = createRouter({
 })
 
 
+// Prevent user from accessing most features without being logged in.
 router.beforeEach((to) => {
-
-
     if (to.path == "/logout") {
         store.commit("user/logOut");
         return "/";
+    } else if (to.path != "/" && !store.getters['user/isLoggedIn']) {
+        return "/";
+    } else if (to.path == "/" && store.getters['user/isLoggedIn']) {
+        return "/explore";
     }
-    // Re-Enable after development
-
-    // } else if (to.path != "/" && !store.getters['user/isLoggedIn']) {
-    //     return "/";
-    // } else if (to.path == "/" && store.getters['user/isLoggedIn']) {
-    //     return "/explore";
-    // }
     return true;
 })
 

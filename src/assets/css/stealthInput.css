@@ -6,8 +6,8 @@
 	font-size: inherit;
 	color: inherit;
 	cursor: pointer;
-	height: 4rem;
 	text-transform: lowercase;
+	text-align: inherit;
 }
 
 .stealth-input:focus {

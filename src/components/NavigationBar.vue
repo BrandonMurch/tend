@@ -1,5 +1,7 @@
-<!-- The navigation bar for the website. On desktop it runs across the top, on
-mobile it will be a drop down. -->
+<!--
+Description: 	The navigation bar for the website. On desktop it runs across 
+				the top, on mobile it will be a drop down.
+-->
 
 <template>
 	<nav class="navigation-bar">

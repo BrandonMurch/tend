@@ -1,8 +1,25 @@
-<!-- Presents text with a title inside a card -->
+<!--
+Description: 			Presents text with a title inside a card. A small image 
+						will appear on the left hand side of the card.
+
+Props: 
+	deletable			Optional prop. If present, the card can be deleted.
+	
+	title				Title of the card
+	
+	subtitle			Subtitle of the card
+
+	text				Main text
+
+	imageSource			Image URL
+
+-->
 
 <template>
 	<div class="container">
-		<img :src="imageSource" alt="title" class="image" />
+		<div class="image-container">
+			<img :src="imageSource" alt="title" class="image" />
+		</div>
 		<div class="text-container">
 			<IconTrash
 				v-if="deletable"
@@ -46,7 +63,6 @@ export default {
 	box-shadow: 0 5px 5px grey;
 	margin-bottom: 1rem;
 	overflow: hidden;
-	padding: 10px;
 	max-height: 10rem;
 	cursor: pointer;
 }
@@ -54,24 +70,30 @@ export default {
 .text-container {
 	width: 70%;
 	float: right;
+}
+
+/* container to allow the image to be placed properly aligning the right edge with the division between image and text. Use position: absolute in child and right: 0. */
+.image-container {
+	position: relative;
+	width: 25%;
+	overflow: hidden;
+	height: 100%;
 	display: inline-block;
 }
 
 .image {
-	position: relative;
-	width: 25%;
-	max-height: 15rem;
-	top: -20px;
-	left: -20px;
+	position: absolute;
+	min-width: 110%;
+	height: 100%;
+	bottom: 0;
+	right: 0;
 	border-radius: 20px 0 0 20px;
-	display: inline-block;
 }
 
 .trash-icon {
 	position: absolute;
 	top: -5px;
 	right: 5px;
-	/* color:  */
 	transition: 0.5s;
 	cursor: pointer;
 }

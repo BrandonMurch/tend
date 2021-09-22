@@ -34,13 +34,13 @@
             {
                 "id": 1002,
                 "body": "This is an example Comment!",
-                "title": "Sarah Bronson",
+                "user": "Sarah Bronson",
                 "datetime": "2021-09-13T10:44:33"
             },
             {
                 "id": 1001,
                 "body": "What a great plant!",
-                "title": "Sarah Bronson",
+                "user": "Jack May",
                 "datetime": "2021-09-13T10:44:33"
             }
         ]
@@ -80,13 +80,13 @@
             {
                 "id": 1002,
                 "body": "This is an example Comment!",
-                "sender": "Sarah Bronson",
+                "user": "Sarah Bronson",
                 "datetime": "2021-09-13T10:44:33"
             },
             {
                 "id": 1001,
                 "body": "What a great plant!",
-                "sender": "Sarah Bronson",
+                "user": "Jack May",
                 "datetime": "2021-09-13T10:44:33"
             }
         ]
@@ -123,13 +123,13 @@
             {
                 "id": 1002,
                 "body": "This is an example Comment!",
-                "sender": "Sarah Bronson",
+                "user": "Sarah Bronson",
                 "datetime": "2021-09-13T10:44:33"
             },
             {
                 "id": 1001,
                 "body": "What a great plant!",
-                "sender": "Sarah Bronson",
+                "user": "Jack May",
                 "datetime": "2021-09-13T10:44:33"
             }
         ]

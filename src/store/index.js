@@ -1,3 +1,5 @@
+//  Entry point into application.
+
 import { createStore } from 'vuex'
 import user from './modules/user';
 import plants from './modules/plants';

@@ -1,3 +1,16 @@
+<!--
+Description: Creates a visual slider which can toggle between two options.
+Props: 
+	option1		The left option.
+
+	option1		The right option.
+	
+	value		The initial value. This is either option1 or option2. Used with 
+				v-model.
+Emits: 
+	update:modelValue	Updates the modelValue. Used with v-model.
+-->
+
 <template>
 	<div class="container">
 		<div class="option">
@@ -16,7 +29,9 @@
 				)
 			"
 		>
+			<!-- The bar underneath -->
 			<div class="slide"></div>
+			<!-- The circle toggle -->
 			<div
 				class="circle"
 				:class="value == option2.value ? 'right' : 'left'"
@@ -38,7 +53,7 @@ export default {
 		option1: Object,
 		option2: Object,
 	},
-	setup() {},
+	emits: ["update:modelValue"],
 };
 </script>
 

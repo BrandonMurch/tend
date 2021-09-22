@@ -1,3 +1,15 @@
+<!--
+Description: 
+					A pop up with a textbox, and a button to submit the contents of that text box.
+Props: 
+	buttonText 		The text to be displayed within the button.
+
+	scroll			Booelan Does this scroll when it grows too big?
+Emits: 
+	add				Submit the message. Returns the message text with the emit.
+	close			Close the popup.
+-->
+
 <template>
 	<PopUp @close="$emit('close')">
 		<div
@@ -18,9 +30,8 @@ import Button from "./AppButton.vue";
 import PopUp from "./PopUp.vue";
 import { ref } from "vue";
 export default {
-	name: "CardListWithTextbox",
+	name: "PopUpTextBox",
 	props: {
-		values: Array,
 		buttonText: String,
 		scroll: {
 			type: Boolean,
