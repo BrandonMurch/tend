@@ -30,7 +30,7 @@ Props:
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import checkForValidId from "../composables/checkForValidId";
 import CardListWithTextbox from "./CardListWithTextbox.vue";
 
@@ -55,6 +55,12 @@ export default {
 		);
 
 		const validId = ref(checkForValidId(router, article.value));
+
+		onBeforeRouteUpdate((to, from, next) => {
+			article.value = store.getters["learn/articles/one"](to.params.id);
+			validId.value = checkForValidId(router, article.value);
+			next();
+		});
 
 		const addComment = (commentText) => {
 			store.dispatch("learn/articles/addComment", {

@@ -39,7 +39,7 @@ export default {
 
 		// Set the height of the dropdown dynamically to fit the childrens size. This is because height:auto is not affected by transition styles.
 		const updateHeight = () => {
-			let duration = contents.value.clientHeight < 100 ? 1 : 1.5;
+			let duration = 1.5;
 
 			container.value.style.transition = `${duration}s ease-in-out`;
 

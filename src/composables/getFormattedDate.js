@@ -12,7 +12,7 @@ export const getFormattedDate = (value) => {
     const timeStamp = Date.parse(value);
     const date = new Date(timeStamp);
     if (areDatesEqual(date, new Date())) {
-        return `${date.getHours()}:${date.getMinutes()}`;
+        return `${date.getHours()}:${date.getMinutes().toString().padStart(2, "0")}`;
     } else {
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     }

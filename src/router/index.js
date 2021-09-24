@@ -45,10 +45,10 @@ router.beforeEach((to) => {
     if (to.path == "/logout") {
         store.commit("user/logOut");
         return "/";
-    } else if (to.path != "/" && !store.getters['user/isLoggedIn']) {
-        return "/";
-    } else if (to.path == "/" && store.getters['user/isLoggedIn']) {
-        return "/explore";
+        // } else if (to.path != "/" && !store.getters['user/isLoggedIn']) {
+        //     return "/";
+        // } else if (to.path == "/" && store.getters['user/isLoggedIn']) {
+        //     return "/explore";
     }
     return true;
 })

@@ -143,6 +143,7 @@ export default {
 		//  Handle changes between different plant ids in the URL
 		onBeforeRouteUpdate((to, from, next) => {
 			plant.value = store.getters["plants/one"](to.params.id);
+			validId.value = checkForValidId(router, plant.value);
 			next();
 		});
 

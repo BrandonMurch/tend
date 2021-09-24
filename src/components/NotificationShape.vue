@@ -26,7 +26,7 @@ Emits:
 	>
 		<div class="visible-bar" @click="$emit('toggleOpen')">
 			<slot name="icon" />
-			<h1 class="count">{{ count }}</h1>
+			<h1 v-if="count" class="count">{{ count }}</h1>
 			<IconDownArrow class="dropdown" />
 		</div>
 		<!-- A small connector between the dropdown and the bar. It makes it look like the bar is extending into the drop down.  -->
@@ -79,7 +79,7 @@ export default {
 		const configureCornerRadius = () => {
 			if (props.position == 0) {
 				return "20px 0 20px 20px";
-			} else if (props.position == 4) {
+			} else if (props.position == 5) {
 				return "0 20px 20px 20px";
 			}
 			return "20px";
@@ -99,13 +99,14 @@ export default {
 	width: 100%;
 	height: 0;
 	z-index: 2;
-	transition-duration: 0.1s;
+	transition-duration: 0.3s;
 	transition-delay: 1.3s;
+	transition-timing-function: ease-in-out;
 }
 .join-div-open {
-	height: 35px;
+	height: 2rem;
 	transition-duration: 0.1s;
-	transition-delay: 0.15s;
+	transition-delay: 0.1s;
 }
 
 .visible-bar {

@@ -27,7 +27,7 @@ Props:
 						@keyup="handleKeyUp"
 						class="search-input"
 						type="text"
-						placeholder="search for a plant species..."
+						:placeholder="placeholderText"
 						v-model.trim="searchTerm"
 					/>
 					<div>
@@ -70,16 +70,14 @@ export default {
 	data() {
 		return {
 			searchTerm: "",
-			searchOptions: this.getOptions(),
 			suggestions: [],
 			focusedIndex: -1,
 			focusedSuggestion: "",
 			searchResultForPopUp: undefined,
 		};
 	},
-	methods: {
-		// Get the options based on the url path.
-		getOptions() {
+	computed: {
+		searchOptions() {
 			if (
 				this.$route.path.includes("my-plants") ||
 				this.$route.path.includes("explore")
@@ -90,7 +88,16 @@ export default {
 					(article) => article.title
 				);
 			}
+			return [];
 		},
+		placeholderText() {
+			if (this.$route.path.includes("learn")) {
+				return "search for an article...";
+			}
+			return "search for a plant species...";
+		},
+	},
+	methods: {
 		// Reset state and close.
 		close() {
 			this.suggestions = [];
@@ -163,23 +170,39 @@ export default {
 				regexPattern.test(option.toLowerCase())
 			);
 		},
-
-		// Check so see if the search result exists, then load a popup with it.
+		// // Check to see if the search result exists, then either go to the appropriate page via the router, or load a pop-up with it.
 		submitSearch(input) {
 			this.close();
-			const searchResult = this.$store.getters["plants/species"](input);
-			if (searchResult) {
+			let searchResult;
+			try {
 				if (this.$route.path.includes("my-plants")) {
+					searchResult = this.$store.getters["plants/species"](input);
+					if (!searchResult) throw "Not Found";
+
 					this.$router.push({
 						name: "private-plant",
 						params: {
 							id: searchResult.id,
 						},
 					});
+				} else if (this.$route.path.includes("learn")) {
+					searchResult = this.$store.getters[
+						"learn/articles/byTitle"
+					](input);
+					if (!searchResult) throw "Not Found";
+
+					this.$router.push({
+						name: "articles",
+						params: {
+							id: searchResult.id,
+						},
+					});
 				} else {
+					searchResult = this.$store.getters["plants/species"](input);
+					if (!searchResult) throw "Not Found";
 					this.searchResultForPopUp = searchResult;
 				}
-			} else {
+			} catch (exception) {
 				alert("Your search could not be found.");
 			}
 		},

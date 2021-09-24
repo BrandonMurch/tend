@@ -20,6 +20,11 @@ const getters = {
             return state.articles.filter(article => article.categories.includes(category));
         }
     },
+    byTitle: (state) => (title) => {
+        return state.articles.find(article => {
+            return article.title.toLowerCase() == title.toLowerCase()
+        });
+    },
 
 }
 

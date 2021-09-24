@@ -35,7 +35,7 @@ Species Data Structure:
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import IconWater from "./Icons/IconWater.vue";
 import IconTemperature from "./Icons/IconTemperature.vue";
 import IconSun from "./Icons/IconSun.vue";
@@ -54,6 +54,12 @@ export default {
 		);
 
 		const validId = ref(checkForValidId(router, species.value));
+
+		onBeforeRouteUpdate((to, from, next) => {
+			species.value = store.getters["learn/species/one"](to.params.name);
+			validId.value = checkForValidId(router, species.value);
+			next();
+		});
 
 		const addComment = (commentText) => {
 			store.dispatch("learn/species/addComment", {
