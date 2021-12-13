@@ -18,13 +18,48 @@ A live demo is hosted on *tend.brandonmurch.com*
 
 ## Formal Proposal
 
-<object data="./proposal.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="./proposal.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="./proposal.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+![Proposal](./proposal/proposal-0.jpg)
+![Proposal](./proposal/proposal-1.jpg)
+![Proposal](./proposal/proposal-2.jpg)
+![Proposal](./proposal/proposal-3.jpg)
+![Proposal](./proposal/proposal-4.jpg)
+![Proposal](./proposal/proposal-5.jpg)
+![Proposal](./proposal/proposal-6.jpg)
+![Proposal](./proposal/proposal-7.jpg)
+![Proposal](./proposal/proposal-8.jpg)
+![Proposal](./proposal/proposal-9.jpg)
+![Proposal](./proposal/proposal-10.jpg)
+![Proposal](./proposal/proposal-11.jpg)
+![Proposal](./proposal/proposal-12.jpg)
+![Proposal](./proposal/proposal-13.jpg)
+![Proposal](./proposal/proposal-14.jpg)
+![Proposal](./proposal/proposal-15.jpg)
+![Proposal](./proposal/proposal-16.jpg)
+![Proposal](./proposal/proposal-17.jpg)
+![Proposal](./proposal/proposal-18.jpg)
+![Proposal](./proposal/proposal-19.jpg)
+![Proposal](./proposal/proposal-20.jpg)
+![Proposal](./proposal/proposal-21.jpg)
+![Proposal](./proposal/proposal-22.jpg)
+![Proposal](./proposal/proposal-23.jpg)
+![Proposal](./proposal/proposal-24.jpg)
+![Proposal](./proposal/proposal-25.jpg)
+![Proposal](./proposal/proposal-26.jpg)
+![Proposal](./proposal/proposal-27.jpg)
+![Proposal](./proposal/proposal-28.jpg)
+![Proposal](./proposal/proposal-29.jpg)
+![Proposal](./proposal/proposal-30.jpg)
+![Proposal](./proposal/proposal-31.jpg)
+![Proposal](./proposal/proposal-32.jpg)
+![Proposal](./proposal/proposal-33.jpg)
+![Proposal](./proposal/proposal-34.jpg)
+![Proposal](./proposal/proposal-35.jpg)
+![Proposal](./proposal/proposal-36.jpg)
+![Proposal](./proposal/proposal-37.jpg)
+![Proposal](./proposal/proposal-38.jpg)
+![Proposal](./proposal/proposal-39.jpg)
+![Proposal](./proposal/proposal-40.jpg)
 
-<iframe src="./proposal.pdf" width="100%" height="500px/>
 
 
 
