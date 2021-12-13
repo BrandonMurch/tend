@@ -82,6 +82,7 @@ export default {
 				this.$route.path.includes("my-plants") ||
 				this.$route.path.includes("explore")
 			) {
+				console.log("test");
 				return this.$store.getters["plants/allSpecies"];
 			} else if (this.$route.path.includes("learn")) {
 				return this.$store.getters["learn/articles/all"].map(
